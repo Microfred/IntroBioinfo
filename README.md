@@ -84,7 +84,7 @@ Una buena forma de escribir un script es:
 Ejemplo:
 
 * Algoritmo para guardar secuencias de *Geosmithia*
- 
+
 ```
 Definir secuencias a bajar desde NCBI
 Crear directorio para guardar datos
@@ -101,7 +101,7 @@ Fin
 # Crear directorio para guardar datos
 mkdir Geos
 
-# Bajar datos de NCBI 
+# Bajar datos de NCBI
 curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&rettype=fasta&id=AM181431,AM947671,KF808310" > Geosm/Geosmithia.fasta
 
 # Revisar qué secuencias se bajaron
@@ -127,3 +127,7 @@ Editores de texto recomendados:
 El ejemplo que vimos antes, abierto en un editor de texto se ve así:
 
 ![](get_seq.png)
+
+La terminación `.sh` indica que es un archivo Shell (es decir el interpretador de la Terminal, equivalente a decir Bash, recordemos la Unidad 1). Y al darle esta terminación de archivo, o señalar el tipo de lenguaje en el menú de opciones, el editor de texto nos ayuda a leer el código coloreando los comandos, los flags, las variables y los comentarios.
+
+En este momento ya podemos correr nuestro script. Sólo hay que ir a la Terminal, `cd` al directorio donde esté nuestro script y utilizar el comando `bash`:
