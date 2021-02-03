@@ -258,4 +258,45 @@ El ejemplo que vimos antes, abierto en un editor de texto se ve así:
 
 La terminación `.sh` indica que es un archivo Shell (es decir el interpretador de la Terminal, equivalente a decir Bash, recordemos la Unidad 1). Y al darle esta terminación de archivo, o señalar el tipo de lenguaje en el menú de opciones, el editor de texto nos ayuda a leer el código coloreando los comandos, los flags, las variables y los comentarios.
 
-En este momento ya podemos correr nuestro script. Sólo hay que ir a la Terminal, `cd` al directorio donde esté nuestro script y utilizar el comando `bash`:
+* Hacer el comando ejecutable
+
+`chmod +x get_seq.sh ./get_seq.sh`
+`chmod +x get_seq1.sh ./get_seq1.sh`
+
+ls -l nos enlista los archivos (ls) y la bandera (-l) nos da información extendida cada archivo, incluyendo los permisos.
+
+Por ejemplo:
+```
+Toxic-Avenger:Unidad_1 ToxicAvenger$ ls -l
+total 1112
+-rw-r--r--@ 1 ToxicAvenger  staff   13162 Feb  2 22:07 01terminal.png
+-rw-r--r--@ 1 ToxicAvenger  staff   88485 Feb  2 22:16 02terminal.png
+-rw-r--r--@ 1 ToxicAvenger  staff  188590 Feb  2 22:29 03terminal.png
+drwxr-xr-x  2 ToxicAvenger  staff      64 Feb  3 00:21 Geos
+drwxr-xr-x  3 ToxicAvenger  staff      96 Feb  3 14:57 Geosm
+-rw-r--r--@ 1 ToxicAvenger  staff    6421 Feb  3 00:09 README.md
+-rw-r--r--@ 1 ToxicAvenger  staff   11282 Feb  3 00:39 README_Unidad1.md
+-rw-r--r--@ 1 ToxicAvenger  staff  233089 Feb  3 00:06 get_seq.png
+-rwxr-xr-x@ 1 ToxicAvenger  staff     349 Feb  3 14:57 get_seq.sh
+-rwxr--r--@ 1 ToxicAvenger  staff     349 Feb  3 14:57 get_seq1.sh
+-rw-r--r--@ 1 ToxicAvenger  staff    8096 Feb  2 21:54 hello_world.png
+``` 
+ls -l nos enlista los archivos (ls) y la bandera (-l) nos da información extendida cada archivo, incluyendo los permisos.
+
+Veamos cómo leerse (imagen cortesía de [aquí](https://www.samba.org/samba/docs/man/Samba-HOWTO-Collection/AccessControls.html)):
+
+
+[chmod](https://blog.desdelinux.net/permisos-basicos-en-gnulinux-con-chmod/)
+
+
+* Ejecutar el comando
+
+`./get_seq1.sh`
+
+ls -l nos enlista los archivos (ls) y la bandera (-l) nos da información extendida cada archivo, incluyendo los permisos.
+
+
+
+
+
+
