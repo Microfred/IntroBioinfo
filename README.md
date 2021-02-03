@@ -22,4 +22,39 @@
  Notarás que esa línea termina en `$`
 
  `$` significa que la terminal está corriendo con un interpretador Shell o Bash y por un usuario sin mayores privilegios. Si termina en `#` significa que la estás corriendo como **root** que es un "súper usuario" con permisos para desconfigurarlo todo, ten cuidado.
+
+ #### ¿Qué significa que La Terminal tenga un interpretador? 
+
+ Que le damos comandos y nos responde. 
+
+ El la Terminal no existe el *point and click*. El que funcione como una Línea de Comando significa que tienes que darle comandos (Instrucciones) de qué hacer línea por línea. 
+
+ Por ejemplo:
+
+ `date` nos responde la fecha actual
+
+ `echo algo` nos responde el texto "algo". También lo puedes utilizar con más de una palabra. 
+
+ `echo hello world`
+ `Adios mundo cruel`
+
+ Algo así debe verse tu terminal:
+
+  ![](03terminal.png)
+
+ Pero por practicidad y para facilitar el copiar-pegar en vez de la imágen de la Terminal pondré los comandos (código) y sus resultados, así:
+```
+Toxic-Avenger:~ ToxicAvenger$ 
+Toxic-Avenger:~ ToxicAvenger$ date
+Tue Feb  2 22:26:40 CST 2021
+Toxic-Avenger:~ ToxicAvenger$ echo algo
+algo
+Toxic-Avenger:~ ToxicAvenger$ echo Hello world!
+Hello world!
+Toxic-Avenger:~ ToxicAvenger$ echo Adios mundo cruel
+Adios mundo cruel
+Toxic-Avenger:~ ToxicAvenger$ 
+```
+
+
  
