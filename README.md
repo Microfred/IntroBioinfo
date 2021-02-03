@@ -227,7 +227,7 @@ Fin
 ```
 ## Este script baja 3 secuencias de Geosmithia de NCBI
 # Crear directorio para guardar datos
-mkdir Geos
+mkdir Geosm
 
 # Bajar datos de NCBI
 curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&rettype=fasta&id=AM181431,AM947671,KF808310" > Geosm/Geosmithia.fasta
@@ -235,8 +235,8 @@ curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide
 # Revisar qué secuencias se bajaron
 grep ">" Geosm/Geosmithia.fasta
 ```
-#Borralo para siempre **cuidado**
-`rm -rf Chirop`
+#Borralo para siempre **cuidado** para siempre en la terminal es para siempre, aquí no tenemos _papelera de reciclaje_
+`rm -rf Geosm`
 
 
 **Observación**: una ventaja de los scripts es que nos permiten tener en un solo documento *varios* comandos que se utilizaron para hacer algo, es decir, conforme se complican los análisis necesitamos más de una línea de comando para realizarlos.
