@@ -235,7 +235,7 @@ curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide
 # Revisar qué secuencias se bajaron
 grep ">" Geosm/Geosmithia.fasta
 ```
-# Borralo para siempre **cuidado** para siempre en la terminal es para siempre, aquí no tenemos _papelera de reciclaje_
+*Borralo para siempre* **cuidado**, para siempre en la terminal, es para siempre, aquí no tenemos _papelera de reciclaje_
 
 `rm -rf Geosm`
 
@@ -347,3 +347,372 @@ Toxic-Avenger:Unidad_1 ToxicAvenger$
 Ojo: hay un `./` antes del nombre del script, esto sirve para decirle dónde está dicho script, ya que por default la Terminal busca los comandos en los directorios enlistados en tu PATH (echo $PATH) para saber cuales son.
 
 Comentario: si tienes una serie de scripts que usas mucho, vale la pena ponerlos todos juntos en una carpeta y volver a esta carpeta parte de tu PATH. Checa el Capítulo 6 de Haddock & Dunn (2011) para cómo.
+
+
+# Funciones básicas de navegación y manejo de archivos con bash 
+
+Windows, Mac y las interfaces gráficas de Linux (como Ubuntu y Biolinux) tienen un sistema de archivos que estamos acostumbrados a explorar a través carpetas y subcarpetas que podemos ver en una ventana. Por ejemplo así:
+
+![](finder.png) 
+
+A continuación vamos a ver cómo navegar por este **mismo** sistema de archivos, pero desde la Terminal y con el teclado en vez de desde una ventana y con clicks.
+
+### `pwd`
+
+`pwd` nos da el directorio en donde estamos (viene de print **working directory**). 
+
+El directorio de trabajo es **dónde estamos**, equivalente a tener una ventana abierta del explorador en una carpeta determinada. Al menos que le indiques lo contrario, todo archivo que se genere como parte de la ejecución de un programa se guardará aquí. También este será el lugar donde cualquier programa/script buscará los archivos que le pidas, y NO los encontrará si no están exactamente ahí. Claro que es posible decirle que busque en otro directorio, lo veremos adelante.  
+
+El working directory de base es la carpeta "home" del usuario de la computadora. En mi caso:
+```
+Toxic-Avenger:~ ToxicAvenger$ pwd
+/Users/ToxicAvenger
+```
+
+    $ pwd
+    /Users/ticatla
+ 
+La diagonal **/** es el símbolo que separa los directorios en niveles jerárquicos. Es decir `ticatla` es un subdirectorio de `Users` que a su vez es un subdirectorio de `root` (simbolizado aquí como una sola /), la raíz de todos los directorios.
+
+### `cd`
+
+`cd` viene de **change directory** y sirve para movernos a otro directorio. Por ejemplo:
+
+```
+Toxic-Avenger:~ ToxicAvenger$ cd Documents/
+Toxic-Avenger:Documents ToxicAvenger$ cd POSTDOC_/
+Toxic-Avenger:POSTDOC_ ToxicAvenger$  
+```
+
+**Pregunta:** ¿Qué pasa con el texto antes del nombre de usuario?
+
+Como se explicó antes, el texto antes de `$` nos indica el nombre del equipo, el directorio actual y el nombre del usuario. El directorio actual cambió de "ToxicAvenger" (home) a "Desktop". 
+
+Ahora vamos a navegar al directorio del repositorio. La navegación se puede hacer de diferentes maneras:
+
+
+Para esto hay varias opciones:
+
+#### Moverse hacia adelante/abajo (i.e. adentro de subdirectorios):
+
+* **Absolute path** que es dar la ruta (dirección) completa **desde root** hasta el directorio que queremos.
+
+* **Relative path** que es dar la ruta **desde donde estamos** hasta el directorio que queremos.
+
+Ejemplo de ruta absoluta:
+
+```
+Toxic-Avenger:~ ToxicAvenger$ cd Documents/GitHub/Unidad_1/Prac_Uni1/
+Toxic-Avenger:Prac_Uni1 ToxicAvenger$ cd ~
+Toxic-Avenger:~ ToxicAvenger$ 
+
+```
+Háganlo en sus compus (terminales). Noten que `ToxicAvenger` es **mi** nombre de usuario, entonces el path absoluto tiene que llevar **su nombre de usuario**.
+
+Ejemplo de ruta relativa:
+
+```
+Toxic-Avenger:Prac_Uni1 ToxicAvenger$ 
+Toxic-Avenger:Prac_Uni1 ToxicAvenger$ ls
+Maiz		Manzanas	Peras		Tomates
+Toxic-Avenger:Prac_Uni1 ToxicAvenger$ cd Maiz/
+Toxic-Avenger:Maiz ToxicAvenger$ 
+``` 
+
+#### Moverse a home:
+
+`~` es una especie de ruta corta a la ruta absoluta de tu directorio home. No importa dónde estés `cd ~` o `cd $HOME` te llevará a home. 
+
+```
+Toxic-Avenger:~ ToxicAvenger$ cd Documents/GitHub/Unidad_1/Prac_Uni1/
+Toxic-Avenger:Prac_Uni1 ToxicAvenger$ cd ~
+Toxic-Avenger:~ ToxicAvenger$ 
+
+Toxic-Avenger:~ ToxicAvenger$ cd Documents/GitHub/Unidad_1/Prac_Uni1/
+Toxic-Avenger:Prac_Uni1 ToxicAvenger$ cd $HOME
+Toxic-Avenger:~ ToxicAvenger$ 
+```
+
+#### Moverse para atrás (hacia el directorio raíz):
+
+Igual puede ser con rutas absolutas o relativas, pero utilizando `..` que representa **parent directory**, es decir el directorio arriba (o atrás, como le entiendas mejor):
+
+`cd ..` por lo tanto te lleva a un directorio arriba de donde estés.
+
+Ejemplo:
+
+
+```
+
+$ pwd
+Toxic-Avenger:Prac_Uni1 ToxicAvenger$ cd Maiz/
+Toxic-Avenger:Maiz ToxicAvenger$ cd ..
+Toxic-Avenger:Prac_Uni1 ToxicAvenger$ cd ..
+Toxic-Avenger:Unidad_1 ToxicAvenger$ cd ..
+Toxic-Avenger:GitHub ToxicAvenger$
+
+```
+
+#### Moverse para atrás y para adelante en la misma línea
+
+Puedes usar `..` muchas veces. Ojo con incluir `/` para separar niveles. 
+
+Ejemplo:
+
+```
+$pwd
+/Users/ToxicAvenger/Desktop/GitHub/Unidad_1/Prac_Uni1/Tomates/VerdesFritos
+$ cd ../../Manzanas/
+$ pwd
+/Users/ToxicAvenger/Desktop/GitHub/Unidad_1/Prac_Uni1/Manzanas
+
+```
+
+Es decir `../` se puede combinar con una ruta relativa. Ejemplo:
+
+```
+$ pwd
+Toxic-Avenger:~ ToxicAvenger$ cd Documents/GitHub/Unidad_1/Prac_Uni1/Tomates/VerdesFritos/
+Toxic-Avenger:VerdesFritos ToxicAvenger$ cd ../../Manzanas/
+Toxic-Avenger:Manzanas ToxicAvenger$ pwd
+/Users/ToxicAvenger/Documents/GitHub/Unidad_1/Prac_Uni1/Manzanas
+Toxic-Avenger:Manzanas ToxicAvenger$  
+```
+
+#### No moverse
+O en otras palabras ir al directorio donde ya estás. Suena inútil, y en general lo es si lo hace con `cd`, pero el concepto es importante para otros comandos que veremos más adelante. 
+
+`cd ./` te lleva al directorio en el que estás. Lo importante a recordar es que `.` significa "el directorio actual". 
+
+
+#### Errores comunes al usar `cd`
+
+
+* `-bash: cd: manzanas: No such file or directory`
+
+ ¿Escribiste bien Manzanas? Ups. No. Es Manzanas no manzanas. Ojo con las mayúsculas. También aguas con  los errores de dedo (e.g. Manzaanas arrojaría el mismo error)
+
+* `-bash: cd: ../Manzanas: No such file or directory`
+
+
+  Sí está bien escrito, el directorio Manzanas existe y no lo encuentra. Ok, existe, pero NO en el directorio inmediatamente arriba. Checa dónde estás y a dónde dirigen tus `cd ..`
+
+* `-bash: cd..: command not found`. 
+  
+  Ojo, con tus espacios `cd..` no es lo mismo que `cd ..`. Otro clásico es poner `cd ...`
+
+
+En resumen: checa que esté bien escrito y que puedas ir a ese directorio con la ruta que le estás pidiendo. 
+
+#### Tips de acceso rápido en la Terminal
+
+**Flecha arriba/abajo** para acceder a los últimos comandos utilizados
+**TAB** para "completar" la escritura del path o nombre de archivos.
+
+
+### `ls`
+
+Enlista los archivos y directorios presentes en un directorio. Ejemplo:
+
+```
+$ cd Maiz
+$ ls
+nuevos_final.bed	nuevos_final.fam
+nuevos_final.bim	nuevos_final.log
+```
+
+Nota que los enlista en orden alfabético. 
+
+Para tener más info de los archivos:
+
+`ls -l` brinda la misma lista, pero con datos sobre: 
+si es un directorio (d) o un archivo (-), permisos (si es sólo lectura, editable, etc y por quién, detalles más adelante), número de links al archivo, qué usuario es el dueño, a qué grupo pertenece dicho usuario, tamaño en bytes, fecha-hora en que se modificó y el nombre del directorio o archivo.
+
+Ejemplo:
+```
+Toxic-Avenger:Prac_Uni1 ToxicAvenger$ cd Maiz/
+Toxic-Avenger:Maiz ToxicAvenger$ ls
+nuevos_final.bed	nuevos_final.bim	nuevos_final.fam	nuevos_final.log
+Toxic-Avenger:Maiz ToxicAvenger$ ls -l
+total 5216
+-rw-r--r--  1 ToxicAvenger  staff  1551105 Feb  2 22:00 nuevos_final.bed
+-rw-r--r--  1 ToxicAvenger  staff  1109078 Feb  2 22:00 nuevos_final.bim
+-rw-r--r--  1 ToxicAvenger  staff     3604 Feb  2 22:00 nuevos_final.fam
+-rw-r--r--  1 ToxicAvenger  staff     1825 Feb  2 22:00 nuevos_final.log
+```
+
+
+Pero se pueden ordenar por fecha (y hora, aunque no se vea) de modificación, por ejemplo:
+
+```
+Toxic-Avenger:Maiz ToxicAvenger$ ls -lt
+total 5216
+-rw-r--r--  1 ToxicAvenger  staff     1825 Feb  2 22:00 nuevos_final.log
+-rw-r--r--  1 ToxicAvenger  staff     3604 Feb  2 22:00 nuevos_final.fam
+-rw-r--r--  1 ToxicAvenger  staff  1109078 Feb  2 22:00 nuevos_final.bim
+-rw-r--r--  1 ToxicAvenger  staff  1551105 Feb  2 22:00 nuevos_final.bed
+Toxic-Avenger:Maiz ToxicAvenger$ 
+``` 
+
+
+`man ls` abre el manual de `ls` (**o de cualquier otro comando**), donde vienen muchas más opciones para usar este comando.
+
+**Tip**: presiona "q" para salir de la pantalla de `man`. 
+
+**Ejercicio**:
+* Enlista el contenido de `Maiz` por tamaño del archivo y has que el tamaño del archivo se lea en KB y MB (ie reducido en vez de todos los bytes).
+
+### `mkdir`
+
+Crea un directorio. 
+
+```
+$ mkdir Prueba
+$ ls
+Prueba			nuevos_final.bim	nuevos_final.log
+nuevos_final.bed	nuevos_final.fam
+```
+
+Nota: Se puede combinar con paths absolutos o relativos para crearlo en un directorio diferente al WD.
+
+
+**Ejercicio:** ¿Qué pasa si intentas crear un directorio que ya existe? ¿Para qué sirve el flag `-p`?
+
+
+### `cp`
+
+Copia un archivo o directorio de lugar A a lugar B.
+
+```
+$ cp -r Prueba ../
+$ ls ../
+Maiz		Manzanas	Peras		Prueba		Tomates
+```
+
+¿Por qué utilicé el flag `-r` en el ejemplo anterior?
+
+
+### `mv`
+
+Mueve un archivo o directorio de lugar A a lugar B. Equivalente a "cut-paste".
+
+```
+$ mv ../Prueba ../Manzanas
+$ ls ../
+Maiz		Manzanas	Peras		Tomates
+$ ls ../Manzanas
+Prueba
+
+```
+
+Nota que con `mv` no es necesario utilizar `-r` para borrar directorios.
+
+
+### `rm`
+
+Borra (**AGUAS al usar esto**) archivos o directorios.
+
+```
+$ rm -r Prueba
+$ rm -r ../Manzanas/Prueba
+```
+
+**Pregunta:** ¿Si borras un directorio se borra su contenido? 
+
+
+### `tar`
+
+Es un método de ultra comprensión (más que zip) utilizado por sistemas Linux/Unix. Viene de "*tape archive*" y originalmente surgió para comprimir archivos para los discos "tape" de respaldo. 
+
+La compresión tar genera archivos "tarball", gzip y bzip. Con terminaciones como `.tar.gz`. Este tipo de compresión es muy utilizada en datos genómicos.
+
+#### Crear un tar.gz
+
+Imaginemos que queremos comprimir la carpeta `Maiz`
+
+```
+Toxic-Avenger:Prac_Uni1 ToxicAvenger$ ls
+Maiz		Manzanas	Peras		Tomates
+Toxic-Avenger:Prac_Uni1 ToxicAvenger$ tar cvzf Maiz.tar.gz Maiz
+a Maiz
+a Maiz/nuevos_final.log
+a Maiz/nuevos_final.bim
+a Maiz/nuevos_final.bed
+a Maiz/nuevos_final.fam
+Toxic-Avenger:Prac_Uni1 ToxicAvenger$ ls
+Maiz		Maiz.tar.gz	Manzanas	Peras		Tomates
+Toxic-Avenger:Prac_Uni1 ToxicAvenger$ ls -lhS
+total 2536
+-rw-r--r--  1 ToxicAvenger  staff   1.2M Feb  3 16:26 Maiz.tar.gz
+drwxr-xr-x  7 ToxicAvenger  staff   224B Feb  3 15:43 Tomates
+drwxr-xr-x  6 ToxicAvenger  staff   192B Feb  2 22:00 Maiz
+drwxr-xr-x  3 ToxicAvenger  staff    96B Feb  2 22:00 Manzanas
+drwxr-xr-x  3 ToxicAvenger  staff    96B Feb  2 22:00 Peras
+Toxic-Avenger:Prac_Uni1 ToxicAvenger$ 
+```
+¿Qué hacen los flags de `tar` que utilizamos?
+
+`c`  Crea un nuevo archivo .tar.
+
+`v`  Muestra "*Verbosely*" el progreso de la compresión.
+
+`z`  Especifica que queremos un `.gzip`.
+
+`f`  Nombre del archivo tar que queremos como resultado.
+
+#### Descomprimir (Untar) archivos .tar.gz
+
+```
+$ rm -r Maiz
+$ tar -xvf Maiz.tar.gz
+Maiz/
+Maiz/.DS_Store
+Maiz/nuevos_final.bed
+Maiz/nuevos_final.bim
+Maiz/nuevos_final.fam
+Maiz/nuevos_final.log
+$ ls
+Maiz		Maiz.tar.gz	Manzanas	Peras		Tomates
+```
+
+**Pregunta:** ¿Qué hacen las flags `-xvf`?
+
+#### Ver el contenido de un archivo tar SIN descomprimirlo
+
+```
+Toxic-Avenger:Prac_Uni1 ToxicAvenger$ tar -tvf Maiz.tar.gz
+drwxr-xr-x  0 ToxicAvenger staff       0 Feb  2 22:00 Maiz/
+-rw-r--r--  0 ToxicAvenger staff    1825 Feb  2 22:00 Maiz/nuevos_final.log
+-rw-r--r--  0 ToxicAvenger staff 1109078 Feb  2 22:00 Maiz/nuevos_final.bim
+-rw-r--r--  0 ToxicAvenger staff 1551105 Feb  2 22:00 Maiz/nuevos_final.bed
+-rw-r--r--  0 ToxicAvenger staff    3604 Feb  2 22:00 Maiz/nuevos_final.fam
+Toxic-Avenger:Prac_Uni1 ToxicAvenger$ 
+
+```
+**Pregunta:** ¿En qué situación puede ser útil ver el contenido de un tar sin descomprimirlo?
+
+[Aquí una guía con más opciones para usar `tar`](http://www.tecmint.com/18-tar-command-examples-in-linux/)
+
+`tar` tiene muchas opciones, lo importante es saber que existen y cómo buscarlas en el manual. Casi siempre:
+
+![](tar_xkcd.png)
+
+### Crear archivos desde la terminal
+
+Es posible crear archivos de texto directamente desde la terminal utilizando programas como `vi` y `nano` o el comando `touch`. 
+
+
+Touch solo crea un archivo sin contenido. Ejemplo :
+
+```
+$ cd Maiz
+$ touch prueba
+$ ls 
+nuevos_final.bed	nuevos_final.fam	prueba
+nuevos_final.bim	nuevos_final.log
+$ rm prueba
+
+
+
+
+
