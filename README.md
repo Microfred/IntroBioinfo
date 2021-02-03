@@ -235,7 +235,8 @@ curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide
 # Revisar qué secuencias se bajaron
 grep ">" Geosm/Geosmithia.fasta
 ```
-#Borralo para siempre **cuidado** para siempre en la terminal es para siempre, aquí no tenemos _papelera de reciclaje_
+# Borralo para siempre **cuidado** para siempre en la terminal es para siempre, aquí no tenemos _papelera de reciclaje_
+
 `rm -rf Geosm`
 
 
@@ -252,7 +253,33 @@ Editores de texto recomendados:
 
 **NOTA IMPORTANTE**: el workingdirectory de un script siempre es el directorio donde está guardado dicho script. Entonces, es importante que si tu script va a manejar directorios (`cd` a algún lugar) lo planees todo con **rutas relativas** empezando en el directorio donde guardarás el script. ¿Dónde es un buen lugar para guardar el script? Lo veremos con detalle en otra unidad, pero en resumen el mejor lugar es en el mismo directorio que los datos, o en uno muy cercano.
 
-El ejemplo que vimos antes, abierto en un editor de texto se ve así:
+`bash` es un comando que a su vez ejecuta comandos de un stdinput o de un archivo, en este caso nuestro script.
+
+Sin embargo este script **aún no está listo para ser un ejecutable**. La terminación `.sh` podría o podría no existir y a `bash` le daría lo mismo para correr el ejemplo anterior. Para hacer de nuestro script un ejecutable es necesario:
+
+### Indicar con qué programa *interpretar* el script: `#!`
+
+**`#!`** Se lee cómo "Shebang".
+
+Se pone en la **primera línea** de un script seguido del nombre (path) del programa (lenguaje, para bash `/bin/bash`) con el que está escrito el script, para indicarle a la computadora que debe interpretar el script en dicho lenguaje.
+
+Memotecnica: *She bangs* de Ricky Martin.
+
+**Ojo**: el shebang **no** es un comentario aunque empiece con `#`, pues en realidad el símbolo `#!` considera a los caracteres `#` y `!` juntos.
+
+
+Por ejemplo, para decir que estamos escribiendo un script de Bash que queremos correr en la Terminal la primera línea tendría que decir:
+
+```
+#!/bin/bash
+```
+Ejemplos en otros lenguajes:
+
+```
+#!/usr/bin/env python
+```
+
+Nuestro script entonces se verá así:
 
 ![](get_seq.png)
 
@@ -280,23 +307,43 @@ drwxr-xr-x  3 ToxicAvenger  staff      96 Feb  3 14:57 Geosm
 -rwxr-xr-x@ 1 ToxicAvenger  staff     349 Feb  3 14:57 get_seq.sh
 -rwxr--r--@ 1 ToxicAvenger  staff     349 Feb  3 14:57 get_seq1.sh
 -rw-r--r--@ 1 ToxicAvenger  staff    8096 Feb  2 21:54 hello_world.png
-``` 
+```
 ls -l nos enlista los archivos (ls) y la bandera (-l) nos da información extendida cada archivo, incluyendo los permisos.
 
 Veamos cómo leerse (imagen cortesía de [aquí](https://www.samba.org/samba/docs/man/Samba-HOWTO-Collection/AccessControls.html)):
+![](permissions.png)
 
-
-[chmod](https://blog.desdelinux.net/permisos-basicos-en-gnulinux-con-chmod/)
-
-
+[chmod](https://blog.desdelinux.net/permisos-basicos-en-gnulinux-con-chmod/)es el comando para cambiar estos permisos, lo cual nos permite volver un archivo ejecutable:
+```
+Toxic-Avenger:Unidad_1 ToxicAvenger$ ls -l
+total 1112
+-rw-r--r--@ 1 ToxicAvenger  staff   13162 Feb  2 22:07 01terminal.png
+-rw-r--r--@ 1 ToxicAvenger  staff   88485 Feb  2 22:16 02terminal.png
+-rw-r--r--@ 1 ToxicAvenger  staff  188590 Feb  2 22:29 03terminal.png
+drwxr-xr-x  2 ToxicAvenger  staff      64 Feb  3 00:21 Geos
+drwxr-xr-x  3 ToxicAvenger  staff      96 Feb  3 14:57 Geosm
+-rw-r--r--@ 1 ToxicAvenger  staff    6421 Feb  3 00:09 README.md
+-rw-r--r--@ 1 ToxicAvenger  staff   11282 Feb  3 00:39 README_Unidad1.md
+-rw-r--r--@ 1 ToxicAvenger  staff  233089 Feb  3 00:06 get_seq.png
+-rwxr-xr-x@ 1 ToxicAvenger  staff     349 Feb  3 14:57 get_seq.sh
+-rwxr--r--@ 1 ToxicAvenger  staff     349 Feb  3 14:57 get_seq1.sh
+-rw-r--r--@ 1 ToxicAvenger  staff    8096 Feb  2 21:54 hello_world.png
+```
+¿Notas que ahora dice -rwxr? La nueva x quiere decir que ahora el archivo es un ejecutable, para correrlo:
 * Ejecutar el comando
 
 `./get_seq1.sh`
 
 ls -l nos enlista los archivos (ls) y la bandera (-l) nos da información extendida cada archivo, incluyendo los permisos.
 
+```
+Toxic-Avenger:Unidad_1 ToxicAvenger$ ./get_seq.sh
+mkdir: Geosm: File exists
+>AM181431.2 Geosmithia sp. CCF3557 18S rRNA gene (partial), 5.8S rRNA gene, 28S rRNA gene (partial), ITS1 and ITS2, strain CCF3557
+>AM947671.1 Geosmithia cnesini 18S rRNA gene (partial), ITS1, 5.8S rRNA gene, ITS2 and 28S rRNA gene (partial), strain MK 1820
+>KF808310.1 Geosmithia sp. 21 NL-2014 strain MK1665 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Toxic-Avenger:Unidad_1 ToxicAvenger$
+```
+Ojo: hay un `./` antes del nombre del script, esto sirve para decirle dónde está dicho script, ya que por default la Terminal busca los comandos en los directorios enlistados en tu PATH (echo $PATH) para saber cuales son.
 
-
-
-
-
+Comentario: si tienes una serie de scripts que usas mucho, vale la pena ponerlos todos juntos en una carpeta y volver a esta carpeta parte de tu PATH. Checa el Capítulo 6 de Haddock & Dunn (2011) para cómo.
