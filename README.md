@@ -55,6 +55,19 @@ Toxic-Avenger:~ ToxicAvenger$ echo Adios mundo cruel
 Adios mundo cruel
 Toxic-Avenger:~ ToxicAvenger$ 
 ```
+Para facilidad visual, de aquí en adelante utilizaremos la opción con el texto a partir de `$` (al menos que sea pertinente ver lo que hay antes). Este formato lo encontrarás en la mayoría, si no es que en todos los foros de ayuda, libros, manuales, etc...
+
+**Ojo** Se pone `$` solo para **distinguir** que lo que sigue es un comando que debes poner en la Terminal, por lo que **NO** debes copiar los comandos a tu terminal incluyendo el `$`.
+ 
+**Pregunta obligada**: ¿Qué pasa si intentas correr el comando  `$ algo`?:
+
+La terminal dirá:
+
+    -bash: algo: command not found
+
+Que quiere decir que no existe el comando `algo`. 
+
+De igual forma si corres `$ date` (incluyendo el `$`) te dirá que no existe el comando `$`, aunque `date` sí sea un comando.
 
 
  
