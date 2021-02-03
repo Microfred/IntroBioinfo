@@ -13,7 +13,7 @@
 
  Una vez abierta deberá verse parecida a esta:
 
- ![](01Terminal.png)
+ ![](02terminal.png)
  
  La primera línea dice la fecha y hora y "ttys000". ttys viene de "Teletype" ([un poco de historia aquí](http://stackoverflow.com/questions/4532413/what-is-tty-on-freebsd)) y significa que el *input* es nuestro teclado, identificado como ttys000. 
 
