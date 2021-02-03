@@ -5,68 +5,73 @@
 
 Vamos a abrir la terminal. Debe ser un ícono parecido a este. En Ubuntu debe estar por default en tu dock. Si no lo encuentras tanto en Mac como en Ubuntu prueba buscar "Terminal" o "Console".
 
-![](terminalicon.png)
+![](01terminal.png)
 
 Tu terminal abierta debe verse parecida a esta:
 
-![TerminalEjemplo](01Terminal.png)
+![](02Terminal.png)
 
-La primera línea dice la fecha y hora y "ttys001". ttys viene de "Teletype" ([un poco de historia aquí](http://stackoverflow.com/questions/4532413/what-is-tty-on-freebsd)) y significa que el *input* es nuestro teclado, identificado como ttys001. 
+La primera línea dice la fecha y hora y "ttys001". ttys viene de "Teletype" ([un poco de historia aquí](http://stackoverflow.com/questions/4532413/what-is-tty-on-freebsd)) y significa que el *input* es nuestro teclado, identificado como ttys001.
 
 En mi caso la segunda línea me dice que tengo correo. Uds probablemente no tengan esto.
 
-La tercera línea es la más importante: dice el **nombre del equipo** (Alicas-MacBook-Pro en este caso), el **directorio** donde estoy (`~` significa "home directory", lo veremos más adelante) y el **nombre del usuario** con quién estoy en la terminal (en mi caso ticatla). 
+La tercera línea es la más importante: dice el **nombre del equipo** (Toxic-Avenger en este caso), el **directorio** donde estoy (`~` significa "home directory", lo veremos más adelante) y el **nombre del usuario** con quién estoy en la terminal (en mi caso ToxicAvenger).
 
 Notarás que la tercera línea termina en `$`
 
-`$` significa que la terminal está corriendo con un interpretador Shell o Bash y por un usuario sin mayores privilegios. Si termina en `#` significa que la estás corriendo como **root** que es un "súper usuario" con permisos para desconfigurarlo todo, ten cuidado. 
+`$` significa que la terminal está corriendo con un interpretador Shell o Bash y por un usuario sin mayores privilegios. Si termina en `#` significa que la estás corriendo como **root** que es un "súper usuario" con permisos para desconfigurarlo todo, ten cuidado.
 
 
 
-#### ¿Qué significa que La Terminal tenga un interpretador? 
+#### ¿Qué significa que La Terminal tenga un interpretador?
 
-Que le damos comandos y nos responde. 
+Que le damos comandos y nos responde.
 
-El la Terminal no existe el *point and click*. El que funcione como una Línea de Comando significa que tienes que darle comandos de qué hacer línea por línea. 
+El la Terminal no existe el *point and click*. El que funcione como una Línea de Comando significa que tienes que darle comandos de qué hacer línea por línea.
 
 Por ejemplo:
 
 `date` nos responde la fecha actual
 
-`echo algo` nos responde el texto "algo". También lo puedes utilizar con más de una palabra. 
+`echo algo` nos responde el texto "algo". También lo puedes utilizar con más de una palabra.
 
 `echo hello world`
 
 Algo así debe verse tu terminal:
 
-![egTerminal2](02Terminal.png)
+![](02terminal.png)
 
 Pero por practicidad y para facilitar el copiar-pegar en vez de la imágen de la Terminal pondré los comandos (código) y sus resultados, así:
 
 ```
-Alicias-MacBook-Pro:~ ticatla$ date
-Sat 23 Jan 2016 14:46:06 CST
-Alicias-MacBook-Pro:~ ticatla$ echo algo
+Last login: Wed Feb  3 00:33:58 on ttys000
+Toxic-Avenger:~ ToxicAvenger$ date
+Wed Feb  3 00:35:04 CST 2021
+Toxic-Avenger:~ ToxicAvenger$ echo algo
 algo
-Alicias-MacBook-Pro:~ ticatla$ echo hello world
-hello world
+Toxic-Avenger:~ ToxicAvenger$ echo Hello World!
+Hello World!
+Toxic-Avenger:~ ToxicAvenger$ echo Adios mundo cruel!
+Adios mundo cruel!
 ```
 
 Que es lo mismo que:
 
 ```
 $ date
-Sat 23 Jan 2016 14:46:06 CST
+Wed Feb  3 00:35:04 CST 2021
 $ echo algo
 algo
 $ echo hello world
 hello world
-``` 
- 
+$echo Adios mundo cruel!
+Adios mundo cruel!
+```
+
 Para facilidad visual, de aquí en adelante utilizaremos la opción con el texto a partir de `$` (al menos que sea pertinente ver lo que hay antes). Este tipo de formato te lo encontrarás en diversos foros de ayuda, libros de textos y manuales.
 
 **Ojo** Se pone `$` solo para **distinguir** que lo que sigue es un comando que debes poner en la Terminal, por lo que **NO** debes copiar los comandos a tu terminal incluyendo el `$`.
- 
+
 
 **Pregunta**: ¿Qué pasa si intentas correr el comando  `algo`?:
 
@@ -74,7 +79,7 @@ La terminal dirá:
 
     -bash: algo: command not found
 
-Que quiere decir que no existe el comando `algo`. 
+Que quiere decir que no existe el comando `algo`.
 
 De igual forma si corres `$ date` (incluyendo el `$`) te dirá que no existe el comando `$`, aunque `date` sí sea un comando.
 
