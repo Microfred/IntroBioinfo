@@ -32,13 +32,11 @@ source activate qiime2
 conda activate qiime2
 
 
-Es necesario crear un archivo manifest donde se especifique sample-id, absolute-filepath y direction por cada uno de las muestras.
-
+#Es necesario crear un archivo manifest donde se especifique sample-id, absolute-filepath y direction por cada uno de las muestras.
 
 #Crear una carpeta llamada dataset, en donde se encontrarán las secuencias crudas
 
 find dataset/ -name "*fastq.gz" -type f | rename 's/_L001//; s/_001//'
-
 
 dir="dataset"
 
@@ -53,7 +51,7 @@ do
 done
 
 #QIIME2 utliza artefactos: * Artifacto = fastq + manifest * Tienen la extensión qza, qiime zip artifact
-Si obtenemos algún error de conda en el entorno qiime2 en AWS.
+#Si obtenemos algún error de conda en el entorno qiime2 en AWS.
 
 qiime cutadapt trim-paired \
     --i-demultiplexed-sequences 01_qc/01_demux.qza \
@@ -82,3 +80,44 @@ Una buena forma de escribir un script es:
 1. Escribir el algoritmo, es decir los pasos que queremos hacer.
 2. Marcar dichos pasos como comentarios (recuerda el uso de `#` para indicar que el texto a su derecha es un comentario, no un comando).
 3. Escribir el código para hacer cada paso debajo del comentario correspondiente.
+
+Ejemplo:
+
+* Algoritmo para guardar secuencias de *Geosmithia*
+ 
+```
+Definir secuencias a bajar desde NCBI
+Crear directorio para guardar datos
+Bajar datos al directorio deseado
+Revisar secuencias
+Fin
+```
+
+* Algoritmo + código para bajar secuencias de *Geosmithia*:
+
+
+```
+## Este script baja 3 secuencias de Geosmithia de NCBI
+# Crear directorio para guardar datos
+mkdir Geos
+
+# Bajar datos de NCBI 
+curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&rettype=fasta&id=AM181431,AM947671,KF808310" > Geosm/Geosmithia.fasta
+
+# Revisar qué secuencias se bajaron
+grep ">" Geosm/Geosmithia.fasta
+```
+#Borralo para siempre **cuidado**
+`rm -rf Chirop`
+
+
+**Observación**: una ventaja de los scripts es que nos permiten tener en un solo documento *varios* comandos que se utilizaron para hacer algo, es decir, conforme se complican los análisis necesitamos más de una línea de comando para realizarlos.
+
+Si haces los análisis de tu trabajo en la terminal sin tenerlos en un script es como platicar la introducción de tu tesis sin haberla escrito nunca. Considera el correr comandos en la terminal como una **prueba** y ya que todo funcione, pon todos los comandos juntos en **uno más scripts documentados** y deja que corra el análisis de principio a fin solito (veremos adelante cómo).
+
+Para poder realizar un script de manera adecuada y sin artefactos, es necesario correr un Editor de texto plano.
+
+Editores de texto recomendados:
+
+* Mac y Linux (y hasta Windows): [Atom](https://atom.io/)
+* Linux: [Gedit](http://sourceforge.net/projects/gedit/)
