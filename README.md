@@ -121,3 +121,9 @@ Editores de texto recomendados:
 
 * Mac y Linux (y hasta Windows): [Atom](https://atom.io/)
 * Linux: [Gedit](http://sourceforge.net/projects/gedit/)
+
+**NOTA IMPORTANTE**: el workingdirectory de un script siempre es el directorio donde está guardado dicho script. Entonces, es importante que si tu script va a manejar directorios (`cd` a algún lugar) lo planees todo con **rutas relativas** empezando en el directorio donde guardarás el script. ¿Dónde es un buen lugar para guardar el script? Lo veremos con detalle en otra unidad, pero en resumen el mejor lugar es en el mismo directorio que los datos, o en uno muy cercano.
+
+El ejemplo que vimos antes, abierto en un editor de texto se ve así:
+
+![](get_seq.png)
