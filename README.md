@@ -55,7 +55,6 @@ Toxic-Avenger:~ ToxicAvenger$ echo Adios mundo cruel
 Adios mundo cruel
 Toxic-Avenger:~ ToxicAvenger$ 
 ```
-
 Que es lo mismo que:
 
 ```
@@ -66,6 +65,7 @@ algo
 $ echo hello world
 hello world
 $ echo Adios mundo cruel
+Adios mundo cruel
 ``` 
 Para facilidad visual, de aquí en adelante utilizaremos la opción con el texto a partir de `$` (al menos que sea pertinente ver lo que hay antes). Este formato lo encontrarás en la mayoría, si no es que en todos los foros de ayuda, libros, manuales, etc...
 
@@ -81,5 +81,43 @@ Que quiere decir que no existe el comando `algo`.
 
 De igual forma si corres `$ date` (incluyendo el `$`) te dirá que no existe el comando `$`, aunque `date` sí sea un comando.
 
+La práctica hace al maestro. A continuación veremos algunos de los comandos básicos, pero para practicar más parte de la tarea será resolver los siguientes cursos prácticos:
+
+* Terminar el curso [Learn the Command Line de CodeAcademy](https://www.codecademy.com/learn/learn-the-command-line).
+
+* Adentrarse en el bosque con este [juego de bash](http://web.mit.edu/mprat/Public/web/Terminus/Web/main.html).
+
+### La terminal de R
+
+`R` es un programa que funciona con la línea de comando y por lo tanto puede correrse desde la terminal de varias formas o en su propia terminal.
+
+```{bash}
+$ R
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> 1+1
+[1] 2
+> quit()
+```
+
+Con `quit()` salgo de la Terminal de R y vuelvo a la Terminal de bash.
+
+R también tiene su propia terminal (lo que sale cuando abres R via su ícono). Sin embargo, nosotros ocuparemos RStudio, que es una interfaz visual que integra la terminal de R con varias funcionalidades útiles e intuitivas.
 
  
