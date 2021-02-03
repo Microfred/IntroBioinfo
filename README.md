@@ -9,8 +9,8 @@
 
 ![](01terminal.png)
 
-* o a este:
-
-![](02terminal.png)
-
  En Ubuntu debe estar por default en tu dock. Si no lo encuentras tanto en Mac como en Ubuntu prueba buscar "Terminal" o "Console"
+
+ Una vez abierta deberá verse parecida a esta:
+
+ ![TerminalEjemplo](02Terminal.png)
