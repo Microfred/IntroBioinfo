@@ -711,6 +711,453 @@ $ ls
 nuevos_final.bed	nuevos_final.fam	prueba
 nuevos_final.bim	nuevos_final.log
 $ rm prueba
+```
+
+## curl
+
+`curl` Sirve para bajar archivos de internet a la computadora.
+
+Sintaxis:
+
+    curl [opciones] [direccionURLdelarchivo]
+   
+
+Ejemplo, podemos bajar el archivo de texto del README que vive en el repositorio de esta clase:
+
+
+```
+$ curl -s "https://raw.githubusercontent.com/AliciaMstt/BioinfInvRepro/master/README.md"
+# Introducción a la bioinformática e investigación reproducible para análisis genéticos
+
+Este es el repositorio de apuntes y código del curso **Introducción a la bioinformática e investigación reproducible para análisis genéticos** [...]
+```
+
+O bajar sencuencias de ADN de GeneBank! ([instrucciones de cómo construir la url aquí](http://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.EFetch))
+
+
+```
+$ curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&rettype=fasta&id=AB080944.1"
+>AB080944.1 Pinus patula chloroplast matK gene for maturase, complete cds
+ATGGATGAGTTCCATAGATGCGGAAAGGAAGATAGCTTTTGGCAACAATGCTTTTTATATCCACTCTTTT
+TTCAGGAAGATCTTTACGCAATTTCTCATGATCATTATTTGGATGTATCAAGTTCCTCCAGACCGATGGA
+ACATTTAAGTTCCAATGATCAATTAAGTTTCCTAACTGTAAAACGTTTGATTGGTCAAATACGTCAACAA
+AATCATTCAATTGTTTTATTCGTGAATTGCGATCCAAATCCATTAGCTGATCGCAAGAAGAGTTTCTATT
+CTGAATCGGTACTAGAAGCACTTACATTGGTCCTGGAAGTTCCGTTCTCTATATGGTCAAAATATTCTGT
+GGAAGGGATGAATGAATCGAAGAGTTTCCGGTCGATCCATTCAATATTTCCCTTCTTAGAGGATAAATTC
+CCGCATTCAAATTCTATATTAGATGCACGAATACCCTATTCTATTCATCCGGAAATTTTGGTTCGAACCT
+TTCGTCGCTGGATCCGAGATGCTCCCTCCTTGCACCCATTACGATCTGTTCTCTATGAATATAGAAATAG
+TCCAGATAATTTACAAAGATCAATTATTGTCGTCCCAAGAGTAAATACGAGATTCTTCCTGTTCCTGTGG
+AATTATTATGTCTGTGAATGCGAATCCATTTTATTTTCCCGTCTTAAACGATCCTCTCATTCACGATCGT
+TGACTCATGGATCTTTCCCTCAGCGAACTCATTTTCATCGAAAGATAAAACATATTATCATATTTTCTCG
+TCGAAATTCACTGAAAAGTATCTGGTCGTTGAAGGATCCTAAAATTCACTATGTTAGATATGGCGAAAGA
+CCTATTATAGCTATAAAGGGTGCTCATCTCCTAGTTAAAAAATGTAGATATTATCTTCTAATTTTTCGGC
+AATTTTATTTCCATCTTTGGTCCGAACCGTATAGGGTCTGTTCTCATCAATTATCCAAGAATTGTTCTTC
+TTCTCCAGGTTATTTTTTGAGGGTTCGGATGAACCCTATTTTGGTCAGAACCAAAATGCTCGATGAGTTA
+TTCATCGCCGATCTTATTACCGATGAAATTGATCCAATAGTTCCGATTGTACCAATAATTGGATTATTGG
+CTACAGAAAAATTCTGTGACATATCAGGGCGGCCAATTAGTAAATTGTCTTGGACCAGTCTAACAGATGA
+TGATATCCTCGATCGATTCGATCAAATTTGGAGAAATCTTTTTCATTACTACAGTGGATCCTTTGATCGA
+GATGGTTTATATCGTATAAAGTATATACTTTCATTATCATGTGCTAAAACTTTAGCCTGTAAACATAAAA
+GTACGATACGTGTAGTTCGGAAGGAATTAGGTCCAGAACTCTTTAAAAAATCGTTTTCAAAAGAACGAGA
+ATTTTATTCTCTGCGCTTTTCATCAAAAGCGGCGGCCCGTTCGCAGAGAGAACGAATTTGGCATTCAGAT
+ATTTCCCAGATAAATCCCCTAGCTAATTCCTGGCAAAAGATACAGGATCTGAAAATAGAAAACTTATTTG
+ACCAATGAAATGCTCTTTGAGTAATTGCCTCGATTCAGAATCATTTTTATTTTTCTATCCGAGAACTAAA
+ATGATTAGGAAATAGATACATTACATGGGGAAAGCCGTGTGCAATGAGAAT
+```
+
+En bioinformática `curl` se utiliza para transferir desde archivos FASTA de secuencias individuales de GeneBank hasta genomas completos. 
+
+Nota:
+`wget` hace algo parecido a `curl`, pero lo salva a un archivo directamente. No existe de base en Mac, pero es posible instalarlo.
+
+Más info:
+
+* Cómo bajar archivos de GeneBank utilizando e-utils (ejemplo anterior): [http://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.EFetch](http://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.EFetch)
+
+* Truco para bajar varios metagenomas (o genomas, secuencias, etc) en una sóla línea de código [https://www.biostars.org/p/94875/](https://www.biostars.org/p/94875/)
+
+* Excelente explicación más profunda de `curl` y `wget` en el Capítulo 6 de Buffalo V (2015) Bioinformatics data skills.
+
+### Comodines o el uso de `*` `?` `[]` `{}`
+
+Volvamos a ver el contenido de Maiz:
+
+```
+$ cd Maiz
+$ ls 
+ejemplonano.txt		nuevos_final.bim	nuevos_final.log
+nuevos_final.bed	nuevos_final.fam
+```
+
+**Ejercicio**: Necesitamos crear más archivos .bed y .fam para los ejemplos de abajo. Queremos qué se llamen `ejemplo_final.bed` y `ejemplo_final.fam`. ¿Cómo hacerlo?
+
+
+El resultado del ejercicio anterior es:
+
+```
+$ ls
+ejemplo_final.bed	nuevos_final.bed	nuevos_final.log
+ejemplo_final.fam	nuevos_final.bim
+ejemplonano.txt		nuevos_final.fam
+```
+
+Fácilmente podemos ver que hay 7 archivos, y que hay dos que terminan en .bed y dos que terminan en .fam. 
+
+
+¿Y si tuviéramos 1,000 archivos con las terminaciones .bed, .fam, bim pero con diferente prefijo? ¿Cómo contarlos y ver cuántos .bed hay?
+
+### `*`
+
+"Comodín" o *wildcard*. Cualquier texto (uno o más caracteres) a partir (derecha o izquierda) de dónde se ponga el `*`.
+
+Ejemplo:
+
+```
+$ ls *.bed
+ejemplo_final.bed	nuevos_final.bed
+$ ls nuevos*
+nuevos_final.bed	nuevos_final.fam
+nuevos_final.bim	nuevos_final.log
+
+``` 
+
+
+### `?`
+Parecido a ´*´ pero para un sólo carácter.
+
+```
+$ ls *.b??
+ejemplo_final.bed	nuevos_final.bed	nuevos_final.bim
+```
+
+### `[]`
+
+Para agrupar términos de búsqueda. Por ejemplo letras [a-z]
+
+```
+$ ls [a-z]*.bed
+ejemplo_final.bed	nuevos_final.bed
+```
+
+Hay más comodines, puedes explorarlos [aquí](http://tldp.org/LDP/GNU-Linux-Tools-Summary/html/x11655.htm).
+
+
+ 
+## Funciones básicas de exploración de archivos con bash
+
+### `more`
+
+Nos permite ver el archivo una línea (flecha abajo) o página a la vez (barra espaciadora). Para salir: `q` 
+
+```
+$ more nuevos_final.fam
+1 maiz_3 0 0 0 -9
+2 maiz_68 0 0 0 -9
+3 maiz_91 0 0 0 -9
+4 maiz_39 0 0 0 -9
+5 maiz_12 0 0 0 -9
+6 maiz_41 0 0 0 -9
+7 maiz_35 0 0 0 -9
+8 maiz_58 0 0 0 -9
+9 maiz_51 0 0 0 -9
+10 maiz_82 0 0 0 -9
+11 maiz_67 0 0 0 -9
+12 maiz_93 0 0 0 -9
+13 maiz_21 0 0 0 -9
+14 maiz_6 0 0 0 -9
+15 maiz_101 0 0 0 -9
+16 maiz_27 0 0 0 -9
+17 maiz_43 0 0 0 -9
+18 maiz_1 0 0 0 -9
+19 maiz_33 0 0 0 -9
+20 maiz_100 0 0 0 -9
+21 maiz_24 0 0 0 -9
+22 maiz_103 0 0 0 -9
+23 maiz_72 0 0 0 -9
+24 maiz_10 0 0 0 -9
+25 maiz_28 0 0 0 -9
+26 maiz_49 0 0 0 -9
+27 maiz_56 0 0 0 -9
+28 maiz_66 0 0 0 -9
+29 maiz_52 0 0 0 -9
+nuevos_final.fam 
+```
+
+(puedes salir con `q` si no quieres escrolear (yes, esa palabra no existe en español) todo el archivo para abajo)
+
+
+### `less`
+Igual que `more` pero se desarrolló más recientemente y puede abrir archivos binarios y otras cosas raras. Juego de palabras con que *less is more*. Pum pum. Se recomienda usar `less` en la vida.
+
+Dentro de `less` (y `more`) podemos escribir `/` y luego texto, mismo que será buscando dentro del archivo. 
+
+**Ejercicio**: En el archivo que estamos viendo hay unas muestras de teocintles cuyos nombres empiezan con "teos". ¿En qué líneas del documento están?
+
+
+### `head`
+
+Muestra las primeras líneas de un archivo (default 10).
+
+```
+$ head nuevos_final.fam
+1 maiz_3 0 0 0 -9
+2 maiz_68 0 0 0 -9
+3 maiz_91 0 0 0 -9
+4 maiz_39 0 0 0 -9
+5 maiz_12 0 0 0 -9
+6 maiz_41 0 0 0 -9
+7 maiz_35 0 0 0 -9
+8 maiz_58 0 0 0 -9
+9 maiz_51 0 0 0 -9
+10 maiz_82 0 0 0 -9
+```
+
+### `tail`
+
+Muestra las últimas líneas de un archivo.
+
+**Pregunta:** ¿Para qué podría ser útil ver las últimas líneas de un archivo?
+
+### `wc`
+Brinda el número de líneas, el número de palabras y el número de caracteres del archivo.
+
+```
+$ wc nuevos_final.fam
+     165     990    3604 nuevos_final.fam
+```
+
+### `cat`
+
+Viene de *Concatenate*. Sirve para unir uno detrás de otro varios archivos, o para imprimir todo el contendio de un archivo a la consola.
+
+
+``` 
+$ cat nuevos_final.fam *log
+1 maiz_3 0 0 0 -9
+2 maiz_68 0 0 0 -9
+3 maiz_91 0 0 0 -9
+4 maiz_39 0 0 0 -9
+5 maiz_12 0 0 0 -9
+6 maiz_41 0 0 0 -9
+7 maiz_35 0 0 0 -9
+8 maiz_58 0 0 0 -9
+9 maiz_51 0 0 0 -9
+10 maiz_82 0 0 0 -9
+11 maiz_67 0 0 0 -9
+12 maiz_93 0 0 0 -9
+13 maiz_21 0 0 0 -9
+14 maiz_6 0 0 0 -9
+15 maiz_101 0 0 0 -9
+16 maiz_27 0 0 0 -9
+17 maiz_43 0 0 0 -9
+18 maiz_1 0 0 0 -9
+19 maiz_33 0 0 0 -9
+20 maiz_100 0 0 0 -9
+21 maiz_24 0 0 0 -9
+22 maiz_103 0 0 0 -9
+23 maiz_72 0 0 0 -9
+24 maiz_10 0 0 0 -9
+25 maiz_28 0 0 0 -9
+26 maiz_49 0 0 0 -9
+27 maiz_56 0 0 0 -9
+28 maiz_66 0 0 0 -9
+29 maiz_52 0 0 0 -9
+30 maiz_47 0 0 0 -9
+31 maiz_80 0 0 0 -9
+32 maiz_65 0 0 0 -9
+33 maiz_94 0 0 0 -9
+34 maiz_36 0 0 0 -9
+35 maiz_26 0 0 0 -9
+36 maiz_105 0 0 0 -9
+37 maiz_30 0 0 0 -9
+38 maiz_16 0 0 0 -9
+39 maiz_42 0 0 0 -9
+40 maiz_4 0 0 0 -9
+41 maiz_31 0 0 0 -9
+42 maiz_17 0 0 0 -9
+43 maiz_46 0 0 0 -9
+44 maiz_5 0 0 0 -9
+45 maiz_32 0 0 0 -9
+46 maiz_19 0 0 0 -9
+47 maiz_50 0 0 0 -9
+48 maiz_8 0 0 0 -9
+49 maiz_34 0 0 0 -9
+50 maiz_23 0 0 0 -9
+51 maiz_54 0 0 0 -9
+52 maiz_14 0 0 0 -9
+53 maiz_37 0 0 0 -9
+54 maiz_25 0 0 0 -9
+55 maiz_55 0 0 0 -9
+56 maiz_40 0 0 0 -9
+57 maiz_29 0 0 0 -9
+58 maiz_60 0 0 0 -9
+59 maiz_44 0 0 0 -9
+60 maiz_74 0 0 0 -9
+61 maiz_89 0 0 0 -9
+62 maiz_64 0 0 0 -9
+63 maiz_83 0 0 0 -9
+64 maiz_75 0 0 0 -9
+65 maiz_92 0 0 0 -9
+66 maiz_69 0 0 0 -9
+67 maiz_84 0 0 0 -9
+68 maiz_76 0 0 0 -9
+69 maiz_97 0 0 0 -9
+70 maiz_70 0 0 0 -9
+71 maiz_85 0 0 0 -9
+72 maiz_77 0 0 0 -9
+73 maiz_71 0 0 0 -9
+74 maiz_86 0 0 0 -9
+75 maiz_78 0 0 0 -9
+76 maiz_102 0 0 0 -9
+77 maiz_73 0 0 0 -9
+78 maiz_88 0 0 0 -9
+79 maiz_79 0 0 0 -9
+80 maiz_106 0 0 0 -9
+81 maiz_119 0 0 0 -9
+82 maiz_148 0 0 0 -9
+83 maiz_108 0 0 0 -9
+84 maiz_120 0 0 0 -9
+85 maiz_151 0 0 0 -9
+86 maiz_134 0 0 0 -9
+87 maiz_123 0 0 0 -9
+88 maiz_153 0 0 0 -9
+89 maiz_135 0 0 0 -9
+90 maiz_124 0 0 0 -9
+91 maiz_184 0 0 0 -9
+92 maiz_140 0 0 0 -9
+93 maiz_125 0 0 0 -9
+94 maiz_141 0 0 0 -9
+95 maiz_131 0 0 0 -9
+96 maiz_189 0 0 0 -9
+97 maiz_57 0 0 0 -9
+98 maiz_126 0 0 0 -9
+99 maiz_113 0 0 0 -9
+100 maiz_138 0 0 0 -9
+101 maiz_63 0 0 0 -9
+102 maiz_127 0 0 0 -9
+103 maiz_114 0 0 0 -9
+104 maiz_139 0 0 0 -9
+105 maiz_99 0 0 0 -9
+106 maiz_129 0 0 0 -9
+107 maiz_116 0 0 0 -9
+108 maiz_142 0 0 0 -9
+109 maiz_110 0 0 0 -9
+110 maiz_132 0 0 0 -9
+111 maiz_118 0 0 0 -9
+112 maiz_144 0 0 0 -9
+113 maiz_133 0 0 0 -9
+114 maiz_121 0 0 0 -9
+115 maiz_111 0 0 0 -9
+116 maiz_137 0 0 0 -9
+117 maiz_109 0 0 0 -9
+118 maiz_146 0 0 0 -9
+119 maiz_164 0 0 0 -9
+120 maiz_157 0 0 0 -9
+121 maiz_171 0 0 0 -9
+122 maiz_149 0 0 0 -9
+123 maiz_165 0 0 0 -9
+124 maiz_159 0 0 0 -9
+125 maiz_172 0 0 0 -9
+126 maiz_150 0 0 0 -9
+127 maiz_166 0 0 0 -9
+128 maiz_160 0 0 0 -9
+129 maiz_173 0 0 0 -9
+130 maiz_152 0 0 0 -9
+131 maiz_167 0 0 0 -9
+132 maiz_161 0 0 0 -9
+133 maiz_174 0 0 0 -9
+134 maiz_154 0 0 0 -9
+135 maiz_169 0 0 0 -9
+136 maiz_162 0 0 0 -9
+137 maiz_176 0 0 0 -9
+138 maiz_156 0 0 0 -9
+139 maiz_170 0 0 0 -9
+140 maiz_163 0 0 0 -9
+141 maiz_177 0 0 0 -9
+142 maiz_178 0 0 0 -9
+143 maiz_192 0 0 0 -9
+144 maiz_185 0 0 0 -9
+145 maiz_201 0 0 0 -9
+146 maiz_179 0 0 0 -9
+147 maiz_193 0 0 0 -9
+148 maiz_186 0 0 0 -9
+149 maiz_202 0 0 0 -9
+150 maiz_180 0 0 0 -9
+151 maiz_195 0 0 0 -9
+152 maiz_187 0 0 0 -9
+153 maiz_181 0 0 0 -9
+155 maiz_197 0 0 0 -9
+156 maiz_188 0 0 0 -9
+157 maiz_182 0 0 0 -9
+158 maiz_198 0 0 0 -9
+159 maiz_190 0 0 0 -9
+160 maiz_200 0 0 0 -9
+161 maiz_183 0 0 0 -9
+162 maiz_191 0 0 0 -9
+163 teos_96 0 0 0 -9
+164 teos_203 0 0 0 -9
+163 teos_911 0 0 0 -9
+164 teos_9107 0 0 0 -9
+
+@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Web-based version check ( --noweb to skip )
+Recent cached web-check found... OK, v1.07 is current
+
++++ PLINK 1.9 is now available! See above website for details +++ 
+
+Writing this text to log file [ nuevos_final.log ]
+Analysis started: Wed May 06 12:19:25 2015
+
+Options in effect:
+	--file nuevos_final
+	--out nuevos_final
+	--recodeA
+
+36931 (of 36931) markers to be included from [ nuevos_final.map ]
+Warning, found 165 individuals with ambiguous sex codes
+Writing list of these individuals to [ nuevos_final.nosex ]
+165 individuals read from [ nuevos_final.ped ] 
+0 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+0 cases, 0 controls and 165 missing
+0 males, 0 females, and 165 of unspecified sex
+Before frequency and genotyping pruning, there are 36931 SNPs
+165 founders and 0 non-founders found
+Total genotyping rate in remaining individuals is 0.990151
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0 )
+After frequency and genotyping pruning, there are 36931 SNPs
+After filtering, 0 cases, 0 controls and 165 missing
+After filtering, 0 males, 0 females, and 165 of unspecified sex
+Writing recoded file to [ nuevos_final.raw ] 
+
+Analysis finished: Wed May 06 12:19:30 2015
+```
+
+Es decir, básicamente es como copiar-pegar un archivo al final de otro. 
+
+
+**Ejercicio** ¿Cómo concatenar tres o más archivos a la vez?
+
+
+**Pregunta:** ¿Y si quisiéramos tener el resultado en un archivo nuevo?
+
+Más detalles y otras formas de redireccionar (que ocupan algunos programas) las puedes encontrar aquí [https://www.tutorialspoint.com/unix/unix-io-redirections.htm](https://www.tutorialspoint.com/unix/unix-io-redirections.htm)
+
+### Regular expressions y búsqueda de patrones (`grep`)
+
+to be continued ...
+
+![](to_be_continued.png)
+
 
 
 
