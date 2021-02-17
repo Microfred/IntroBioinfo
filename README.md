@@ -726,7 +726,7 @@ Ejemplo, podemos bajar el archivo de texto del README que vive en el repositorio
 
 
 ```
-$ curl -s "https://raw.githubusercontent.com/AliciaMstt/BioinfInvRepro/master/README.md"
+$ curl -s "https://github.com/Microfred/IntroBioinfo/edit/main/README.md"
 # Introducción a la bioinformática e investigación reproducible para análisis genéticos
 
 Este es el repositorio de apuntes y código del curso **Introducción a la bioinformática e investigación reproducible para análisis genéticos** [...]
@@ -928,7 +928,6 @@ $ wc nuevos_final.fam
 ### `cat`
 
 Viene de *Concatenate*. Sirve para unir uno detrás de otro varios archivos, o para imprimir todo el contendio de un archivo a la consola.
-
 
 ``` 
 $ cat nuevos_final.fam *log
@@ -1154,12 +1153,679 @@ Más detalles y otras formas de redireccionar (que ocupan algunos programas) las
 
 ### Regular expressions y búsqueda de patrones (`grep`)
 
-to be continued ...
+#### ¿Qué son las expresiones regulares
+Las *expresiones regulares* son una herramienta de búsqueda o búsqueda-remplazo de cadenas de texto acorde a un patrón dado. Existen en la línea de comando, pero también en otros lenguajes, como R y casi cualquier buscador de texto.
 
-![](to_be_continued.png)
+Una expresión regular se puede pensar como una combinación de caracteres literales y metacaracteres. 
+
+* Los **caracteres literales** son de los que están formadas las **palabras en el lenguaje utilizado**. Ejemplo: "c",""o","n","a","b","i","o","2","0","6"
+
+* Los **metacaracteres** son aquellos que tienen una **función particular en la expresión regular**. Ejemplo:  "*","?",".","|","^","$","(",")","[","]"
+
+Las expresiones regulares también se conocen como *regexp*, *regex* o `grep` (global regular expression print), que es el comando que utilizaremos. Pero en realidad `grep` solo es uno de los comandos que las utiliza, es decir hay otros. 
+
+#### ¿Para qué sirven? 
+
+Las principales aplicaciones de las expresiones regulares en bioinformática son:
+
+* Reformatear archivos de datos. **Una se la vive haciendo esto**
+* Decirle a un algoritmo que realice análisis en ciertas muestras y no otras
+* Identificar patrones cortos de ADN en una secuencia, por ejemplo enzimas de restricción o índices. 
+
+Utilidad alternativa:
+
+![regular_expressions_xkcd.png](regular_expressions_xkcd.png)
+
+#### ¿Cómo utilizar expresiones regulares en la línea de comando?
+
+El comando `grep` busca dentro de uno o más archivos las líneas que contengan una expresión regular dada y copia dicha línea al stdout (o hace algo con ese output, si se lo indicamos).
+
+`grep [options] [regularexpression] [filename]`
+
+Las opciones de grep pueden verse en el manual (**Pregunta** ¿Cómo buscar el manual de `grep` en la Terminal?). Veremos los casos más usados adelante. 
+
+La *regularexpression* puede ser tal cual el texto a buscar, pero también podemos hacer una búsqueda mucho más compleja con **operadores**, **cuantificadores**, y **posicionadores**, que de forma similar a las *wildcards* nos permiten realizar búsquedas más flexibles. 
+
+##### Operadores
+
+* **.**  Cualquier símbolo (una vez)
+
+* **[....]**  Para hacer una lista de caracteres, por ejemplo [Bb]iology10[1234] acepta cualquiera de las cadenas "Biology102", "biology101". También se pueden incluir rangos, por ejemplo: [0-9] para todos los números. 
+
+* **[^...]** Para hacer una lista de caracteres negativos, o sea que busque cualquiera excepto los enlistados. 
+
+* **\w** Cualquier "caracter de palabra", ie: letras, números y _.
+* **\W** Cualquier "caracter de NO palabra", ie: símbolos raros que no son letras, números ni _.
+
+* **\\**  Sirve para usar los metacaracteres ($ * + . ? [ ] ^ { } | ( ) \) como caracteres literales. Por ejemplo \\$3 para el string \$3. A esto se le conoce como "escapar" (*escape*).
+
+* **|**  Operador "or" acepta un patrón u otro, por ejemplo p(err|at)o va a aceptar tanto "perro" como "pato".
+
+* **(....)**  Grupos, sirven para recuperar partes del patrón encontrado para ser usadas después
+
+##### Cuantificadores
+
+* __*__ Cero o más ocurrencias del caracter anterior, por ejemplo 10\*, va a aceptar las cadenas "1", "10", "100", "1000", etc
+
+* **+**  Una o más ocurrencias del caracter anterior, por ejemplo 10+, va a aceptar las cadenas 10", "100", "1000", etc, pero no la cadena "1"
+
+* **?**  Hasta una ocurrencia del caracter anterior, por ejemplo patos?, va aceptar las cadenas "pato" y "patos"
+
+* **{n}**  Exactamente n veces el caracter anterior, por ejemplo 10{5}, únicamente va a aceptar la cadena "100000"
+
+* **{n,}**  Mínimo n veces el caracter anterior, por ejemplo 10{5,}, aceptará las cadenas "100000", "1000000", "1000000", etc
+
+* **{n,m}**  Entre n y m veces el caracter anterior, por ejemplo 10{2,5}, aceptará las cadenas "100", "10000"
+
+##### Posicionadores
+* **<** Inicio de la cadena (palabra), por ejemplo <GAAA aceptará "GAAACCCTTT", pero no "CCCTGAAAC"
+
+* **>** Fin de la cadena, por ejemplo TCCA> aceptará "ACTTCCA" pero no "AGTCCATC"
+
+* **^** Igual que los anteriores, pero para el inicio de una línea
+
+* **$** Final de una línea
 
 
 
+### Usos comunes de `grep` 
+
+Empecemos por ver el archivo [tomatesverdes.fasta](../Unidad1/Prac_Uni1/Tomates/tomatesverdes.fasta). (Vive en: `BioinfInvRepro/Unidad1/Prac_Uni1/Tomates/`)
+
+```
+$ less tomatesverdes.fasta 
+>gi|156629013|gb|EF438954.1| Physalis philadelphica isolate P061 maturase K (matK) gene, partial cds; chloroplast
+TAGGTCGATTTTGTTGGAAAATCCAGGTTATAACAATAAATTTAGTTTCCTAATTGTGAAACGTTTAATT
+ACTCGAATGTATCAACAGAATCATTTTATTATTTCTACTAATGATTCTAACAAAAATCCATTTTTGGGGT
+GCAACAAGAGTTTGTATTCTCAAATGATATCAGAGGGATTTGCATTTATTGTGGAAATTCCGTTTTCTCT
+ACGATTAATATCTTCTTTATCTTCTTTCGAAGGCAAAAAGATTTTAAAATCTCATAATTTACGATCAATT
+CATTCAACATTTCCTTTTTTAGAGGACAATTTTTCACATCTAAATTATGTATTAGATATACTAATACCCT
+ACCCCGTTCATCTGGAAATCTTGGTTCAAACTCTTCGCTATTGGGTAAAAGATGCCTCTTCTTTACATTT
+ATTACGATTCTTTCTCCACGAATATTGGAATTTGAATAGTCTTATTACTTCAAAGAAGCCCGGTTACTCC
+TTTTCAAAAAAAAATCAAAGATTCTTCTTCTTCTTATATAATTCTTATGTATATGAATGGGAATCCACTT
+TCGTCTTTCTACGGAACCAATCTTCTCATTTACGATCAACATCTTTTGGAGCCCTTCTTGAACGAATATA
+TTTCTATGGAAAAATAGAACGTCTTGTAGAAGTCTTTGCTAAGGATTTTCAGGTTACCTTATGGTTATTC
+AAGGATCCTTTCATGCATTATGTTAGGTATCAAGGAAAATCAATTCTGGCTTCAAAAGGGACGTTTCTTT
+TGATGAATAATTGGAAATTTTACCTAGTGGATTTTTGGCACTGTCATTTTTTTCGGTGCTTTCACTCATG
+TAGGATCCTTATAAACCAATTGGCCAATCATTTACGTGACTTTCTGGGCTATCTTTCAAGTGTGCGGCTA
+AATCTTTCAATGGTTCGTAGAAAA
+>gi|156629009|gb|EF438952.1| Physalis philadelphica isolate P059 maturase K (matK) gene, partial cds; chloroplast
+TAGGTCGATTTTGTTGGAAAATCCAGGTTATAACAATAAATTTAGTTTCCTAATTGTGAAACGTTTAATT
+ACTCGAATGTATCAACAGAATCATTTTATTATTTCTACTAATGATTCTAACAAAAATCCATTTTTGGGGT
+GCAACAAGAGTTTGTATTCTCAAATGATATCAGAGGGATTTGCATTTATTGTGGAAATTCCGTTTTCTCT
+ACGATTAATATCTTCTTTATCTTCTTTCGAAGGCAAAAAGATTTTAAAATCTCATAATTTACGATCAATT
+CATTCAACATTTCCTTTTTTAGAGGACAATTTTTCACATCTAAATTATGTATTAGATATACTAATACCCT
+ACCCCGTTCATCTGGAAATCTTGGTTCAAACTCTTCGCTATTGGGTAAAAGATGCCTCTTCTTTACATTT
+ATTACGATTCTTTCTCCACGAATATTGGAATTTGAATAGTCTTATTACTTCAAAGAAGCCCGGTTACTCC
+TTTTCAAAAAAAAATCAAAGATTCTTCTTCTTCTTATATAATTCTTATGTATATGAATGGGAATCCACTT
+TCGTCTTTCTACGGAACCAATCTTCTCATTTACGATCAACATCTTTTGGAGCCCTTCTTGAACGAATATA
+TTTCTATGGAAAAATAGAACGTCTTGTAGAAGTCTTTGCTAAGGATTTTCAGGTTACCTTATGGTTATTC
+AAGGATCCTTTCATGCATTATGTTAGGTATCAAGGAAAATCAATTCTGGCTTCAAAAGGGACGTTTCTTT
+TGATGAATAAATGGAAATTTTACCTTGTCAATTTTTGTCAATGTCATTTTTTTCTGTGCTTTCACACAGG
+AAGGATCCATATAAACCAATTATCCAATCATTTACGTGACTTTATGGGCTATCTTTCAAGTGTGCGACTA
+AATCATTCAATGGTACGTAGTCAAATGTTAGAAAA
+:
+```
+
+**Preguntas:** 
+
+1) ¿Qué tipo de archivo es? 
+
+2) ¿Cuántas secuencias contiene?
+
+3) ¿Cuál es el encabezado de las secuencias?
+
+`grep` puede permitirnos extraer información de archivos como este, pero mucho más grandes y difíciles de ver. 
+
+Formas comunes de usar `grep`:
+
+#### `grep` a secas: 
+Busca una expresión regular y otorga las líneas donde se encontró dicha expresión.
+
+Ejemplo:
+
+```
+$ grep ">" tomatesverdes.fasta 
+>gi|156629013|gb|EF438954.1| Physalis philadelphica isolate P061 maturase K (matK) gene, partial cds; chloroplast
+>gi|156629009|gb|EF438952.1| Physalis philadelphica isolate P059 maturase K (matK) gene, partial cds; chloroplast
+>gi|156628921|gb|EF438908.1| Physalis philadelphica isolate P056 maturase K (matK) gene, partial cds; chloroplast
+>gi|156628893|gb|EF438894.1| Physalis philadelphica isolate P050 maturase K (matK) gene, partial cds; chloroplast
+>gi|156629011|gb|EF438953.1| Physalis philadelphica isolate P060 maturase K (matK) gene, partial cds; chloroplast
+```
+**Pregunta**: ¿Por qué está ">" entre comillas? 
+
+**Ejercicio** En el mismo directorio hay otro archivo fasta. Utiliza `grep` y algo más para ver el encabezado de `tomatesverdes.fasta` y `jitomate.fasta`. ¿Qué diferencia hay con el output anterior?
 
 
+#### `grep -c` 
+Para contar en cuántas líneas aparece la expresión de búsqueda 
+
+```
+$ grep -c ">" tomatesverdes.fasta 
+5
+```
+
+#### `grep -l`
+Sólo enlista los archivos donde se encontró la expresión, pero no las líneas.
+
+```
+$ grep -l Physalis *.fasta
+tomatesverdes.fasta
+
+```
+
+#### `grep -i` 
+Hace que la búsqueda sea **insensible** a Mayúsculas/minúsculas. 
+
+```
+$ grep -l physalis *.fasta
+$
+$ grep -li physalis *.fasta
+tomatesverdes.fasta
+
+```
+
+#### `grep -w`
+Sirve para buscar palabras completas, por ejemplo para buscar "he" y no "the". 
+
+```
+$ grep iso tomatesverdes.fasta 
+>gi|156629013|gb|EF438954.1| Physalis philadelphica isolate P061 maturase K (matK) gene, partial cds; chloroplast
+>gi|156629009|gb|EF438952.1| Physalis philadelphica isolate P059 maturase K (matK) gene, partial cds; chloroplast
+>gi|156628921|gb|EF438908.1| Physalis philadelphica isolate P056 maturase K (matK) gene, partial cds; chloroplast
+>gi|156628893|gb|EF438894.1| Physalis philadelphica isolate P050 maturase K (matK) gene, partial cds; chloroplast
+>gi|156629011|gb|EF438953.1| Physalis philadelphica isolate P060 maturase K (matK) gene, partial cds; chloroplast
+$ grep -w iso tomatesverdes.fasta 
+$ 
+```
+
+
+#### `grep -E`
+
+Lee el texto entre comillas como una expresión regular  completa, es decir con operadores, cuantificadores y posicionadores. Es útil utilizarlo junto con `-o` para mostrar solo la parte del texto encontrado que cumple con la expresión regular.
+
+```
+$ grep -oE "\| \w+ \w+" tomatesverdes.fasta 
+| Physalis philadelphica
+| Physalis philadelphica
+| Physalis philadelphica
+| Physalis philadelphica
+| Physalis philadelphica
+
+```
+
+**Ejercicio 1** Obtener el nombre de la especie *Physalis philadelphica* como en el ejemplo anterior, pero sin el "|" del principio.
+
+
+**Ejercicio 2** Obtener el *nombre de las secuencias* de los archivos tomatesverdes.fasta y jitomares.fasta y escribirlos a un archivo llamado secsIDs. No importa cómo escribas la expresión regular, pero el chiste es lograr que toda la operación sea en una sola línea de código.
+
+El texto dentro del archivo secsIDs debe verse así
+
+```
+>gi|156629013|gb|EF438954.1|
+>gi|156629009|gb|EF438952.1|
+>gi|156628921|gb|EF438908.1|
+>gi|156628893|gb|EF438894.1|
+>gi|156629011|gb|EF438953.1|
+``` 
+
+
+**Más información de expresiones regulares en:**
+
+Cap 2. Cap 3. y Cap 5 de Haddock SHD, Dunn CW (2011) Practical computing for biologists. Sinauer Associates Sunderland, MA.
+
+Buena referencia de expresiones regulares [aquí](http://tldp.org/LDP/abs/html/x17129.html) 
+
+Y buenos ejemplos de cómo usar `grep` [aquí](http://www.thegeekstuff.com/2009/03/15-practical-unix-grep-command-examples/)
+
+**Nota:** `awk` y `sed` son otros comandos que también usan expresiones regulares. 
+
+`sed` es particularmente útil para sustituir una expresión regular (como una palabra) por otra. 
+
+Por ejemplo esta línea cambia "Solanum lycopersicum" del archivo "tomates.fasta" por "jitomate"
+
+```
+sed 's/Solanum lycopersicum/jitomate/' tomates.fasta
+```
+
+`awk` es parecido, pero es particularmente útil para archivos con filas y columnas, pues puedes acceder específicamente a ellas.
+
+
+No los cubriremos aquí, pero vale la pena darles un ojo. Recomiendo esta [Introducción a `sed`](http://www.grymoire.com/Unix/Sed.html#uh-1)  y esta [introducción a `awk`](https://www.lifewire.com/write-awk-commands-and-scripts-2200573) así como estos [ejemplos de cómo se utilizan para manipular archivos fasta](http://bioinformatics.cvr.ac.uk/blog/short-command-lines-for-manipulation-fastq-and-fasta-sequence-files/).
+ 
+ 
+## Redirección con bash
+
+**Pregunta** ¿Qué son el Standar output y el Standar input?
+
+###  `>` y `>>` 
+
+Redirige el Standar output (*stdout*) a un archivo en vez de imprimirlo en pantalla.
+
+Estando en `BioinfinvRepro/Unidad1/Prac_Uni1/Maiz`:
+
+```
+$ cat nuevos_final.fam *log > catejemplo.txt
+$ ls
+catejemplo.txt		ejemplonano.txt		nuevos_final.fam
+ejemplo_final.bed	nuevos_final.bed	nuevos_final.log
+ejemplo_final.fam	nuevos_final.bim
+$ head catejemplo.txt 
+1 maiz_3 0 0 0 -9
+2 maiz_68 0 0 0 -9
+3 maiz_91 0 0 0 -9
+4 maiz_39 0 0 0 -9
+5 maiz_12 0 0 0 -9
+6 maiz_41 0 0 0 -9
+7 maiz_35 0 0 0 -9
+8 maiz_58 0 0 0 -9
+9 maiz_51 0 0 0 -9
+10 maiz_82 0 0 0 -9
+$ tail catejemplo.txt 
+Total genotyping rate in remaining individuals is 0.990151
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0 )
+After frequency and genotyping pruning, there are 36931 SNPs
+After filtering, 0 cases, 0 controls and 165 missing
+After filtering, 0 males, 0 females, and 165 of unspecified sex
+Writing recoded file to [ nuevos_final.raw ] 
+
+Analysis finished: Wed May 06 12:19:30 2015
+```
+
+Nota que si el archivo catejemplo.txt ya existe será borrado por el comando anterior. Si no deseas que esto ocurra sino que el nuevo contenido se agregue al final de un archivo ya existente entonces usa  `>>`. Así:
+
+```
+$ cat nuevos_final.fam *log >> catejemplo.txt
+```
+
+**Ejercicio** utiliza `sed` para sustituir "Solanum lycopersicum" del archivo `Tomates/tomates.fasta` por "jitomate" y guarda el output en un nuevo archivo llamado "edited_tomates.fasta" 
+
+
+### `|`
+Toma el stdout de un comando y lo convierte en el input de otro (*Pipes* the strout).
+
+![Mariopipe](https://i.ytimg.com/vi/uMCCxuGIGtw/hqdefault.jpg)
+
+
+Ejemplo:
+
+```
+$ ls
+catejemplo.txt		ejemplonano.txt		nuevos_final.fam
+ejemplo_final.bed	nuevos_final.bed	nuevos_final.log
+ejemplo_final.fam	nuevos_final.bim
+$ ls | wc -l
+       8
+```  
+
+Otro ejemplo (no se muestra el stdout pues es demasiado largo)
+
+```
+cat *.fam | more 
+```
+
+
+Más detalles y otras formas de redireccionar (que ocupan algunos programas) las puedes encontrar aquí [https://www.tutorialspoint.com/unix/unix-io-redirections.htm](https://www.tutorialspoint.com/unix/unix-io-redirections.htm)
+
+
+**Ejercico** Primero explora qué hace el comando `history`. ¿Cómo lo combinarías con `grep` para buscar cuáles líneas hemos corrido con `less`?
+
+
+## Loops con bash
+
+Los *for loops* permiten **repetir** una serie de comandos con diferentes *variables de una lista*.
+
+
+Sintaxis: 
+
+```
+for i in list; do
+ command1
+ command2
+ ..
+done
+```
+
+"i" puede leerse como "el elemento i de la lista". Y  la lista no es más que el conjunto total de las variables que queremos. 
+
+Ejemplo:
+
+```
+$ for i in adenina citosina guanina timina; do
+> echo "La $i es una base nitrogenada"
+> done
+
+La adenina es una base nitrogenada
+La citosina es una base nitrogenada
+La guanina es una base nitrogenada
+La timina es una base nitrogenada
+```
+
+
+**Observaciones importantes:**
+
+* Los elementos de la lista NO se separan por comas (en otros lenguajes sí).
+* Para referirnos al "elemento i" dentro de los comandos debemos usar como prefijo el símbolo `$`. 
+* No tienes que escribir el `>` antes de `echo` y de `done`, los pongo solo para mostrar que eso aparece en la terminal hasta que terminemos de meter los comandos que formarán parte del loop. De hecho `done` sirve para decir "ok, aquí termina el loop". En los ejemplos de abajo ya no lo pondré.
+
+Otro ejemplo:
+
+```
+for perro in labrador "pastor mesoamericano" xolo; do
+echo Mi mejor amigo es un $perro; done
+
+Mi mejor amigo es un labrador
+Mi mejor amigo es un pastor mesoamericano
+Mi mejor amigo es un xolo
+```
+
+**Preguntas** 
+
+1) ¿Cuándo debo usar comillas en la lista de elementos?
+
+2) ¿Qué hace `;`?
+
+Y un ejemplo más:
+
+```
+for i in {1..100};do
+mkdir directorio$i; done
+```
+
+Lo cual hará 100 directorios, llamados directorio1, directorio2 y así.
+
+**Pregunta** ¿De qué manera sencilla borrarías esos 100 directorios que acabas de crear?
+
+### Definir variables
+
+Los for loops utilizan *variables* definidas por el usuario, es decir "i" y "perro" en los ejemplos anteriores. Sin embargo, también pueden crearse variables **afuera** de un for loop, y usarlas para lo que queramos. 
+
+Ejemplo:
+
+```
+$ varx=2
+$ $varx
+-bash: 2: command not found
+
+```
+
+**Observaciones importantes**
+* NO debe haber espacios entre el símbolo = y la variable o su valor.
+* El nombre de la variable puede ser cualquier cosa que queramos **MENOS** el nombre de un comando que exista. 
+
+Las variables se pueden usar para acortar algo que escribamos muy seguido (como un path o un nombre de archivo largos) y conjuntar con otras variables dentro de un loop. 
+
+Ejemplo:
+
+```
+$ maullido=miau
+$ for i in gato gatito gatón; do
+> echo El $i hace $maullido
+> done
+El gato hace miau
+El gatito hace miau
+El gatón hace miau
+```
+
+**Ejercicio** Navega al directorio `BioinfInvRepro/Unidad1/Prac_Uni1`. Desde ahí (i.e. **sin** utilizar `cd`) utiliza un for loop para crear por lo menos cuatro directorios dentro del directorio `Tomates/VerdesFritos`. Tu for loop debe incluir una variable definida externamente. 
+
+
+### Crear arrays y utilizarlos como una lista en un loop
+
+Quizá quieras correr algo sobre muchas variables, como los nombres de 30 muestras o poblaciones distintas. Esto puede resolverse utilizando comodines, si los nombres lo permiten, o alimentando al loop con un un **arreglo**.
+
+**Con comodines**
+
+Por ejemplo si el loop lo quieres correr sobre puros archivos fasta que estén en un directorio (eg `Prac_Uni1/Tomates`):
+
+```
+$ ls
+VerdesFritos		jitomate.fasta		tomatesverdes.fasta
+$ for i in *.fasta; do
+> echo "El archivo $i es un fasta ejemplo"
+> echo "Utilizamos al archivo $i en este loop"
+> done
+El archivo jitomate.fasta es un fasta ejemplo
+Utilizamos al archivo jitomate.fasta en este loop
+El archivo tomatesverdes.fasta es un fasta ejemplo
+Utilizamos al archivo tomatesverdes.fasta en este loop
+```
+
+**Con arreglos**
+
+Los arreglos (una "lista"). Se generan parecido a las variables, pero con un par de () para indicar que se trata de un arreglo.
+
+```
+$ a=( gato gatito gatón )
+```
+
+Luego para indicar dentro de un loop que `a` es un array, debemos utilizar la notación `${a[@]}`:
+
+```
+$ for i in ${a[@]}; do echo El $i hace miau; done
+El gato hace miau
+El gatito hace miau
+El gatón hace miau
+```
+
+Un arreglo también puede ser el resultado de un comando, por ejemplo de `grep`, siguiendo la siguiente sintaxis `
+some_array=($(command))`. Ejemplo utilizando archivos en `Prac_Uni1/Maiz`:
+
+
+```
+$ a=($(grep -oE "\w+_[0-9]*" nuevos_final.fam))
+$ for i in ${a[@]}; do echo Hacer algo con la muestra $i; done
+Hacer algo con la muestra maiz_3
+Hacer algo con la muestra maiz_68
+Hacer algo con la muestra maiz_91
+Hacer algo con la muestra maiz_39
+Hacer algo con la muestra maiz_12
+Hacer algo con la muestra maiz_41
+Hacer algo con la muestra maiz_35
+Hacer algo con la muestra maiz_58
+Hacer algo con la muestra maiz_51
+Hacer algo con la muestra maiz_82
+Hacer algo con la muestra maiz_67
+Hacer algo con la muestra maiz_93
+Hacer algo con la muestra maiz_21
+Hacer algo con la muestra maiz_6
+Hacer algo con la muestra maiz_101
+Hacer algo con la muestra maiz_27
+Hacer algo con la muestra maiz_43
+Hacer algo con la muestra maiz_1
+Hacer algo con la muestra maiz_33
+Hacer algo con la muestra maiz_100
+Hacer algo con la muestra maiz_24
+Hacer algo con la muestra maiz_103
+Hacer algo con la muestra maiz_72
+Hacer algo con la muestra maiz_10
+Hacer algo con la muestra maiz_28
+Hacer algo con la muestra maiz_49
+Hacer algo con la muestra maiz_56
+Hacer algo con la muestra maiz_66
+Hacer algo con la muestra maiz_52
+Hacer algo con la muestra maiz_47
+Hacer algo con la muestra maiz_80
+Hacer algo con la muestra maiz_65
+Hacer algo con la muestra maiz_94
+Hacer algo con la muestra maiz_36
+Hacer algo con la muestra maiz_26
+Hacer algo con la muestra maiz_105
+Hacer algo con la muestra maiz_30
+Hacer algo con la muestra maiz_16
+Hacer algo con la muestra maiz_42
+Hacer algo con la muestra maiz_4
+Hacer algo con la muestra maiz_31
+Hacer algo con la muestra maiz_17
+Hacer algo con la muestra maiz_46
+Hacer algo con la muestra maiz_5
+Hacer algo con la muestra maiz_32
+Hacer algo con la muestra maiz_19
+Hacer algo con la muestra maiz_50
+Hacer algo con la muestra maiz_8
+Hacer algo con la muestra maiz_34
+Hacer algo con la muestra maiz_23
+Hacer algo con la muestra maiz_54
+Hacer algo con la muestra maiz_14
+Hacer algo con la muestra maiz_37
+Hacer algo con la muestra maiz_25
+Hacer algo con la muestra maiz_55
+Hacer algo con la muestra maiz_40
+Hacer algo con la muestra maiz_29
+Hacer algo con la muestra maiz_60
+Hacer algo con la muestra maiz_44
+Hacer algo con la muestra maiz_74
+Hacer algo con la muestra maiz_89
+Hacer algo con la muestra maiz_64
+Hacer algo con la muestra maiz_83
+Hacer algo con la muestra maiz_75
+Hacer algo con la muestra maiz_92
+Hacer algo con la muestra maiz_69
+Hacer algo con la muestra maiz_84
+Hacer algo con la muestra maiz_76
+Hacer algo con la muestra maiz_97
+Hacer algo con la muestra maiz_70
+Hacer algo con la muestra maiz_85
+Hacer algo con la muestra maiz_77
+Hacer algo con la muestra maiz_71
+Hacer algo con la muestra maiz_86
+Hacer algo con la muestra maiz_78
+Hacer algo con la muestra maiz_102
+Hacer algo con la muestra maiz_73
+Hacer algo con la muestra maiz_88
+Hacer algo con la muestra maiz_79
+Hacer algo con la muestra maiz_106
+Hacer algo con la muestra maiz_119
+Hacer algo con la muestra maiz_148
+Hacer algo con la muestra maiz_108
+Hacer algo con la muestra maiz_120
+Hacer algo con la muestra maiz_151
+Hacer algo con la muestra maiz_134
+Hacer algo con la muestra maiz_123
+Hacer algo con la muestra maiz_153
+Hacer algo con la muestra maiz_135
+Hacer algo con la muestra maiz_124
+Hacer algo con la muestra maiz_184
+Hacer algo con la muestra maiz_140
+Hacer algo con la muestra maiz_125
+Hacer algo con la muestra maiz_141
+Hacer algo con la muestra maiz_131
+Hacer algo con la muestra maiz_189
+Hacer algo con la muestra maiz_57
+Hacer algo con la muestra maiz_126
+Hacer algo con la muestra maiz_113
+Hacer algo con la muestra maiz_138
+Hacer algo con la muestra maiz_63
+Hacer algo con la muestra maiz_127
+Hacer algo con la muestra maiz_114
+Hacer algo con la muestra maiz_139
+Hacer algo con la muestra maiz_99
+Hacer algo con la muestra maiz_129
+Hacer algo con la muestra maiz_116
+Hacer algo con la muestra maiz_142
+Hacer algo con la muestra maiz_110
+Hacer algo con la muestra maiz_132
+Hacer algo con la muestra maiz_118
+Hacer algo con la muestra maiz_144
+Hacer algo con la muestra maiz_133
+Hacer algo con la muestra maiz_121
+Hacer algo con la muestra maiz_111
+Hacer algo con la muestra maiz_137
+Hacer algo con la muestra maiz_109
+Hacer algo con la muestra maiz_146
+Hacer algo con la muestra maiz_164
+Hacer algo con la muestra maiz_157
+Hacer algo con la muestra maiz_171
+Hacer algo con la muestra maiz_149
+Hacer algo con la muestra maiz_165
+Hacer algo con la muestra maiz_159
+Hacer algo con la muestra maiz_172
+Hacer algo con la muestra maiz_150
+Hacer algo con la muestra maiz_166
+Hacer algo con la muestra maiz_160
+Hacer algo con la muestra maiz_173
+Hacer algo con la muestra maiz_152
+Hacer algo con la muestra maiz_167
+Hacer algo con la muestra maiz_161
+Hacer algo con la muestra maiz_174
+Hacer algo con la muestra maiz_154
+Hacer algo con la muestra maiz_169
+Hacer algo con la muestra maiz_162
+Hacer algo con la muestra maiz_176
+Hacer algo con la muestra maiz_156
+Hacer algo con la muestra maiz_170
+Hacer algo con la muestra maiz_163
+Hacer algo con la muestra maiz_177
+Hacer algo con la muestra maiz_178
+Hacer algo con la muestra maiz_192
+Hacer algo con la muestra maiz_185
+Hacer algo con la muestra maiz_201
+Hacer algo con la muestra maiz_179
+Hacer algo con la muestra maiz_193
+Hacer algo con la muestra maiz_186
+Hacer algo con la muestra maiz_202
+Hacer algo con la muestra maiz_180
+Hacer algo con la muestra maiz_195
+Hacer algo con la muestra maiz_187
+Hacer algo con la muestra maiz_181
+Hacer algo con la muestra maiz_197
+Hacer algo con la muestra maiz_188
+Hacer algo con la muestra maiz_182
+Hacer algo con la muestra maiz_198
+Hacer algo con la muestra maiz_190
+Hacer algo con la muestra maiz_200
+Hacer algo con la muestra maiz_183
+Hacer algo con la muestra maiz_191
+Hacer algo con la muestra teos_96
+Hacer algo con la muestra teos_203
+Hacer algo con la muestra teos_911
+Hacer algo con la muestra teos_9107
+```
+
+**Pregunta**: Si `some_array=($(command))` sirve para crear un arreglo a partir del resultaod de un comando ¿Cómo puedes crear una **variable** a partir de un comando?
+
+**Leyendo desde un archivo**
+
+Los arrays tienen sus problemas cuando son muy grandes y  es fácil cometer errores porque nunca "los vemos", por lo tanto mucha gente prefiere mejor leer los elemntos directo de un archivo. Ejemplo:
+
+```
+$ grep -oE "\w+_[0-9]*" nuevos_final.fam > muestras.txt
+$ for i in $(cat muestras.txt); do echo Hacer algo con la muestra $i; done
+Hacer algo con la muestra maiz_3
+Hacer algo con la muestra maiz_68
+Hacer algo con la muestra maiz_91
+Hacer algo con la muestra maiz_39
+Hacer algo con la muestra maiz_12
+Hacer algo con la muestra maiz_41
+Hacer algo con la muestra maiz_35
+Hacer algo con la muestra maiz_58
+Hacer algo con la muestra maiz_51
+Hacer algo con la muestra maiz_82
+Hacer algo con la muestra maiz_67
+Hacer algo con la muestra maiz_93
+Hacer algo con la muestra maiz_21
+Hacer algo con la muestra maiz_6
+Hacer algo con la muestra maiz_101
+Hacer algo con la muestra maiz_27
+Hacer algo con la muestra maiz_43
+Hacer algo con la muestra maiz_1
+... [o sea lo mismo que hace rato]
+
+```
+
+
+### Más información de for loops
+
+Aquí presenté la sintaxis más usada, pero hay otros métodos para escribir loops que hacen lo mismo. Y también pueden hacerse más complejos agregando "ifs". 
+Puedes consultar esta y más info de for loops en [esta guía con ejemplos y varios formatos](http://www.thegeekstuff.com/2011/07/bash-for-loop-examples/). 
+
+
+##### Ejercicios
+
+1. Escribe **una línea de código** que cree un archivo con los nombres de las muestras de maiz enlistadas en `/Unidad1/Prac_Uni1/Maiz/nuevos_final.fam`. 
+
+2. Escribe **un script** que cree 4 directorios llamados PobA, PobB, PobC, PobD y dentro de cada uno de ellos un archivo de texto que diga "Este es un individuo de la población x" donde x debe corresponder al nombre del directorio. 
+
+3. Escribe un script que baje 5 secuencias (algún loci corto, no un genoma) de una especie que te interese y señala cuántas veces existe la secuencia "TGCA" en cada una de ellas. ¿Sabes qué hace esta secuencia?
 
