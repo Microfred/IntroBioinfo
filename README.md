@@ -720,7 +720,7 @@ $ rm prueba
 Sintaxis:
 
     curl [opciones] [direccionURLdelarchivo]
-   
+
 
 Ejemplo, podemos bajar el archivo de texto del README que vive en el repositorio de esta clase:
 
@@ -764,7 +764,7 @@ ACCAATGAAATGCTCTTTGAGTAATTGCCTCGATTCAGAATCATTTTTATTTTTCTATCCGAGAACTAAA
 ATGATTAGGAAATAGATACATTACATGGGGAAAGCCGTGTGCAATGAGAAT
 ```
 
-En bioinformática `curl` se utiliza para transferir desde archivos FASTA de secuencias individuales de GeneBank hasta genomas completos. 
+En bioinformática `curl` se utiliza para transferir desde archivos FASTA de secuencias individuales de GeneBank hasta genomas completos.
 
 Nota:
 `wget` hace algo parecido a `curl`, pero lo salva a un archivo directamente. No existe de base en Mac, pero es posible instalarlo.
@@ -773,7 +773,7 @@ Más info:
 
 * Cómo bajar archivos de GeneBank utilizando e-utils (ejemplo anterior): [http://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.EFetch](http://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.EFetch)
 
-* Truco para bajar varios metagenomas (o genomas, secuencias, etc) en una sóla línea de código [https://www.biostars.org/p/94875/](https://www.biostars.org/p/94875/)
+* Truco para bajar varios metagenomas (o genomas, secuencias, etc) en una sola línea de código [https://www.biostars.org/p/94875/](https://www.biostars.org/p/94875/)
 
 * Excelente explicación más profunda de `curl` y `wget` en el Capítulo 6 de Buffalo V (2015) Bioinformatics data skills.
 
@@ -783,7 +783,7 @@ Volvamos a ver el contenido de Maiz:
 
 ```
 $ cd Maiz
-$ ls 
+$ ls
 ejemplonano.txt		nuevos_final.bim	nuevos_final.log
 nuevos_final.bed	nuevos_final.fam
 ```
@@ -800,10 +800,10 @@ ejemplo_final.fam	nuevos_final.bim
 ejemplonano.txt		nuevos_final.fam
 ```
 
-Fácilmente podemos ver que hay 7 archivos, y que hay dos que terminan en .bed y dos que terminan en .fam. 
+Fácilmente podemos ver que hay 6 archivos, y que hay dos que terminan en .bed y dos que terminan en .fam.
 
 
-¿Y si tuviéramos 1,000 archivos con las terminaciones .bed, .fam, bim pero con diferente prefijo? ¿Cómo contarlos y ver cuántos .bed hay?
+¿Y si tuviéramos 1,000 archivos con las terminaciones .bed, .fam, .bim pero con diferente prefijo? ¿Cómo contarlos y ver cuántos .bed hay?
 
 ### `*`
 
@@ -818,7 +818,7 @@ $ ls nuevos*
 nuevos_final.bed	nuevos_final.fam
 nuevos_final.bim	nuevos_final.log
 
-``` 
+```
 
 
 ### `?`
@@ -841,12 +841,12 @@ ejemplo_final.bed	nuevos_final.bed
 Hay más comodines, puedes explorarlos [aquí](http://tldp.org/LDP/GNU-Linux-Tools-Summary/html/x11655.htm).
 
 
- 
+
 ## Funciones básicas de exploración de archivos con bash
 
 ### `more`
 
-Nos permite ver el archivo una línea (flecha abajo) o página a la vez (barra espaciadora). Para salir: `q` 
+Nos permite ver el archivo una línea (flecha abajo) o página a la vez (barra espaciadora). Para salir: `q`
 
 ```
 $ more nuevos_final.fam
@@ -879,16 +879,16 @@ $ more nuevos_final.fam
 27 maiz_56 0 0 0 -9
 28 maiz_66 0 0 0 -9
 29 maiz_52 0 0 0 -9
-nuevos_final.fam 
+nuevos_final.fam
 ```
 
 (puedes salir con `q` si no quieres escrolear (yes, esa palabra no existe en español) todo el archivo para abajo)
-
+[Scroll](https://es.wikipedia.org/wiki/Scroll)
 
 ### `less`
 Igual que `more` pero se desarrolló más recientemente y puede abrir archivos binarios y otras cosas raras. Juego de palabras con que *less is more*. Pum pum. Se recomienda usar `less` en la vida.
 
-Dentro de `less` (y `more`) podemos escribir `/` y luego texto, mismo que será buscando dentro del archivo. 
+Dentro de `less` (y `more`) podemos escribir `/` y luego texto, mismo que será buscando dentro del archivo.
 
 **Ejercicio**: En el archivo que estamos viendo hay unas muestras de teocintles cuyos nombres empiezan con "teos". ¿En qué líneas del documento están?
 
@@ -929,7 +929,7 @@ $ wc nuevos_final.fam
 
 Viene de *Concatenate*. Sirve para unir uno detrás de otro varios archivos, o para imprimir todo el contendio de un archivo a la consola.
 
-``` 
+```
 $ cat nuevos_final.fam *log
 1 maiz_3 0 0 0 -9
 2 maiz_68 0 0 0 -9
@@ -1109,7 +1109,7 @@ $ cat nuevos_final.fam *log
 Web-based version check ( --noweb to skip )
 Recent cached web-check found... OK, v1.07 is current
 
-+++ PLINK 1.9 is now available! See above website for details +++ 
++++ PLINK 1.9 is now available! See above website for details +++
 
 Writing this text to log file [ nuevos_final.log ]
 Analysis started: Wed May 06 12:19:25 2015
@@ -1122,7 +1122,7 @@ Options in effect:
 36931 (of 36931) markers to be included from [ nuevos_final.map ]
 Warning, found 165 individuals with ambiguous sex codes
 Writing list of these individuals to [ nuevos_final.nosex ]
-165 individuals read from [ nuevos_final.ped ] 
+165 individuals read from [ nuevos_final.ped ]
 0 individuals with nonmissing phenotypes
 Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
 Missing phenotype value is also -9
@@ -1136,12 +1136,24 @@ Total genotyping rate in remaining individuals is 0.990151
 After frequency and genotyping pruning, there are 36931 SNPs
 After filtering, 0 cases, 0 controls and 165 missing
 After filtering, 0 males, 0 females, and 165 of unspecified sex
-Writing recoded file to [ nuevos_final.raw ] 
+Writing recoded file to [ nuevos_final.raw ]
 
 Analysis finished: Wed May 06 12:19:30 2015
 ```
 
-Es decir, básicamente es como copiar-pegar un archivo al final de otro. 
+Es decir, básicamente es como copiar-pegar un archivo al final de otro.
+
+También podemos crear un archivo nuevo:
+
+`cat > file_new.txt`
+¿cómo vemos el contenido de ese archivo? ...
+
+... añadir información a un archivo:
+
+`cat >> file_new.txt`
+Hello world!
+
+### etc...
 
 
 **Ejercicio** ¿Cómo concatenar tres o más archivos a la vez?
@@ -1153,28 +1165,27 @@ Más detalles y otras formas de redireccionar (que ocupan algunos programas) las
 
 ### Regular expressions y búsqueda de patrones (`grep`)
 
+Las expresiones regulares son las grandes olvidadas, no se utilizan mucho, pero cuando te toca utilizarlas lamentas no conocerlas más.
+
 #### ¿Qué son las expresiones regulares
 Las *expresiones regulares* son una herramienta de búsqueda o búsqueda-remplazo de cadenas de texto acorde a un patrón dado. Existen en la línea de comando, pero también en otros lenguajes, como R y casi cualquier buscador de texto.
 
-Una expresión regular se puede pensar como una combinación de caracteres literales y metacaracteres. 
+Una expresión regular se puede pensar como una combinación de caracteres literales y metacaracteres.
 
 * Los **caracteres literales** son de los que están formadas las **palabras en el lenguaje utilizado**. Ejemplo: "c",""o","n","a","b","i","o","2","0","6"
 
 * Los **metacaracteres** son aquellos que tienen una **función particular en la expresión regular**. Ejemplo:  "*","?",".","|","^","$","(",")","[","]"
 
-Las expresiones regulares también se conocen como *regexp*, *regex* o `grep` (global regular expression print), que es el comando que utilizaremos. Pero en realidad `grep` solo es uno de los comandos que las utiliza, es decir hay otros. 
+Las expresiones regulares también se conocen como *regexp*, *regex* o `grep` (global regular expression print), que es el comando que utilizaremos. Pero en realidad `grep` solo es uno de los comandos que las utiliza, es decir hay otros.
 
-#### ¿Para qué sirven? 
+#### ¿Para qué sirven?
 
 Las principales aplicaciones de las expresiones regulares en bioinformática son:
 
 * Reformatear archivos de datos. **Una se la vive haciendo esto**
 * Decirle a un algoritmo que realice análisis en ciertas muestras y no otras
-* Identificar patrones cortos de ADN en una secuencia, por ejemplo enzimas de restricción o índices. 
+* Identificar patrones cortos de ADN en una secuencia, por ejemplo enzimas de restricción o índices.
 
-Utilidad alternativa:
-
-![regular_expressions_xkcd.png](regular_expressions_xkcd.png)
 
 #### ¿Cómo utilizar expresiones regulares en la línea de comando?
 
@@ -1182,22 +1193,22 @@ El comando `grep` busca dentro de uno o más archivos las líneas que contengan 
 
 `grep [options] [regularexpression] [filename]`
 
-Las opciones de grep pueden verse en el manual (**Pregunta** ¿Cómo buscar el manual de `grep` en la Terminal?). Veremos los casos más usados adelante. 
+Las opciones de grep pueden verse en el manual (**Pregunta** ¿Cómo buscar el manual de `grep` en la Terminal?). Veremos los casos más usados adelante.
 
-La *regularexpression* puede ser tal cual el texto a buscar, pero también podemos hacer una búsqueda mucho más compleja con **operadores**, **cuantificadores**, y **posicionadores**, que de forma similar a las *wildcards* nos permiten realizar búsquedas más flexibles. 
+La *regularexpression* puede ser tal cual el texto a buscar, pero también podemos hacer una búsqueda mucho más compleja con **operadores**, **cuantificadores**, y **posicionadores**, que de forma similar a las *wildcards* nos permiten realizar búsquedas más flexibles.
 
 ##### Operadores
 
 * **.**  Cualquier símbolo (una vez)
 
-* **[....]**  Para hacer una lista de caracteres, por ejemplo [Bb]iology10[1234] acepta cualquiera de las cadenas "Biology102", "biology101". También se pueden incluir rangos, por ejemplo: [0-9] para todos los números. 
+* **[....]**  Para hacer una lista de caracteres, por ejemplo [Bb]iology10[1234] acepta cualquiera de las cadenas "Biology102", "biology101". También se pueden incluir rangos, por ejemplo: [0-9] para todos los números.
 
-* **[^...]** Para hacer una lista de caracteres negativos, o sea que busque cualquiera excepto los enlistados. 
+* **[^...]** Para hacer una lista de caracteres negativos, o sea que busque cualquiera excepto los enlistados.
 
 * **\w** Cualquier "caracter de palabra", ie: letras, números y _.
 * **\W** Cualquier "caracter de NO palabra", ie: símbolos raros que no son letras, números ni _.
 
-* **\\**  Sirve para usar los metacaracteres ($ * + . ? [ ] ^ { } | ( ) \) como caracteres literales. Por ejemplo \\$3 para el string \$3. A esto se le conoce como "escapar" (*escape*).
+* **\\**  Sirve para usar los metacaracteres ($ * + . ? [ ] ^ { } | ( ) \) como caracteres literales. Por ejemplo \\$3 para el string \$3. A esto se le conoce como "escapar" (*escape*). Experto y además un [juego](https://www.therobinlord.com/projects/slash-escape) para aprender mucho más de escape y *RegEx*
 
 * **|**  Operador "or" acepta un patrón u otro, por ejemplo p(err|at)o va a aceptar tanto "perro" como "pato".
 
@@ -1228,12 +1239,12 @@ La *regularexpression* puede ser tal cual el texto a buscar, pero también podem
 
 
 
-### Usos comunes de `grep` 
+### Usos comunes de `grep`
 
-Empecemos por ver el archivo [tomatesverdes.fasta](../Unidad1/Prac_Uni1/Tomates/tomatesverdes.fasta). (Vive en: `BioinfInvRepro/Unidad1/Prac_Uni1/Tomates/`)
+Empecemos por ver el archivo `tomatesverdes.fasta` (Vive en: `/Unidad_1/Prac_Uni1/Tomates`)
 
 ```
-$ less tomatesverdes.fasta 
+$ less tomatesverdes.fasta
 >gi|156629013|gb|EF438954.1| Physalis philadelphica isolate P061 maturase K (matK) gene, partial cds; chloroplast
 TAGGTCGATTTTGTTGGAAAATCCAGGTTATAACAATAAATTTAGTTTCCTAATTGTGAAACGTTTAATT
 ACTCGAATGTATCAACAGAATCATTTTATTATTTCTACTAATGATTCTAACAAAAATCCATTTTTGGGGT
@@ -1267,41 +1278,41 @@ AATCATTCAATGGTACGTAGTCAAATGTTAGAAAA
 :
 ```
 
-**Preguntas:** 
+**Preguntas:**
 
-1) ¿Qué tipo de archivo es? 
+1) ¿Qué tipo de archivo es?
 
 2) ¿Cuántas secuencias contiene?
 
 3) ¿Cuál es el encabezado de las secuencias?
 
-`grep` puede permitirnos extraer información de archivos como este, pero mucho más grandes y difíciles de ver. 
+`grep` puede permitirnos extraer información de archivos como este, pero mucho más grandes y difíciles de ver.
 
 Formas comunes de usar `grep`:
 
-#### `grep` a secas: 
+#### `grep` a secas:
 Busca una expresión regular y otorga las líneas donde se encontró dicha expresión.
 
 Ejemplo:
 
 ```
-$ grep ">" tomatesverdes.fasta 
+$ grep ">" tomatesverdes.fasta
 >gi|156629013|gb|EF438954.1| Physalis philadelphica isolate P061 maturase K (matK) gene, partial cds; chloroplast
 >gi|156629009|gb|EF438952.1| Physalis philadelphica isolate P059 maturase K (matK) gene, partial cds; chloroplast
 >gi|156628921|gb|EF438908.1| Physalis philadelphica isolate P056 maturase K (matK) gene, partial cds; chloroplast
 >gi|156628893|gb|EF438894.1| Physalis philadelphica isolate P050 maturase K (matK) gene, partial cds; chloroplast
 >gi|156629011|gb|EF438953.1| Physalis philadelphica isolate P060 maturase K (matK) gene, partial cds; chloroplast
 ```
-**Pregunta**: ¿Por qué está ">" entre comillas? 
+**Pregunta**: ¿Por qué está ">" entre comillas?
 
 **Ejercicio** En el mismo directorio hay otro archivo fasta. Utiliza `grep` y algo más para ver el encabezado de `tomatesverdes.fasta` y `jitomate.fasta`. ¿Qué diferencia hay con el output anterior?
 
 
-#### `grep -c` 
-Para contar en cuántas líneas aparece la expresión de búsqueda 
+#### `grep -c`
+Para contar en cuántas líneas aparece la expresión de búsqueda
 
 ```
-$ grep -c ">" tomatesverdes.fasta 
+$ grep -c ">" tomatesverdes.fasta
 5
 ```
 
@@ -1314,8 +1325,8 @@ tomatesverdes.fasta
 
 ```
 
-#### `grep -i` 
-Hace que la búsqueda sea **insensible** a Mayúsculas/minúsculas. 
+#### `grep -i`
+Hace que la búsqueda sea **insensible** a Mayúsculas/minúsculas.
 
 ```
 $ grep -l physalis *.fasta
@@ -1326,17 +1337,17 @@ tomatesverdes.fasta
 ```
 
 #### `grep -w`
-Sirve para buscar palabras completas, por ejemplo para buscar "he" y no "the". 
+Sirve para buscar palabras completas, por ejemplo para buscar "he" y no "the".
 
 ```
-$ grep iso tomatesverdes.fasta 
+$ grep iso tomatesverdes.fasta
 >gi|156629013|gb|EF438954.1| Physalis philadelphica isolate P061 maturase K (matK) gene, partial cds; chloroplast
 >gi|156629009|gb|EF438952.1| Physalis philadelphica isolate P059 maturase K (matK) gene, partial cds; chloroplast
 >gi|156628921|gb|EF438908.1| Physalis philadelphica isolate P056 maturase K (matK) gene, partial cds; chloroplast
 >gi|156628893|gb|EF438894.1| Physalis philadelphica isolate P050 maturase K (matK) gene, partial cds; chloroplast
 >gi|156629011|gb|EF438953.1| Physalis philadelphica isolate P060 maturase K (matK) gene, partial cds; chloroplast
-$ grep -w iso tomatesverdes.fasta 
-$ 
+$ grep -w iso tomatesverdes.fasta
+$
 ```
 
 
@@ -1345,7 +1356,7 @@ $
 Lee el texto entre comillas como una expresión regular  completa, es decir con operadores, cuantificadores y posicionadores. Es útil utilizarlo junto con `-o` para mostrar solo la parte del texto encontrado que cumple con la expresión regular.
 
 ```
-$ grep -oE "\| \w+ \w+" tomatesverdes.fasta 
+$ grep -oE "\| \w+ \w+" tomatesverdes.fasta
 | Physalis philadelphica
 | Physalis philadelphica
 | Physalis philadelphica
@@ -1367,20 +1378,20 @@ El texto dentro del archivo secsIDs debe verse así
 >gi|156628921|gb|EF438908.1|
 >gi|156628893|gb|EF438894.1|
 >gi|156629011|gb|EF438953.1|
-``` 
+```
 
 
 **Más información de expresiones regulares en:**
 
 Cap 2. Cap 3. y Cap 5 de Haddock SHD, Dunn CW (2011) Practical computing for biologists. Sinauer Associates Sunderland, MA.
 
-Buena referencia de expresiones regulares [aquí](http://tldp.org/LDP/abs/html/x17129.html) 
+Buena referencia de expresiones regulares [aquí](http://tldp.org/LDP/abs/html/x17129.html)
 
 Y buenos ejemplos de cómo usar `grep` [aquí](http://www.thegeekstuff.com/2009/03/15-practical-unix-grep-command-examples/)
 
-**Nota:** `awk` y `sed` son otros comandos que también usan expresiones regulares. 
+**Nota:** `awk` y `sed` son otros comandos que también usan expresiones regulares.
 
-`sed` es particularmente útil para sustituir una expresión regular (como una palabra) por otra. 
+`sed` es particularmente útil para sustituir una expresión regular (como una palabra) por otra.
 
 Por ejemplo esta línea cambia "Solanum lycopersicum" del archivo "tomates.fasta" por "jitomate"
 
@@ -1392,17 +1403,17 @@ sed 's/Solanum lycopersicum/jitomate/' tomates.fasta
 
 
 No los cubriremos aquí, pero vale la pena darles un ojo. Recomiendo esta [Introducción a `sed`](http://www.grymoire.com/Unix/Sed.html#uh-1)  y esta [introducción a `awk`](https://www.lifewire.com/write-awk-commands-and-scripts-2200573) así como estos [ejemplos de cómo se utilizan para manipular archivos fasta](http://bioinformatics.cvr.ac.uk/blog/short-command-lines-for-manipulation-fastq-and-fasta-sequence-files/).
- 
- 
+
+
 ## Redirección con bash
 
 **Pregunta** ¿Qué son el Standar output y el Standar input?
 
-###  `>` y `>>` 
+###  `>` y `>>`
 
 Redirige el Standar output (*stdout*) a un archivo en vez de imprimirlo en pantalla.
 
-Estando en `BioinfinvRepro/Unidad1/Prac_Uni1/Maiz`:
+Estando en `/Unidad1/Prac_Uni1/Maiz`:
 
 ```
 $ cat nuevos_final.fam *log > catejemplo.txt
@@ -1410,7 +1421,7 @@ $ ls
 catejemplo.txt		ejemplonano.txt		nuevos_final.fam
 ejemplo_final.bed	nuevos_final.bed	nuevos_final.log
 ejemplo_final.fam	nuevos_final.bim
-$ head catejemplo.txt 
+$ head catejemplo.txt
 1 maiz_3 0 0 0 -9
 2 maiz_68 0 0 0 -9
 3 maiz_91 0 0 0 -9
@@ -1421,14 +1432,14 @@ $ head catejemplo.txt
 8 maiz_58 0 0 0 -9
 9 maiz_51 0 0 0 -9
 10 maiz_82 0 0 0 -9
-$ tail catejemplo.txt 
+$ tail catejemplo.txt
 Total genotyping rate in remaining individuals is 0.990151
 0 SNPs failed missingness test ( GENO > 1 )
 0 SNPs failed frequency test ( MAF < 0 )
 After frequency and genotyping pruning, there are 36931 SNPs
 After filtering, 0 cases, 0 controls and 165 missing
 After filtering, 0 males, 0 females, and 165 of unspecified sex
-Writing recoded file to [ nuevos_final.raw ] 
+Writing recoded file to [ nuevos_final.raw ]
 
 Analysis finished: Wed May 06 12:19:30 2015
 ```
@@ -1439,7 +1450,7 @@ Nota que si el archivo catejemplo.txt ya existe será borrado por el comando ant
 $ cat nuevos_final.fam *log >> catejemplo.txt
 ```
 
-**Ejercicio** utiliza `sed` para sustituir "Solanum lycopersicum" del archivo `Tomates/tomates.fasta` por "jitomate" y guarda el output en un nuevo archivo llamado "edited_tomates.fasta" 
+**Ejercicio** utiliza `sed` para sustituir "Solanum lycopersicum" del archivo `Tomates/tomates.fasta` por "jitomate" y guarda el output en un nuevo archivo llamado "edited_tomates.fasta"
 
 
 ### `|`
@@ -1462,7 +1473,7 @@ $ ls | wc -l
 Otro ejemplo (no se muestra el stdout pues es demasiado largo)
 
 ```
-cat *.fam | more 
+cat *.fam | more
 ```
 
 
@@ -1472,12 +1483,12 @@ Más detalles y otras formas de redireccionar (que ocupan algunos programas) las
 **Ejercico** Primero explora qué hace el comando `history`. ¿Cómo lo combinarías con `grep` para buscar cuáles líneas hemos corrido con `less`?
 
 
-## Loops con bash
+## Loops con bash (¿están listos?)
 
 Los *for loops* permiten **repetir** una serie de comandos con diferentes *variables de una lista*.
 
 
-Sintaxis: 
+Sintaxis:
 
 ```
 for i in list; do
@@ -1487,7 +1498,7 @@ for i in list; do
 done
 ```
 
-"i" puede leerse como "el elemento i de la lista". Y  la lista no es más que el conjunto total de las variables que queremos. 
+"i" puede leerse como "el elemento i de la lista". Y  la lista no es más que el conjunto total de las variables que queremos.
 
 Ejemplo:
 
@@ -1506,7 +1517,7 @@ La timina es una base nitrogenada
 **Observaciones importantes:**
 
 * Los elementos de la lista NO se separan por comas (en otros lenguajes sí).
-* Para referirnos al "elemento i" dentro de los comandos debemos usar como prefijo el símbolo `$`. 
+* Para referirnos al "elemento i" dentro de los comandos debemos usar como prefijo el símbolo `$`.
 * No tienes que escribir el `>` antes de `echo` y de `done`, los pongo solo para mostrar que eso aparece en la terminal hasta que terminemos de meter los comandos que formarán parte del loop. De hecho `done` sirve para decir "ok, aquí termina el loop". En los ejemplos de abajo ya no lo pondré.
 
 Otro ejemplo:
@@ -1520,7 +1531,7 @@ Mi mejor amigo es un pastor mesoamericano
 Mi mejor amigo es un xolo
 ```
 
-**Preguntas** 
+**Preguntas**
 
 1) ¿Cuándo debo usar comillas en la lista de elementos?
 
@@ -1539,7 +1550,7 @@ Lo cual hará 100 directorios, llamados directorio1, directorio2 y así.
 
 ### Definir variables
 
-Los for loops utilizan *variables* definidas por el usuario, es decir "i" y "perro" en los ejemplos anteriores. Sin embargo, también pueden crearse variables **afuera** de un for loop, y usarlas para lo que queramos. 
+Los for loops utilizan *variables* definidas por el usuario, es decir "i" y "perro" en los ejemplos anteriores. Sin embargo, también pueden crearse variables **afuera** de un for loop, y usarlas para lo que queramos.
 
 Ejemplo:
 
@@ -1552,9 +1563,9 @@ $ $varx
 
 **Observaciones importantes**
 * NO debe haber espacios entre el símbolo = y la variable o su valor.
-* El nombre de la variable puede ser cualquier cosa que queramos **MENOS** el nombre de un comando que exista. 
+* El nombre de la variable puede ser cualquier cosa que queramos **MENOS** el nombre de un comando que exista.
 
-Las variables se pueden usar para acortar algo que escribamos muy seguido (como un path o un nombre de archivo largos) y conjuntar con otras variables dentro de un loop. 
+Las variables se pueden usar para acortar algo que escribamos muy seguido (como un path o un nombre de archivo largos) y conjuntar con otras variables dentro de un loop.
 
 Ejemplo:
 
@@ -1568,7 +1579,7 @@ El gatito hace miau
 El gatón hace miau
 ```
 
-**Ejercicio** Navega al directorio `BioinfInvRepro/Unidad1/Prac_Uni1`. Desde ahí (i.e. **sin** utilizar `cd`) utiliza un for loop para crear por lo menos cuatro directorios dentro del directorio `Tomates/VerdesFritos`. Tu for loop debe incluir una variable definida externamente. 
+**Ejercicio** Navega al directorio `/Unidad1/Prac_Uni1`. Desde ahí (i.e. **sin** utilizar `cd`) utiliza un for loop para crear por lo menos cuatro directorios dentro del directorio `Tomates/VerdesFritos`. Tu for loop debe incluir una variable definida externamente.
 
 
 ### Crear arrays y utilizarlos como una lista en un loop
@@ -1783,7 +1794,7 @@ Hacer algo con la muestra teos_911
 Hacer algo con la muestra teos_9107
 ```
 
-**Pregunta**: Si `some_array=($(command))` sirve para crear un arreglo a partir del resultaod de un comando ¿Cómo puedes crear una **variable** a partir de un comando?
+**Pregunta**: Si `some_array=($(command))` sirve para crear un arreglo a partir del resultado de un comando ¿Cómo puedes crear una **variable** a partir de un comando?
 
 **Leyendo desde un archivo**
 
@@ -1817,15 +1828,14 @@ Hacer algo con la muestra maiz_1
 
 ### Más información de for loops
 
-Aquí presenté la sintaxis más usada, pero hay otros métodos para escribir loops que hacen lo mismo. Y también pueden hacerse más complejos agregando "ifs". 
-Puedes consultar esta y más info de for loops en [esta guía con ejemplos y varios formatos](http://www.thegeekstuff.com/2011/07/bash-for-loop-examples/). 
+Aquí presenté la sintaxis más usada, pero hay otros métodos para escribir loops que hacen lo mismo. Y también pueden hacerse más complejos agregando "ifs".
+Puedes consultar esta y más info de for loops en [esta guía con ejemplos y varios formatos](http://www.thegeekstuff.com/2011/07/bash-for-loop-examples/).
 
 
 ##### Ejercicios
 
-1. Escribe **una línea de código** que cree un archivo con los nombres de las muestras de maiz enlistadas en `/Unidad1/Prac_Uni1/Maiz/nuevos_final.fam`. 
+1. Escribe **una línea de código** que cree un archivo con los nombres de las muestras de maiz enlistadas en `/Unidad1/Prac_Uni1/Maiz/nuevos_final.fam`.
 
-2. Escribe **un script** que cree 4 directorios llamados PobA, PobB, PobC, PobD y dentro de cada uno de ellos un archivo de texto que diga "Este es un individuo de la población x" donde x debe corresponder al nombre del directorio. 
+2. Escribe **un script** que cree 4 directorios llamados PobA, PobB, PobC, PobD y dentro de cada uno de ellos un archivo de texto que diga "Este es un individuo de la población x" donde x debe corresponder al nombre del directorio.
 
 3. Escribe un script que baje 5 secuencias (algún loci corto, no un genoma) de una especie que te interese y señala cuántas veces existe la secuencia "TGCA" en cada una de ellas. ¿Sabes qué hace esta secuencia?
-
