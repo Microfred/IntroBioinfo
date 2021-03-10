@@ -31,10 +31,45 @@ El **objetivo** de FastQC es proporcionar un informe de control de calidad que p
 
 Para abrir uno o más archivos de secuencia de forma interactiva, simplemente ejecute el programa y seleccione *Archivo > Abrir*.
 A continuación, podrá seleccionar los archivos que desee analizar.
-![](figura_1.png)
+![figura_1.png](figura_1.png)
+
+**¿cómo abrimos desde la terminal?**
+
+1) necesitamos instalar FastQC
+
+```
+conda install -c bioconda fastqc
+conda install -c bioconda/label/broken fastqc
+conda install -c bioconda/label/cf201901 fastqc
+```
+
+![figura_2.png](figura_2.png)
+
+
+Existen varias maneras de instalar:
+
+
 
 Los archivos recién abiertos aparecerán inmediatamente en el conjunto de pestañas de la parte superior de la pantalla.
 Debido al tamaño de estos archivos, puede tardar un par de minutos en abrirlos. FastQC
 funciona con un sistema de colas en el que sólo se abre un archivo a la vez, y los nuevos archivos
 nuevos archivos esperan hasta que los archivos existentes hayan sido procesados.
-FastQC admite archivos en los siguientes formatos
+FastQC admite archivos en los siguientes formatos:
+
+![FastQ](https://pythonhosted.org/OBITools/fastq.html] (todas las variantes de codificación de calidad)
+Casava FastQ files*
+Colorspace FastQ
+GZip comprimidos FastQ
+![SAM](https://en.wikipedia.org/wiki/SAM_(file_format))
+![BAM](https://support.illumina.com/help/BS_App_RNASeq_Alignment_OLH_1000000006112/Content/Source/Informatics/BAM-Format.htm#)
+SAM/BAM Sólo mapeado (normalmente utilizado para datos de espacio de color)
+
+Por defecto, FastQC intentará adivinar el formato del archivo a partir del nombre del archivo de entrada. Todo lo que
+que termine en .sam o .bam se abrirá como un archivo SAM/BAM (utilizando todas las secuencias, mapeadas
+y no mapeadas), y todo lo demás será tratado como formato FastQ. Si desea
+anular esta detección y especificar el formato de archivo manualmente, puede utilizar el filtro
+en el selector de archivos para seleccionar el tipo de archivo que va a cargar. Es necesario
+utilizar el selector desplegable para que el programa utilice los modos de archivo BAM mapeado o Casava
+ya que estos no se seleccionan automáticamente
+
+
