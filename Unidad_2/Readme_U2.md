@@ -56,11 +56,11 @@ funciona con un sistema de colas en el que sólo se abre un archivo a la vez, y 
 nuevos archivos esperan hasta que los archivos existentes hayan sido procesados.
 FastQC admite archivos en los siguientes formatos:
 
-* [Fastq (todas las variantes de codificación de calidad)](https://pythonhosted.org/OBITools/fastq.html](todas las variantes de codificación de calidad)
+* [Fastq](https://pythonhosted.org/OBITools/fastq.html](todas las variantes de codificación de calidad) todas las variantes de codificación de calidad
 * Casava FastQ files*
 * Colorspace FastQ
 * GZip comprimidos FastQ
-* [SAM](https://en.wikipedia.org/wiki/SAM_file_format))
+* [SAM](https://en.wikipedia.org/wiki/SAM_file_format)
 * [BAM](https://support.illumina.com/help/BS_App_RNASeq_Alignment_OLH_1000000006112/Content/Source/Informatics/BAM-Format.htm#)
 * SAM/BAM Sólo mapeado (normalmente utilizado para datos de espacio de color)
 
