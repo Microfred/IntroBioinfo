@@ -109,9 +109,9 @@ analizado.
 
 
 
-**Advertencia**
++ **Advertencia**
 La Estadística Básica nunca emite una advertencia.
-**Error**
++ **Error**
 La Estadística Básica nunca genera un error.
 
 ## 2.1 Cómo abrimos un archivo
