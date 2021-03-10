@@ -35,19 +35,25 @@ A continuación, podrá seleccionar los archivos que desee analizar.
 
 **¿cómo abrimos desde la terminal?**
 
-1) necesitamos instalar FastQC
+1) necesitamos instalar FastQC, Existen varias maneras de instalar:
 
+Mac & linux
 ```
 conda install -c bioconda fastqc
 conda install -c bioconda/label/broken fastqc
 conda install -c bioconda/label/cf201901 fastqc
 ```
+Mac & linux
+```
+sudo apt update
+sudo apt install fastqc
+```
+
+ Si esta bien instalado lo podremos correr así
+
+ `fastqc *_R1.fastq.gz *_R2.fastq.gz`
 
 ![figura_2.png](figura_2.png)
-
-
-Existen varias maneras de instalar:
-
 
 
 Los archivos recién abiertos aparecerán inmediatamente en el conjunto de pestañas de la parte superior de la pantalla.
@@ -56,7 +62,7 @@ funciona con un sistema de colas en el que sólo se abre un archivo a la vez, y 
 nuevos archivos esperan hasta que los archivos existentes hayan sido procesados.
 FastQC admite archivos en los siguientes formatos:
 
-* [Fastq](https://pythonhosted.org/OBITools/fastq.html](todas las variantes de codificación de calidad) todas las variantes de codificación de calidad
+* [Fastq](https://pythonhosted.org/OBITools/fastq.html](todas las variantes de codificación de calidad)
 * Casava FastQ files*
 * Colorspace FastQ
 * GZip comprimidos FastQ
@@ -71,3 +77,41 @@ anular esta detección y especificar el formato de archivo manualmente, puede ut
 en el selector de archivos para seleccionar el tipo de archivo que va a cargar. Es necesario
 utilizar el selector desplegable para que el programa utilice los modos de archivo BAM mapeado o Casava
 ya que estos no se seleccionan automáticamente
+
+## 2.2 Evaluación de resultados
+
+El análisis en FastQC se realiza mediante una serie de módulos de análisis. La parte izquierda
+de la pantalla interactiva principal o la parte superior del informe HTML muestran un resumen de los
+módulos que se han ejecutado, y una evaluación rápida de si los resultados del módulo
+parecen totalmente **normales** (marca verde), **ligeramente anormales** (triángulo naranja) o **muy inusuales** (cruz roja).
+
+Es importante subrayar que, aunque los resultados del análisis parezcan dar un resultado de apto/no apto
+estas evaluaciones deben tomarse en el contexto de lo que usted espera de su biblioteca. A
+muestra "normal" en lo que respecta a FastQC es aleatoria y diversa.
+
+
+## 2.3 Guardar el reporte
+Además de proporcionar un informe interactivo, FastQC también tiene la opción de crear una
+versión HTML de este informe para un registro más permanente. Este informe HTML también puede ser generar directamente ejecutando FastQC en modo no interactivo.
+Para crear un informe simplemente seleccione *Archivo > Guardar* informe en el menú principal. Por defecto se creará un informe utilizando el nombre del archivo fastq con _fastqc.zip añadido al final.
+
+El informe se creará para la pestaña del archivo que estaba activa cuando se seleccionó la opción de menú se seleccionó la opción de menú.
+El archivo de informe que se crea es en realidad un archivo zip. Al descomprimirlo, se creará una carpeta con el mismo nombre que el archivo del informe. Dentro de ella habrá una serie de archivos, pero el que hay que ver es el archivo **fastqc_report.html** que enlaza con los otros archivos del informe.
+
+
+# 3.0 Modulos de análisis
+##  3.1 estadísticos básicos
++ El módulo de estadísticas básicas genera algunas estadísticas de composición sencillas para el archivo
+analizado.
+
+
+
+
+
+
+**Advertencia**
+La Estadística Básica nunca emite una advertencia.
+**Error**
+La Estadística Básica nunca genera un error.
+
+## 2.1 Cómo abrimos un archivo
