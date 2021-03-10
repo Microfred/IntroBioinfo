@@ -31,7 +31,7 @@ El **objetivo** de FastQC es proporcionar un informe de control de calidad que p
 
 Para abrir uno o más archivos de secuencia de forma interactiva, simplemente ejecute el programa y seleccione *Archivo > Abrir*.
 A continuación, podrá seleccionar los archivos que desee analizar.
-![Unidad_2/figura_1.png](imagen_1.png)
+![](figura_1.png)
 
 Los archivos recién abiertos aparecerán inmediatamente en el conjunto de pestañas de la parte superior de la pantalla.
 Debido al tamaño de estos archivos, puede tardar un par de minutos en abrirlos. FastQC
