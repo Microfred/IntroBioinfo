@@ -60,7 +60,7 @@ FastQC admite archivos en los siguientes formatos:
 Casava FastQ files*
 Colorspace FastQ
 GZip comprimidos FastQ
-![SAM](https://en.wikipedia.org/wiki/SAM_(file_format))
+![SAM](https://en.wikipedia.org/wiki/SAM_(file_format)
 ![BAM](https://support.illumina.com/help/BS_App_RNASeq_Alignment_OLH_1000000006112/Content/Source/Informatics/BAM-Format.htm#)
 SAM/BAM Sólo mapeado (normalmente utilizado para datos de espacio de color)
 
@@ -71,5 +71,3 @@ anular esta detección y especificar el formato de archivo manualmente, puede ut
 en el selector de archivos para seleccionar el tipo de archivo que va a cargar. Es necesario
 utilizar el selector desplegable para que el programa utilice los modos de archivo BAM mapeado o Casava
 ya que estos no se seleccionan automáticamente
-
-
