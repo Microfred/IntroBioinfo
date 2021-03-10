@@ -127,12 +127,13 @@ posición en el archivo FastQ.
 
 Para cada posición se dibuja un gráfico de tipo BoxWhisker (boxplots). Los elementos del gráfico son los siguientes
 siguientes:
-La **línea roja central** es el valor de la mediana
-La **caja amarilla** representa el rango intercuartil (25-75%)
-Los **bigotes superior e inferior** representan los puntos del 10% y el 90%.
-La **línea azul** representa la calidad media
-El **eje Y** del gráfico muestra las puntuaciones de calidad. Cuanto mayor sea la puntuación, mejor será la
++ La **línea roja central** es el valor de la mediana
++ La **caja amarilla** representa el rango intercuartil (25-75%)
++ Los **bigotes superior e inferior** representan los puntos del 10% y el 90%.
++ La **línea azul** representa la calidad media
++ El **eje Y** del gráfico muestra las puntuaciones de calidad. Cuanto mayor sea la puntuación, mejor será la
 mejor es la integración de la base. El fondo del gráfico divide el eje Y en integraciones de muy buena calidad (verde), integraciones de calidad razonable (naranja) y integraciones de mala calidad (rojo).
+
 La calidad de las integraciones en la mayoría de las plataformas se degradará a medida que la ejecución progrese, por lo que es común ver que las llamadas base que caen en la zona naranja hacia el final de la lectura.
 
 ### **Advertencia**
@@ -175,3 +176,182 @@ tienen valores de calidad universalmente bajos. A menudo se da el caso de que un
 secuencias.
 
 ![figura_4.png](figura_4.png)
+
+Si una proporción significativa de las secuencias de una corrida tiene una calidad general baja, esto podría
+indicar algún tipo de problema sistemático, posiblemente sólo con una parte de la serie.
+### **Advertencia**
+Se emite una advertencia si la calidad media observada con mayor frecuencia es inferior a 27, lo que equivale a una tasa de error del 0,2%.
+### **Error**
+Se produce un error si la calidad media observada con mayor frecuencia es inferior a 20, lo que equivale a una tasa de error del 1%.
+
+## 3.4 Contenido de la secuencia por base
+
+Gráficos de contenido de secuencias por base, la proporción de cada posición de base en un archivo para
+para la que se ha integrado a cada una de las cuatro bases normales del ADN.
+
+![figura_5.png](figura_5.png)
+
+
+En una biblioteca aleatoria se espera que haya poca o ninguna diferencia entre
+las diferentes bases de una secuencia, por lo que las líneas de este gráfico deberían ser paralelas entre sí.
+La cantidad relativa de cada base debería reflejar la cantidad total de estas bases
+en su genoma, pero en cualquier caso no deberían estar enormemente desequilibradas entre sí.
+
+Si ves fuertes sesgos que cambian en diferentes bases, esto suele indicar una una secuencia sobrerrepresentada que está contaminando su biblioteca. Un sesgo que es consistente en todas las bases indica que la biblioteca original estaba sesgada por la secuencia, o que hubo un problema sistemático durante la secuenciación de la biblioteca.
+
+### **Advertencia**
+Este módulo emite una advertencia si la diferencia entre A y T, o G y C es mayor
+del 10% en cualquier posición.
+
+### **Error**
+Este módulo falla si la diferencia entre A y T, o G y C es superior al 20% en
+cualquier posición.
+
+## 3.5 Puntuación de calidad por Secuencias
+
+Este módulo mide el contenido de GC en toda la longitud de cada secuencia de un archivo
+y lo compara con una distribución normal modelada del contenido de CG
+
+![figura_6.png](figura_6.png)
+
+
+### **Advertencia**
+Este módulo emite una advertencia si el contenido de GC de cualquier base se desvía más del 5% del contenido de GC medio.
+
+### **Error**
+Este módulo fallará si el contenido de GC de cualquier base se desvía más del 10% del contenido medio de GC.
+GC medio.
+
+## 3.6 Contenido GC por secuencia de cada posición de base en un archivo.
+
+Este módulo mide el contenido de GC en toda la longitud de cada secuencia de un archivo
+y lo compara con una distribución normal modelada del contenido de CG
+
+![figura_7.png](figura_7.png)
+
+En una biblioteca aleatoria normal se esperaría ver una distribución aproximadamente normal del contenido de GC
+donde el pico central corresponde al contenido general de GC del genoma subyacente.
+genoma subyacente.
+Como no conocemos el contenido de CG del genoma, el contenido modal de GC se calcula a partir de los datos observados y se utiliza para construir una distribución de referencia.
+
+Una distribución de forma inusual podría indicar una biblioteca contaminada o algún otro tipo
+de subconjunto sesgado. Una distribución normal que está desplazada indica algún sesgo sistemático
+que es independiente de la posición de la base. Si hay un sesgo sistemático que crea una distribución normal desplazada, el módulo no la marcará como un error, ya que no sabe cuál es el GC de su genoma.
+sabe cuál debería ser el contenido de GC de su genoma.
+
+### **Advertencia**
+Se produce una advertencia si la suma de las desviaciones de la distribución normal representa
+más del 15% de las lecturas.
+
+### **Error**
+
+Este módulo indicará un fallo si la suma de las desviaciones de la distribución normal
+representa más del 30% de las lecturas.
+
+## 3.7 Contenido de N (bases ambiguas).
+
+Si un secuenciador no puede realizar una integración de base con suficiente confianza, normalmente
+sustituirá una integración de base N en lugar de una convencional.
+Este módulo muestra el porcentaje de integraciones a bases en cada posición para las que se ha llamado a una N.
+
+![figura_8.png](figura_8.png)
+
+No es raro que aparezca una proporción muy baja de Ns en una secuencia, especialmente
+especialmente al final de la secuencia. Sin embargo, si esta proporción se eleva por encima de unos pocos porcentajes
+sugiere que la línea de análisis no ha podido interpretar los datos lo suficientemente bien como para hacer
+llamadas de base válidas.
+
+
+### **Advertencia**
+Este módulo emite una advertencia si alguna posición muestra un contenido de N >5%.
+
+### **Error**
+Este módulo genera un error si cualquier posición muestra un contenido de N >20%.
+
+## 3.8 Distribución de la longitud de la secuencia
+
+Algunos secuenciadores de alto rendimiento generan fragmentos de secuencias de longitud uniforme, pero
+otros pueden contener lecturas de longitudes muy variables. Incluso dentro de las bibliotecas de longitud uniforme algunos pipelines recortan las secuencias para eliminar las integraciones de base de baja calidad del final.
+Este módulo genera un gráfico que muestra la distribución de los tamaños de los fragmentos en el archivo que
+fue analizado.
+
+![figura_9.png](figura_9.png)
+
+En muchos casos, esto producirá un simple gráfico que muestra un pico en un solo tamaño, pero para
+archivos FastQ de longitud variable esto mostrará las cantidades relativas de cada tamaño diferente de
+fragmento de la secuencia.
+
+
+### **Advertencia**
+Este módulo emitirá una advertencia si todas las secuencias no tienen la misma longitud.
+
+### **Error**
+Este módulo emitirá un error si alguna de las secuencias tiene una longitud cero.
+
+## 3.9 Secuencias duplicadas
+
+En una biblioteca diversa, la mayoría de las secuencias aparecerán sólo una vez en el conjunto final. Un bajo nivel de duplicación puede indicar un nivel muy alto de cobertura de la secuencia objetivo, pero una alta
+duplicación es más probable que indique algún tipo de sesgo de enriquecimiento (p. ej., sobreamplificación por PCR).
+
+Este módulo cuenta el grado de duplicación de cada secuencia del conjunto y crea un
+gráfico que muestra el número relativo de secuencias con diferentes grados de duplicación.
+
+![figura_10.png](figura_10.png)
+
+
+
+
+### **Advertencia**
+Este módulo emitirá una advertencia si las secuencias no únicas representan más del 20% del
+total.
+### **Error**
+ste módulo emitirá un error si las secuencias no únicas representan más del 50% del
+total
+
+
+## 3.10 Secuencias sobrerrepresentadas
+
+Una biblioteca normal de alto rendimiento contendrá un conjunto diverso de secuencias, sin que ninguna secuencia individual constituya una pequeña fracción del conjunto. El hecho de que una sola secuencia esté muy sobrerrepresentada en el conjunto significa que es altamente significativa desde el punto de vista biológico, o indica que la biblioteca está contaminada o no es tan diversa como se esperaba.
+
+Este módulo enumera todas las secuencias que representan más del 0,1% del total. Para
+conservar la memoria sólo se rastrean las secuencias que aparecen en las primeras 200,000 secuencias
+se siguen hasta el final del archivo. Por tanto, es posible que una secuencia que esté sobrerrepresentada pero
+que no aparezca al principio del fichero por alguna razón.
+
+Para cada secuencia sobrerrepresentada, el programa buscará coincidencias en una base de datos de
+contaminantes comunes e informará del mejor resultado que encuentre. Las coincidencias deben tener al menos 20 pb de longitud y no tener más de 1 desajuste. Encontrar una coincidencia no significa necesariamente que ésta
+sea la fuente de la contaminación, pero puede indicarle la dirección correcta.
+También sabemos que muchas secuencias de adaptadores son muy similares entre sí, por lo que es posible que se que no sea técnicamente correcta, pero que tenga una secuencia muy similar a la coincidencia real.
+
+Dado que la detección de duplicación requiere una coincidencia de secuencia exacta en toda la longitud de la secuencia, cualquier lectura de más de 75 longitud de la secuencia, cualquier lectura de más de 75 pb se trunca a 50 pb para los fines de este análisis. Aun así, es más probable que las lecturas más largas contengan errores de secuenciación, lo que aumentará artificialmente la diversidad observada y tenderá a subrrepresentar
+las secuencias altamente duplicadas.
+
+### **Advertencia**
+Este módulo emitirá una advertencia si se encuentra alguna secuencia que represente más del 0,1% del
+del total.
+
+### **Error**
+Este módulo emitirá un error si se encuentra alguna secuencia que represente más del 1% del
+total.
+
+
+## 3.10 Kmers sobrerrepresentados
+
+¿K-MER? todas las posibles subcadenas de longitud k que contiene una cadena
+
+![Kmer.png](Kmer.png)
+
+El análisis de las secuencias sobrerrepresentadas detectará un aumento de las secuencias exactamente duplicadas
+pero hay un subconjunto diferente de problemas en los que no funcionará.
+Si las secuencias son muy largas y de baja calidad, los errores aleatorios de secuenciación reducirán drásticamente los recuentos de secuencias duplicadas.
+Si tiene una secuencia parcial que aparece en varios lugares dentro de su
+secuencia, ésta no se verá ni en el gráfico de contenido de bases ni en el análisis de secuencias duplicadas.
+duplicado.
+Este módulo cuenta el enriquecimiento de cada 5-mer dentro de la biblioteca de secuencias. En
+calcula un nivel esperado en el que este k-mer debería haber sido visto basándose en el
+contenido de bases de la biblioteca en su conjunto y luego utiliza el recuento real para calcular una
+relación observada/esperada para ese k-mer. Además de reportar una lista de aciertos, dibujará un
+gráfico de los 6 primeros resultados para mostrar el patrón de enriquecimiento de ese Kmer a través de la longitud de sus lecturas. Esto mostrará si tiene un enriquecimiento general, o si hay un patrón de sesgo
+en diferentes puntos de la longitud de la lectura.
+
+![figura_11.png](figura_11.png)
