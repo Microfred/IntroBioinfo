@@ -56,7 +56,7 @@ funciona con un sistema de colas en el que sólo se abre un archivo a la vez, y 
 nuevos archivos esperan hasta que los archivos existentes hayan sido procesados.
 FastQC admite archivos en los siguientes formatos:
 
-* [FastQ](https://pythonhosted.org/OBITools/fastq.html] (todas las variantes de codificación de calidad)
+* [Fastq (todas las variantes de codificación de calidad)](https://pythonhosted.org/OBITools/fastq.html](todas las variantes de codificación de calidad)
 * Casava FastQ files*
 * Colorspace FastQ
 * GZip comprimidos FastQ
