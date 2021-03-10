@@ -350,7 +350,7 @@ duplicado.
 Este módulo cuenta el enriquecimiento de cada 5-mer dentro de la biblioteca de secuencias. En
 calcula un nivel esperado en el que este k-mer debería haber sido visto basándose en el
 contenido de bases de la biblioteca en su conjunto y luego utiliza el recuento real para calcular una
-relación observada/esperada para ese k-mer. Además de reportar una lista de aciertos, dibujará un
+relación observada/esperada para ese k-mer. Además de reportar una lista de aciertos, realizará un
 gráfico de los 6 primeros resultados para mostrar el patrón de enriquecimiento de ese Kmer a través de la longitud de sus lecturas. Esto mostrará si tiene un enriquecimiento general, o si hay un patrón de sesgo
 en diferentes puntos de la longitud de la lectura.
 
