@@ -101,17 +101,22 @@ El archivo de informe que se crea es en realidad un archivo zip. Al descomprimir
 
 # 3.0 Modulos de análisis
 ##  3.1 estadísticos básicos
-+ El módulo de estadísticas básicas genera algunas estadísticas de composición sencillas para el archivo
+El módulo de estadísticas básicas genera algunas estadísticas de composición sencillas para el archivo
 analizado.
++ **Nombre del archivo**: El nombre original del archivo analizado
++ **Tipo de archivo**: Indica si el archivo parecía contener llamadas base reales o datos de espacio de color
+que han tenido que ser convertidos en llamadas de base
++ **Codificación**: Indica qué codificación ASCII de los valores de calidad se encontró en este archivo.
++ **Total de secuencias**: Un recuento del número total de secuencias procesadas. Hay dos valores reportados, el real y el estimado. 
++ **Secuencias filtradas**: Si se ejecuta en modo Casava, las secuencias marcadas como filtradas se eliminarán de todos los análisis. El número de tales secuencias eliminadas se informará aquí. El recuento total de secuencias anterior no incluirá estas secuencias filtradas el número de secuencias realmente utilizadas para el resto del
+análisis.
++ **Longitud de la secuencia**: Proporciona la longitud de la secuencia más corta y más larga del
+conjunto. Si todas las secuencias tienen la misma longitud, sólo se informa de un valor.
++ **%GC**: El %GC global de todas las bases en todas las secuencias
 
-
-
-
-
-
-+ **Advertencia**
-La Estadística Básica nunca emite una advertencia.
-+ **Error**
+### **Advertencia**
+  La Estadística Básica nunca emite una advertencia.
+### **Error** 
 La Estadística Básica nunca genera un error.
 
-## 2.1 Cómo abrimos un archivo
+## 3.1 Cómo abrimos un archivo
