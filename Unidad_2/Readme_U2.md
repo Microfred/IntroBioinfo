@@ -124,3 +124,45 @@ Esta vista muestra un resumen del rango de valores de calidad en todas las bases
 posición en el archivo FastQ.
 
 ![figura_3.png](figura_3.png)
+
+Para cada posición se dibuja un gráfico de tipo BoxWhisker (boxplots). Los elementos del gráfico son los siguientes
+siguientes:
+La **línea roja central** es el valor de la mediana
+La **caja amarilla** representa el rango intercuartil (25-75%)
+Los **bigotes superior e inferior** representan los puntos del 10% y el 90%.
+La **línea azul** representa la calidad media
+El **eje Y** del gráfico muestra las puntuaciones de calidad. Cuanto mayor sea la puntuación, mejor será la
+mejor es la integración de la base. El fondo del gráfico divide el eje Y en integraciones de muy buena calidad (verde), integraciones de calidad razonable (naranja) y integraciones de mala calidad (rojo).
+La calidad de las integraciones en la mayoría de las plataformas se degradará a medida que la ejecución progrese, por lo que es común ver que las llamadas base que caen en la zona naranja hacia el final de la lectura.
+
+### **Advertencia**
+Se emitirá una advertencia si el cuartil inferior de cualquier base es inferior a 10, o si la mediana
+de cualquier base es inferior a 25.
+### **Error**
+Este módulo emitirá un fallo si el cuartil inferior de cualquier base es inferior a 5 o si la
+mediana de cualquier base es inferior a 20.
+
+
+
+## 3.1 Puntuación de calidad por Secuencias
+
+El informe de puntuación de calidad por secuencia le permite ver si un subconjunto de sus secuencias
+tienen valores de calidad universalmente bajos. A menudo se da el caso de que un subconjunto de secuencias
+de secuencias tengan una calidad universalmente baja, a menudo porque están mal representadas (en el borde del campo de visión, etc.).
+campo de visión, etc.), sin embargo, éstas deberían representar sólo un pequeño porcentaje del total de secuencias.
+secuencias.
+
+
+
+Si una proporción significativa de las secuencias e en una corrida tiene una calidad general baja, esto podría
+indicar algún tipo de problema sistemático, posiblemente sólo con una parte de la serie (por ejemplo
+un extremo de una célula de flujo).
+
+
+### **Advertencia**
+Se emite una advertencia si la calidad media observada con mayor frecuencia es inferior a 27, lo que equivale a
+a una tasa de error del 0,2%.
+
+### **Error**
+Se produce un error si la calidad media observada con mayor frecuencia es inferior a 20, lo que equivale a
+a una tasa de error del 1%
