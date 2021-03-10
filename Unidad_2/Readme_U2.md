@@ -144,7 +144,7 @@ mediana de cualquier base es inferior a 20.
 
 
 
-## 3.1 Puntuación de calidad por Secuencias
+## 3.2 Puntuación de calidad por Secuencias
 
 El informe de puntuación de calidad por secuencia le permite ver si un subconjunto de sus secuencias
 tienen valores de calidad universalmente bajos. A menudo se da el caso de que un subconjunto de secuencias
@@ -165,4 +165,13 @@ a una tasa de error del 0,2%.
 
 ### **Error**
 Se produce un error si la calidad media observada con mayor frecuencia es inferior a 20, lo que equivale a
-a una tasa de error del 1%
+a una tasa de error del 1%.
+
+
+## 3.3 Puntuación de calidad por Secuencias
+
+El informe de puntuación de calidad por secuencia le permite ver si un subconjunto de sus secuencias
+tienen valores de calidad universalmente bajos. A menudo se da el caso de que un subconjunto de secuencias tengan una calidad universalmente baja, frecuentemente porque están mal representadas (en el borde del campo de visión, etc.), sin embargo, éstas deberían representar sólo un pequeño porcentaje del total de secuencias.
+secuencias.
+
+![figura_4.png](figura_4.png)
