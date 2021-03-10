@@ -1,4 +1,3 @@
-
 # Unidad_2 : Introducción a la programación
 
 ##  Control de calidad de secuencias NGS
@@ -30,10 +29,9 @@ El **objetivo** de FastQC es proporcionar un informe de control de calidad que p
 # 2. Operaciones básicas
 ## 2.1 Cómo abrimos un archivo
 
-Para abrir uno o más archivos de secuencia de forma interactiva, simplemente ejecute el programa y seleccione Archivo > Abrir.
+Para abrir uno o más archivos de secuencia de forma interactiva, simplemente ejecute el programa y seleccione *Archivo > Abrir*.
 A continuación, podrá seleccionar los archivos que desee analizar.
-
-![](imagen_1.png)
+![imagen_1.png](imagen_1.png)
 
 Los archivos recién abiertos aparecerán inmediatamente en el conjunto de pestañas de la parte superior de la pantalla.
 Debido al tamaño de estos archivos, puede tardar un par de minutos en abrirlos. FastQC
