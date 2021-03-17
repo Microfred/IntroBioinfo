@@ -31,3 +31,50 @@ Existen varios softwares para realizar estos pasos
 
 * [FASTX-T](http://hannonlab.cshl.edu/fastx_toolkit/)
   El FASTX-Toolkit es una colección de herramientas de línea de comandos para el preprocesamiento de archivos FASTA/FASTQ de Short-Reads.
+
+### Trimmomatic
+#### Instalación
+
+```
+cd Downloads/
+◦ wget http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.39.zip
+◦ unzip Trimmomatic-0.39.zip
+◦ cd Trimomatic-0.39.zip
+```
+Corre con el siguiente script con parámetros por default
+```
+java -jar trimmomatic-0.39.jar PE -threads {number_threads} -phred33 {forward_read.fq.gz}
+{reverse_read.fq.gz} –baseout {examplename} ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3
+TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+```
+
++ ILLUMINACLIP: Corta el adaptador y otras secuencias específicas de illumina de las lecturaa.
++ LEADING: Cortar las bases del inicio de una lectura, si está por debajo de un umbral de calidad
++ TRAILING:cortar bases del final de una lectura, si está por debajo de un umbral de calidad
++ MINLEN: Dejar la lectura si está por debajo de una longitud especificada
++ SLIDINGWINDOW: Realiza un recorte de la ventana deslizante, cortando una vez que la calidad media dentro de la ventana cae por debajo de un umbral.
++ HEADCROP: Corta el número especificado de bases desde el inicio de la lectura
+
+**NOTA** El recorte se produce en el orden en que se especifican los pasos en la línea de comandos. En la mayoría de los casos se recomienda que el recorte del adaptador, si es necesario, se realice lo antes posible.
+
+```
+java -jar trimmomatic-0.39.jar PE -phred33 sample_R1.fastq.gz sample_R2.fastq.gz sampleT_R1.fastq.gz sampleU_R1.fastq.gz sampleT_R2.fastq.gz sampleU_R2.fastq.gz SLIDINGWINDOW:4:28 MINLEN:36
+```
+
+
+
+### trim_galore
+#### [Instalación](https://anaconda.org/bioconda/trim-galore)
+
+```
+trim_galore --paired --three_prime_clip_R1 15 --three_prime_clip_R2 15 *.clock_UMI.R1.fq.gz *.clock_UMI.R2.fq.gz
+```
+
+
+este script ya está probado:
+
+```
+trim_galore \
+ --paired --illumina --retain_unpaired --fastqc \
+ -o . *1.fq.gz *2.fq.gz
+```
