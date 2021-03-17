@@ -16,6 +16,7 @@ tratadas para reducir ese sesgo. Ambos pasos pueden completarse con Trimmomatic.
 Shit in => Shit out [SiSo](https://www.urbandictionary.com/define.php?term=siso)
 
 ¿cuándo hacemos un Trimming?
+
 + Necesitamos incrementar la calidad de nuestras lecturas
 + Los picos en el "contenido de GC por secuencia" suelen indicar contaminación por adaptadores
 + Secuencias sobrerepresentadas
@@ -32,8 +33,19 @@ Existen varios softwares para realizar estos pasos
 * [FASTX-T](http://hannonlab.cshl.edu/fastx_toolkit/)
   El FASTX-Toolkit es una colección de herramientas de línea de comandos para el preprocesamiento de archivos FASTA/FASTQ de Short-Reads.
 
+
+
 ### Trimmomatic
 #### Instalación
+
+Trimmomatic puede usarse tanto con lecturas single-end como paired-end. En el caso
+de las lecturas paired-end, el programa realiza otras tareas como verificar que cada par de
+lecturas esté completo, es decir, que esté presente la lectura forward y reverse del par.
+
+Las lecturas que no tienen su par son separadas en un archivo diferente (Forward y
+Reverse unpaired) y posteriormente podrán ser utilizadas como lecturas single-end. También
+se incluyen en esos archivos las lecturas a las que su par fue eliminado por no cumplir alguno
+de los criterios especificados.
 
 ```
 cd Downloads/
@@ -70,7 +82,6 @@ java -jar trimmomatic-0.39.jar PE -phred33 sample_R1.fastq.gz sample_R2.fastq.gz
 trim_galore --paired --three_prime_clip_R1 15 --three_prime_clip_R2 15 *.clock_UMI.R1.fq.gz *.clock_UMI.R2.fq.gz
 ```
 
-
 este script ya está probado:
 
 ```
@@ -78,3 +89,12 @@ trim_galore \
  --paired --illumina --retain_unpaired --fastqc \
  -o . *1.fq.gz *2.fq.gz
 ```
+
+Finalmente debemos evaluar nuestras secuencias después del control de calidad, lo realizaremos 
+en FASTCQ, comparamos el antes y el después.
+
+
+# ahora vamos a ensamblar.
+
+
+
