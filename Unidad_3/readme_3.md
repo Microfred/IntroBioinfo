@@ -35,7 +35,7 @@ Existen varios softwares para realizar estos pasos
 
 
 
-### Trimmomatic
+###[Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic)
 #### Instalación
 
 Trimmomatic puede usarse tanto con lecturas single-end como paired-end. En el caso
@@ -51,7 +51,7 @@ de los criterios especificados.
 cd Downloads/
 ◦ wget http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.39.zip
 ◦ unzip Trimmomatic-0.39.zip
-◦ cd Trimomatic-0.39.zip
+◦ cd Trimomatic-0.39
 ```
 Corre con el siguiente script con parámetros por default
 ```
