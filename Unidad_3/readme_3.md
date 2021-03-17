@@ -29,6 +29,5 @@ Existen varios softwares para realizar estos pasos
 * [trim_galore](https://github.com/FelixKrueger/TrimGalore/blob/master/Docs/Trim_Galore_User_Guide.md)
   es un script de cobertura para automatizar la calidad y el recorte de adaptadores, así como el control de calidad, con alguna funcionalidad añadida para eliminar las posiciones de metilación sesgadas para los archivos de secuencias (paired-end, directional, non-directional)
 
-*[FASTX-T][http://hannonlab.cshl.edu/fastx_toolkit/]
+* [FASTX-T](http://hannonlab.cshl.edu/fastx_toolkit/)
   El FASTX-Toolkit es una colección de herramientas de línea de comandos para el preprocesamiento de archivos FASTA/FASTQ de Short-Reads.
-
