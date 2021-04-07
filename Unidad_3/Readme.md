@@ -141,7 +141,10 @@ do
     cat ${i}*R1*.fastq.gz > ${i}_R1.fastq.gz
     cat ${i}*R2*.fastq.gz > ${i}_R2.fastq.gz
 done < <(ls *R1*gz | cut -d\_ -f1,2 | sort | uniq )
-```
+```in:/home/bismarkr9/bin:/home/bismarkr9/bin:/home/bismarkr9/bin/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/bismarkr9/bin/kma:/home/bismarkr9/bin/velvet_1.2.10:/home/bismarkr9/bin/kmergenie-1.7051:/home/bismarkr9/bin/ggcb:/home/bismarkr9/bin/kma:/home/bismarkr9/bin/velvet_1.2.10:/home/bismarkr9/bin/kmergenie-1.7051:/home/bismarkr9/bin/ggcb
+bismarkr9@pop-os:~/Ensamble$ 
+
+
 NextSeq, un archivo por muestra, L001
 
 ```
@@ -154,6 +157,7 @@ ________________________________________________________________________________
 
 
 ### seleccionaremos una submuestra
+
 Una de las limitantes de los ensambles es el hardware con el que se dispone para realizar el análisis. Para fines prácticos utilizaremos sólo el 15% del total de lecturas por muestra. Usaremos seqkit para obtener sub-muestras.
 
 1) Lo mejor es al principio del análisis es saber el número de secuencias crudas (raw) que obtenemos
