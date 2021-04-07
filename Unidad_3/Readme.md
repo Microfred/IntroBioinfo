@@ -1,8 +1,8 @@
 
-#Unidad_3
+# Unidad_3
 ## Instalación
 
-+ Ubuntu
+### Ubuntu
 
 Estas son las instrucciones para la instalación de los programas necesarios para el análisis que vamos a realizar. Incluye instalación de librerías, programas, y configuración del $PATH. Estas instrucciones fueron probadas en AWS con Ubuntu 20.04 LTS, **van caladas, van garantizadas**
 
@@ -12,7 +12,7 @@ sudo apt-get update && sudo apt-get install -y build-essential \
     gfortran tree htop zlib1g-dev ncbi-blast+
 ```
 
-Modificar el $PATH
+### Modificar el $PATH
 
 ```
 mkdir -p $HOME/bin
@@ -24,7 +24,7 @@ fi
 EOF    
 ```
 
-Recargar y revisar el $PATH
+### Recargar y revisar el $PATH
 
 ```
 source $HOME/.bashrc
@@ -54,9 +54,9 @@ EOF
 Recargar y revisar el $PATH
 
 `source $HOME/.bashrc`
-
 `echo $PATH`
-Agregar canales de Conda
+
+### Agregar canales de Conda
 
 Si tienes una instalación previa de `conda`revisa el archivo `.condarc` para evitar duplicación de canales, generará error cuando quieras instalar programas
 ¿cómo revisamos?
@@ -72,10 +72,10 @@ channels:
 EOF
 ```
 
-# Mamba
+# [Mamba](https://mamba.readthedocs.io/en/latest/)
 
 `conda install -yc conda-forge mamba`
- 
+
 # ensamble de genomas
 
 ### Crearemos un directorio y copiaremos ahí los datos de secuenciación
@@ -237,16 +237,16 @@ trimmomatic PE -phred33 -threads 16 \
   #Cuento cuántas secuencias tengo en el archivo `01_qc/Salbidoflavus_S01_R1.trim.fastq.gz`
 zcat 01_qc/Salbidoflavus_S01_R1.trim.fastq.gz | awk 'END{ print NR/4 }'
 
-#Cuento cuántas secuencias tengo y de qué longitud en el archivo `01_qc/Salbidoflavus_S01_R1.trim.fastq.gz`
+### Cuento cuántas secuencias tengo y de qué longitud en el archivo `01_qc/Salbidoflavus_S01_R1.trim.fastq.gz`
 zcat 01_qc/Salbidoflavus_S01_R1.trim.fastq.gz | \
     awk '{if(NR%4==2) print length($1)}' | sort -n | uniq -c
 
-#Cuento cuántas secuencias tengo en el archivo `01_qc/Salbidoflavus_S01_R1.trim.fastq.gz`
+#### Cuento cuántas secuencias tengo en el archivo `01_qc/Salbidoflavus_S01_R1.trim.fastq.gz`
 zcat 01_qc/Salbidoflavus_S01_R1.trim.fastq.gz | awk 'END{ print NR/4 }'
 
 
-# Los mismo pero para R2:
-#Cuento cuántas secuencias tengo en el archivo `01_qc/Salbidoflavus_S01_R2.trim.fastq.gz`
+### Los mismo pero para R2:
+### Cuento cuántas secuencias tengo en el archivo `01_qc/Salbidoflavus_S01_R2.trim.fastq.gz`
 zcat 01_qc/ecoli_S01_R2.trim.fastq.gz | awk 'END{ print NR/4 }'
 
 #Cuento cuántas secuencias tengo y de qué longitud en el archivo `01_qc/ecoli_S01_R2.trim.fastq.gz`
@@ -257,7 +257,7 @@ zcat 01_qc/ecoli_S01_R2.trim.fastq.gz | \
 zcat 01_qc/ecoli_S01_2U.trim.fq.gz | awk 'END{ print NR/4 }'
 
 
-# Evaluación de PhiX
+# Evaluación con PhiX
 
 Crear index de la referencia:
 
