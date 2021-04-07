@@ -83,7 +83,7 @@ EOF
 `mkdir -p $HOME/Ensamble/00_raw && mv misdatos* 00_raw/`
 
 
-[https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0060204](“Identification of Optimum Sequencing Depth Especially for De Novo Genome Assembly of Small Genomes Using Next Generation Sequencing Data”. Desai et al. PLOS One 2013)
+[https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0060204](Identification of Optimum Sequencing Depth Especially for De Novo Genome Assembly of Small Genomes Using Next Generation Sequencing Data. Desai et al. PLOS One 2013)
 
 Existen diferentes bases de datos que podemos utilizar para el análisis de genomas.
 
@@ -96,7 +96,7 @@ Links:
 Los cambios realizados en estos tres escenarios producen cambios en el nombre de los archivos por lo que se recomienda tener un respaldo de los archivos originales con los nombres originales.
 Es recomendable documentar si se renombraron los archivos en un archivo README.txt, README.md en el folder del proyecto.
 
-MiSeq, un archivo por muestra
+MiSeq, genera 2 secuencias de salida SR1 y SR2, podemos generar un solo archivo por muestra
 
 ```
 sampleA_S1_R1_001.fastq.gz
@@ -111,7 +111,7 @@ Este script hace
 
 NextSeq, cuatro archivos por muestra, L001-L004
 
-
+```
 sampleA_S1_L001_R1_001.fastq.gz
 sampleA_S1_L001_R2_001.fastq.gz
 
@@ -123,9 +123,10 @@ sampleA_S1_L003_R2_001.fastq.gz
 
 sampleA_S1_L004_R1_001.fastq.gz
 sampleA_S1_L004_R2_001.fastq.gz
+```
 
 
-Podemos concatenar los archivos unos por uno :(
+Podemos concatenar los archivos uno por uno :(
 
 ```
 cat sampleA_S1_L00?_R1* > sampleA_S1_L001_R1_001.fastq.gz
@@ -143,39 +144,50 @@ done < <(ls *R1*gz | cut -d\_ -f1,2 | sort | uniq )
 ```
 NextSeq, un archivo por muestra, L001
 
+```
 sampleA_S1_L001_R1_001.fastq.gz
 sampleA_S1_L001_R2_001.fastq.gz
+```
+___________________________________________________________________________________
+
+# Arrancamos...
 
 
-Arrancamos...
+### SUBMUESTRA
+Una de las limitantes de los ensambles es el hardware con el que se dispone para realizar el análisis. Para fines prácticos utilizaremos sólo el 15% del total de lecturas por muestra. Usaremos seqkit para obtener sub-muestras.
 
+1) Lo mejor es al principio del análisis es saber el número de secuencias crudas (raw) que obtenemos
 
-Comparar lecturas, antes y después del control de calidad
++ Comparar lecturas antes y después del control de calidad
 
-mkdir -p $HOME/Ensamble/00_raw && mv *fastq.gz* 00_raw/
+`mkdir -p $HOME/Ensamble/00_raw && mv *fastq.gz* 00_raw/`
 
+```
 cd 00_raw
 
 zcat Q1_CSFP200001976-1a_H57HLDSXY_L1_1.fq.gz | seqkit sample -p 0.15 -o Salbidoflavus_S01_R1.fastq.gz
 zcat Q1_CSFP200001976-1a_H57HLDSXY_L1_2.fq.gz | seqkit sample -p 0.15 -o Salbidoflavus_S01_R2.fastq.gz
-
+```
+`-p` porcentaje de secuencias por extraer para probar el pipeline
+1= 100%
+0.15= 15%
 
 
 cd $HOME/Ensamble
 
 # Número de secuencias en el archivo ecoli_S01_R1.fastq.gz
-zcat 00_raw/Salbidoflavus_S01_R1.fastq.gz  | awk 'END{ print NR/4 }'
+`zcat 00_raw/Salbidoflavus_S01_R1.fastq.gz  | awk 'END{ print NR/4 }'`
 
 #Cuento cuántas secuencias tengo y de qué longitud en el archivo ecoli_S01_R1.fastq.gz
-zcat 00_raw/Salbidoflavus_S01_R1.fastq.gz  | \
-      awk '{if(NR%4==2) print length($1)}' | sort -n | uniq -c
+`zcat 00_raw/Salbidoflavus_S01_R1.fastq.gz  | \
+      awk '{if(NR%4==2) print length($1)}' | sort -n | uniq -c`
 
 # Número de secuencias en el archivo ecoli_S01_R2.fastq.gz
-zcat 00_raw/Salbidoflavus_S01_R2.fastq.gz | awk 'END{ print NR/4 }'
+`zcat 00_raw/Salbidoflavus_S01_R2.fastq.gz | awk 'END{ print NR/4 }'`
 
 #Cuento cuántas secuencias tengo y de qué longitud en el archivo ecoli_S01_R2.fastq.gz
-zcat 00_raw/Salbidoflavus_S01_R2.fastq.gz | \
-      awk '{if(NR%4==2) print length($1)}' | sort -n | uniq -c
+`zcat 00_raw/Salbidoflavus_S01_R2.fastq.gz | \
+      awk '{if(NR%4==2) print length($1)}' | sort -n | uniq -c`
 
 #  7.1 FastQC
 
@@ -186,9 +198,9 @@ Cada archivo fastq tiene cuatro lineas:
 * 1.- Nombre de la secuencia (header - id del secuenciador, coordenadas del spot, flow-cell, adaptador, etc.)
 * 2.- Secuencia
 * 3.- Espaciador (+)
-* 4.- Valores de calidad: (Q Score)[https://en.wikipedia.org/wiki/FASTQ_format] - alfanumérico.
+* 4.- Valores de calidad: [Q Score](https://en.wikipedia.org/wiki/FASTQ_format) - alfanumérico.
 
-Imagen1
+![figura_1.png](figura_1.png)
 
 
 
