@@ -82,15 +82,14 @@ EOF
 
 `mkdir -p $HOME/Ensamble/00_raw && mv misdatos* 00_raw/`
 
-
 [https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0060204](Identification of Optimum Sequencing Depth Especially for De Novo Genome Assembly of Small Genomes Using Next Generation Sequencing Data. Desai et al. PLOS One 2013)
 
 Existen diferentes bases de datos que podemos utilizar para el análisis de genomas.
 
 Links:
 
-* [SRA:](https://www.ncbi.nlm.nih.gov/sra/ERX008638)
-* [ENA:](https://www.ebi.ac.uk/ena/data/view/ERX008638)
+* Americana [SRA:](https://www.ncbi.nlm.nih.gov/sra/ERX008638)
+* Europea [ENA:](https://www.ebi.ac.uk/ena/data/view/ERX008638)
 
 # Tres escenarios de datos
 
@@ -154,7 +153,7 @@ ________________________________________________________________________________
 # Arrancamos...
 
 
-### SUBMUESTRA
+### seleccionaremos una submuestra
 Una de las limitantes de los ensambles es el hardware con el que se dispone para realizar el análisis. Para fines prácticos utilizaremos sólo el 15% del total de lecturas por muestra. Usaremos seqkit para obtener sub-muestras.
 
 1) Lo mejor es al principio del análisis es saber el número de secuencias crudas (raw) que obtenemos
@@ -341,6 +340,20 @@ zcat 01_qc/Salbidoflavus_S01_R2.trim.clean.fastq.gz | awk 'END{ print NR/4 }'
 
 # Ensamble de novo
 
+
+Estrategias de ensamble:
+
+
+![denovo.png](denovo.png)
+
+
+Powers, J.G., Weigman, V.J., Shu, J. et al. Efficient and accurate whole genome assembly and methylome profiling of E. coli. BMC Genomics 14, 675 (2013). https://doi.org/10.1186/1471-2164-14-675
+
+
+
+
+
+
 Activamos el ambiente
 
  `assembly
@@ -348,10 +361,11 @@ Activamos el ambiente
  mkdir -p 01_qc/kmerfinder
 `
 
-# Identificación de taxonómica de especies
+#### Identificación de taxonómica de especies
 
-### KmerFinder https://cge.cbs.dtu.dk/services/KmerFinder/
--**Sin miedo a la terminal**- 
+##### KmerFinder https://cge.cbs.dtu.dk/services/KmerFinder/
+## **Sin miedo a la terminal**
+
 ![sinmiedoalexito.png](sinmiedoalexito.png)
 
 
@@ -362,7 +376,7 @@ mkdir -p 01_qc/kmerfinder
      -db /opt/KmerFinder_DB/bacteria/bacteria.ATG.name \
      -tax /opt/KmerFinder_DB/bacteria/bacteria.tax -x -q
 
-     less -S 01_qc/kmerfinder/results.txt
+less -S 01_qc/kmerfinder/results.txt
 
 No. Acceso
 Score- valor alto
@@ -371,7 +385,7 @@ Template_length
 Query_coverage
 
 
-#Estimación de K-mer
+## Estimación de K-mer
 
 Según la Wikipedia:
 In bioinformatics, k-mers are substrings of length k contained within a biological sequence.
