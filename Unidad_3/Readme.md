@@ -1,18 +1,95 @@
 
-#EnsAmble de genomas
+#Unidad_3
+## Instalación
+
++ Ubuntu
+
+Estas son las instrucciones para la instalación de los programas necesarios para el análisis que vamos a realizar. Incluye instalación de librerías, programas, y configuración del $PATH. Estas instrucciones fueron probadas en AWS con Ubuntu 20.04 LTS, **van caladas, van garantizadas**
+
+```
+sudo apt-get update && sudo apt-get install -y build-essential \
+    unzip git cmake rename libltdl-dev libblas-dev liblapack-dev \
+    gfortran tree htop zlib1g-dev ncbi-blast+
+```
+
+Modificar el $PATH
+
+```
+mkdir -p $HOME/bin
+cat <<EOF >> $HOME/.bashrc
+##### Microfred #####
+if [ -d "\$HOME/bin" ] ; then
+export PATH="\$HOME/bin:\$PATH"
+fi
+EOF    
+```
+
+Recargar y revisar el $PATH
+
+```
+source $HOME/.bashrc
+
+echo $PATH
+```
+
+## **Conda**
+
+LOS PASOS DE LA SECCIÓN DE CONDA SE HACEN **UNA SOLA VEZ**
+
+## Miniconda
+```
+cd $HOME/bin
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/bin/miniconda3
+rm Miniconda3-latest-Linux-x86_64.sh
+```
+
+Agregar Miniconda al PATH
+```
+cat <<EOF >> $HOME/.bashrc
+export PATH=\$HOME/bin/miniconda3/bin:\$PATH
+EOF
+```
+
+Recargar y revisar el $PATH
+
+`source $HOME/.bashrc`
+
+`echo $PATH`
+Agregar canales de Conda
+
+Si tienes una instalación previa de `conda`revisa el archivo `.condarc` para evitar duplicación de canales, generará error cuando quieras instalar programas
+¿cómo revisamos?
+
+`nano $HOME/.condarc `
+
+```
+cat <<EOF >> $HOME/.condarc
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+EOF
+```
+
+# Mamba
+
+`conda install -yc conda-forge mamba`
+ 
+# ensamble de genomas
 
 ### Crearemos un directorio y copiaremos ahí los datos de secuenciación
 
-´mkdir -p $HOME/Ensamble/ && cd $_´
+`mkdir -p $HOME/Ensamble/00_raw && mv misdatos* 00_raw/`
 
 
-(https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0060204)[“Identification of Optimum Sequencing Depth Especially for De Novo Genome Assembly of Small Genomes Using Next Generation Sequencing Data”. Desai et al. PLOS One 2013]
+[https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0060204](“Identification of Optimum Sequencing Depth Especially for De Novo Genome Assembly of Small Genomes Using Next Generation Sequencing Data”. Desai et al. PLOS One 2013)
 
 Existen diferentes bases de datos que podemos utilizar para el análisis de genomas.
 
 Links:
-SRA: https://www.ncbi.nlm.nih.gov/sra/ERX008638
-ENA: https://www.ebi.ac.uk/ena/data/view/ERX008638
+[SRA:](https://www.ncbi.nlm.nih.gov/sra/ERX008638)
+[ENA:](https://www.ebi.ac.uk/ena/data/view/ERX008638)
 
 #6.1 Tres escenarios de datos
 
@@ -21,11 +98,14 @@ Es recomendable documentar si se renombraron los archivos en un archivo README.t
 
 MiSeq, un archivo por muestra
 
+```
 sampleA_S1_R1_001.fastq.gz
 sampleA_S1_R2_001.fastq.gz
+```
 
 Este script hace
-find -maxdepth 1 -name "*fastq.gz" -type f | rename 's
+
+`find -maxdepth 1 -name "*fastq.gz" -type f | rename 's`
 
 
 
@@ -47,16 +127,20 @@ sampleA_S1_L004_R2_001.fastq.gz
 
 Podemos concatenar los archivos unos por uno :(
 
+```
 cat sampleA_S1_L00?_R1* > sampleA_S1_L001_R1_001.fastq.gz
 cat sampleA_S1_L00?_R2* > sampleA_S1_L001_R2_001.fastq.gz
+```
 
 O podemos usar iteraciones para concatenar los archivos de las 4 líneas, L001-L004, de Illumina al formato sampleA_S1_R1.fastq.gz
+
+```
 while read i
 do
     cat ${i}*R1*.fastq.gz > ${i}_R1.fastq.gz
     cat ${i}*R2*.fastq.gz > ${i}_R2.fastq.gz
 done < <(ls *R1*gz | cut -d\_ -f1,2 | sort | uniq )
-
+```
 NextSeq, un archivo por muestra, L001
 
 sampleA_S1_L001_R1_001.fastq.gz
@@ -93,7 +177,8 @@ zcat 00_raw/Salbidoflavus_S01_R2.fastq.gz | awk 'END{ print NR/4 }'
 zcat 00_raw/Salbidoflavus_S01_R2.fastq.gz | \
       awk '{if(NR%4==2) print length($1)}' | sort -n | uniq -c
 
-    #  7.1 FastQC
+#  7.1 FastQC
+
 El formato FASTQ es una simple extensión del formato FASTA: permite la habilidad de almacenar información alfanumérica de la calidad asociada a cada nucleótido en una secuencia.
 
 Cada archivo fastq tiene cuatro lineas:
@@ -103,7 +188,7 @@ Cada archivo fastq tiene cuatro lineas:
 * 3.- Espaciador (+)
 * 4.- Valores de calidad: (Q Score)[https://en.wikipedia.org/wiki/FASTQ_format] - alfanumérico.
 
-Imagen
+Imagen1
 
 
 
