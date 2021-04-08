@@ -21,7 +21,7 @@ cat <<EOF >> $HOME/.bashrc
 if [ -d "\$HOME/bin" ] ; then
 export PATH="\$HOME/bin:\$PATH"
 fi
-EOF
+EOF    
 ```
 
 ### Recargar y revisar el $PATH
@@ -166,8 +166,8 @@ Una de las limitantes de los ensambles es el hardware con el que se dispone para
 ```
 cd 00_raw
 
-zcat A1_FDMS210040144-1a_HVW5JDSXY_L2_1.fq.gz | seqkit sample -p 0.15 -o Salbidoflavus_S01_R1.fastq.gz
-zcat A1_FDMS210040144-1a_HVW5JDSXY_L2_2.fq.gz | seqkit sample -p 0.15 -o Salbidoflavus_S01_R2.fastq.gz
+zcat Q1_CSFP200001976-1a_H57HLDSXY_L1_1.fq.gz | seqkit sample -p 0.15 -o Salbidoflavus_S01_R1.fastq.gz
+zcat Q1_CSFP200001976-1a_H57HLDSXY_L1_2.fq.gz | seqkit sample -p 0.15 -o Salbidoflavus_S01_R2.fastq.gz
 ```
 `-p` porcentaje de secuencias por extraer para probar el pipeline
 1= 100%
@@ -499,7 +499,7 @@ tablet afg
 velvetg 02_assembly/denovo_velvet/ec_47 -read_trkg yes -ins_length 300 \
           -cov_cutoff 40 -exp_cov 80 -min_contig_lgth 300 -amos_file yes
 
--min_contig_lgth 300 ¿qué tanto elimina con este modificación
+-min_contig_lgth 300 ¿qué tanto elimina con este modificación          
 
 https://ics.hutton.ac.uk/tablet/download-tablet/
 
