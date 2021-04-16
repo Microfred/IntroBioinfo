@@ -245,6 +245,8 @@ La calidad de secuencia por base muestra la calidad de cada nucleótido. del 1 a
 
 Es un heatmap de la calidad del flowcell mostrando celdas individuales. Si la figura es un sólido azul brillante la calidad del flowcell es consistentemente buena. Si hay parches de un azul más claro o de otro color, hay un problemas asociado con alguna de las celdas ( como una burbuja o una mancha ) y esto puede corresponder con un decremento en la calidad de la secuencia en dichas regiones. En la gráfica se observan parches azul claro en la esquina superior derecha que indicaría problemas potenciales con la secuenciación en esas lineas, pero hasta el momento no sabemos cuántas lecturas pudieron ser afectadas. Sin embargo, en este caso las lecturas son lo suficientemente buenas para pasar el control de calidad; sería más preocupante si hubieran sido celdas color naranja o rojo.
 
+más errores comunes en el [*flowcell*](https://sequencing.qcfail.com/)
+
 
 ## 3.1.4 Score de calidad  por secuencia
 
