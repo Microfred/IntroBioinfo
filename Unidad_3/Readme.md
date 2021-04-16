@@ -391,17 +391,19 @@ Cuento cuántas secuencias tengo en el archivo `01_qc/Salbidoflavus_S01_2U.trim.
 
 # 3.3 Evaluación de la preparación de la libreria con PhiX (control interno)
 
-[PhiX](https://support.illumina.com/bulletins/2017/02/what-is-the-phix-control-v3-library-and-what-is-its-function-in-.html)
-[Phix download]()
+Más información referente a [PhiX](https://support.illumina.com/bulletins/2017/02/what-is-the-phix-control-v3-library-and-what-is-its-function-in-.html)
+
+* Para descargar [PhiX_Illumina_RTA](https://drive.google.com/drive/folders/1trDAyju05qWdyQtfQrbXzSzhLbzINocf?usp=sharing)
 
 
 En una corrida estandar se introduce el 1% de PhiX, según el manual y en bacterias con baja complejidad,
-se recomienda utilizar el 10%, sin embargo en bacterias que contienen un mayor/menor valor de GC, se
+se recomienda utilizar el 10%, sin embargo en bacterias que contienen un mayor o menor valor de GC, se
 recomienda aumentar el % de secuencias de PhiX. Lo mejor es utilizar todo el "genoma de PhiX".
 
-Crear index de la referencia:
+### 3.3.1 Crear index de la referencia:
+
 [BWA](https://github.com/lh3/bwa#type): es un paquete de software para el mapeo de secuencias de ADN contra un gran genoma de referencia, como el genoma humano.
-A mayor número de lecturas de Phix, mayor probabilidad de tener un Prfago en el genoma problema.
+A mayor número de lecturas de Phix, mayor probabilidad de tener un Profago en el genoma problema.
 Evidentemente me quedaría con las secuencias que no mapearon vs PhiX.
 
 ```
@@ -418,9 +420,9 @@ Mapear="Alineamiento" *lecturas* versus la referencia:
 `cd $HOME/Ensamble
 source activate qc`
 
-1) 3 scritp usando | Indexar y alinear vs esa referencia
+1) 3 script usando | Indexar y alinear vs esa referencia
 2) Selecciona las secuencias que no mapean vs PhiX
-3) Sort-ordenar esas secuencias no mapeadas
+3) Sort=ordenar esas secuencias no mapeadas
 
 ```
 cd $HOME/Ensamble
@@ -476,7 +478,7 @@ Activamos el ambiente
 
 ![sinmiedoalexito.png](sinmiedoalexito.png)
 
-
+```
 cd $HOME/Ensamble
 mkdir -p 01_qc/kmerfinder
 
@@ -485,6 +487,8 @@ mkdir -p 01_qc/kmerfinder
      -tax /opt/KmerFinder_DB/bacteria/bacteria.tax -x -q
 
 less -S 01_qc/kmerfinder/results.txt
+```
+
 
 No. Acceso
 Score- valor alto
@@ -517,19 +521,19 @@ Imagen de gráfica de la muestra
 
 # Usaremos Kmergenie para obtener la distribución de K-mers de nuestro genomas.
 
+  ````
   cd $HOME/Ensamble
-
   cat 01_qc/Salbidoflavus_S01_R1.trim.clean.fastq.gz 01_qc/Salbidoflavus_S01_R2.trim.clean.fastq.gz > Salbidoflavus.fq.gz
-
   source activate kmergenie
-
   kmergenie Salbidoflavus.fq.gz
+````
 
 ### Ponemos la salida de Kmergenie en 01_qc
+```
 mv histograms.dat 01_qc/
 mv histograms_report.html 01_qc/
-
 Abrimos el html
+````
 
 
 Obtenemos la longitud de K-mer que presenta una mayor distribución
