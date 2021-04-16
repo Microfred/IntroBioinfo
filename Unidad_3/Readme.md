@@ -153,7 +153,6 @@ ________________________________________________________________________________
 
 # Arrancamos...
 
-
 ### seleccionaremos una submuestra
 Una de las limitantes de los ensambles es el hardware con el que se dispone para realizar el análisis. Para fines prácticos utilizaremos sólo el 15% del total de lecturas por muestra. Usaremos seqkit para obtener sub-muestras.
 
@@ -192,7 +191,7 @@ zcat Q1_CSFP200001976-1a_H57HLDSXY_L1_2.fq.gz | seqkit sample -p 0.15 -o Salbido
 `zcat 00_raw/Salbidoflavus_S01_R2.fastq.gz | \
       awk '{if(NR%4==2) print length($1)}' | sort -n | uniq -c`
 
-#  7.1 FastQC
+#  3.1 FastQC
 
 El formato FASTQ es una simple extensión del formato FASTA: permite la habilidad de almacenar información alfanumérica de la calidad asociada a cada nucleótido en una secuencia.
 
@@ -225,18 +224,128 @@ conda deactivate
 ```
 El resultado se encuentra en el archivo **html**
 
+## 3.1.1 Estadísticos básicos:
+
+![figure2.png](figure2.png)
+
+La estadística básica de las secuencias incluye el nombre del archivo, cuántas secuencias contiene, si algunos reads fueron etiquetados con una mala calidad. En este caso tenemos 36,000,000 de secuencias, con un tamaño promedio de 51, un GC de 44% y ninguna lectura de mala calidad.
+
+## 3.1.2 Calidad de secuencias por base
+
+![figure3.png](figure3.png)
+
+La calidad de secuencia por base muestra la calidad de cada nucleótido. del 1 al 51 en este caso. Muestra esta información usando un gráfico de caja y bigotes para mostrarnos cuánta variación hay entre los reads. Idealmente desearíamos que todo el gráfico se concentrara en la región verde; lo cual se consideraría muy buena calidad. No es deseable que el gráfico se localice en las regiones naranja y roja.
+
+* Cuando el cuartil más bajo de cualquier posición es menor a 10 ó la media es menor que 25, el módulo dará un *warning*.
+* Cuando el cuartil más bajo de cualquier posición es menor a 5 ó la media es menor que 20, el módulo dará un fail en este paso del control de calidad.
+
+## 3.1.3 Calidad de secuencias de *flowcell*
+
+![figure4.png](figure4.png)
+
+Es un heatmap de la calidad del flowcell mostrando celdas individuales. Si la figura es un sólido azul brillante la calidad del flowcell es consistentemente buena. Si hay parches de un azul más claro o de otro color, hay un problemas asociado con alguna de las celdas ( como una burbuja o una mancha ) y esto puede corresponder con un decremento en la calidad de la secuencia en dichas regiones. En la gráfica se observan parches azul claro en la esquina superior derecha que indicaría problemas potenciales con la secuenciación en esas lineas, pero hasta el momento no sabemos cuántas lecturas pudieron ser afectadas. Sin embargo, en este caso las lecturas son lo suficientemente buenas para pasar el control de calidad; sería más preocupante si hubieran sido celdas color naranja o rojo.
 
 
-## Recorte de lecturas (Trimeado) para lecturas *paired-end*
+## 3.1.4 Score de calidad  por secuencia
+
+![figure5.png](figure5.png)
+
+El score de calidad por secuencia representa la calidad de cada lectura. El eje y es el número de secuencias, y el eje x es la escala Phred, la cual está basada en una escala logarítmica.
+
+* Un Predscore de 30 indica un ranto de error de 1 base en 1000, o una exactitud de 99.9%.
+* Un Phred score de 40 indica un rango de error de 1 base en 10,000, o una exactitud de 99.99%.
+* Con un valor debajo de 27 se obtendrá un warning y por debajo de 20 se dará un fail.
+En nuestro ejemplo, el promedio de calidad es 37, lo cual es muy bueno.
+
+## 3.1.5 Contenido por secuencia por base
+
+![figure6.png](figure6.png)
+
+El contenido de secuencias por base nos muestra, para cada posición de cada secuencia, la composición de bases como porcentaje para A, T, C y G.
+
+* Este módulo obtendrá un warning si el contenido de base varía más del 10% en cualquier posición, como en el ejemplo de las secuencias que estamos utilizando.
+* La muestra obtendrá fail si hay más de 20% de variación en cualquier posición.
+
+FastQC está diseñado para secuencias de genomas completos, pero nosotros utilizamos secuencias de RNASeq como input. Aunque tenemos una advertencia en este módulo, no es que haya algo malo con nuestras secuencias.
+
+## 3.1.6 Contenido de GC por secuencia
+
+![figure7.png](figure7.png)
+
+El contenido de GC por secuencia muestra el contenido total para todos los reads de acuerdo a la "distrbución teórica" de GC's. El pico de la linea roja corresponde a la media de contenido GC de las secuencias, mientras que el pico de la linea azul corresponde a la media teórica de contenido de GC. Nuestro contenido de GC debería estar distribuido normalmente.
+
+* Se observa un *warning* si el 15% total de las secuencias caen fuera de la distribución normal.
+* Se obtendrá un *fail* si más del 20% de las secuencias están fuera de la distribución normal.
+* Los fails son generalmente debidos a contaminación, frecuentemente por secuencias de adaptadores.
+
+## 3.1.7 Contenido de N por base
+
+![figure8.png](figure8.png)
+
+El contenido de N por base muestra cualquier posición de las secuencias que no han sido ‘llamadas’ como A,T,C o G. Idealmente el contenido de N por base sería una linea plana en 0% sobre el eje y, indicando que todas las bases han sido ‘llamadas’.
+
+* Se recibe un warning si el contenido de N es igual o mayor de 5%,
+* Obtendrá un fail si el contenido de N es igual o mayor a 20%.
+
+Nuestras secuencias muestran el resultado ideal para este módulo.
+
+## 3.1.8 Distribución de longitud de secuencias
+
+![figure9.png](figure9.png)
+
+Este módulo simplemente muestra la longitud de cada secuencia en la muestra. La gráfica puede variar dependiendo de la plataforma y del kit de secuenciación utilizado. Para secuenciación con Illumina, cada lectura debería ser del mismo tamaño (?). Para otras plataformas, se puede obtener una cantidad considerable de variación en el tamaño de las lecturas.
+
+Este módulo mostrará un warning si hay cualquier variación en la longitud de las secuencias, el cual puede ser ignorado si se sabe que es normal para el tipo de datos que se tiene.
+Un fail en este módulo significa que al menos una secuencia tiene longitud de 0.
+Nuestro ejemplo pasa este módulo ya que todas las secuencias tienen una longitud de de 51 sin variación alguna.
+
+## 3.1.9 Distribución de longitud de secuencias
+
+![figure10.png](figure10.png)
+
+
+La gráfica de los niveles de duplicación de secuencias muestran en el eje x, el número de veces que una secuencia está duplicada, y en el eje y el porcentaje de secuencias que muestran ese nivel de duplicación. Normalmente un genoma tendrá un nivel de duplicación de secuencias de 1 a 3 para la mayoría de las secuencias, con sólo un puñado de lecturas teniendo un nivel más alto que este; la linea debería tener la forma inversa a una gráfica log.
+
+* Un alto porcentaje de duplicación de secuencias es un indicativo de contaminación.
+* Este módulo nos dará un *warning* si más del 20% de las secuencias son duplicadas.
+* Dará *fail* si más del 50% de las secuencias están duplicadas.
+* Un *warning* o fail puede ser resultado de artefactos de PCR.
+
+
+## 3.1.10 Secuencias sobre-representadas
+
+![figure11.png](figure11.png)
+
+* Si alguna secuencia se calcula que representa más del 0.1 % del genoma completo será etiquetada como una secuencia sobre-representada y se obtendrá un warning, como se observa en este ejemplo.
+* La presencia de secuencias que representan más del 1% del genoma dará como resultado un fail.
+
+
+## 3.1.11 Contenido de adaptadores
+
+![figure12.png](figure12.png)
+
+Este módulo busca secuencias específicas de adaptadores.
+* Una secuencia que representa más del 5% del total causará un *warning* en este módulo.
+* Una secuencia que represente más del 10% del total causará un *fail*.
+
+Nuestro ejemplo no muestra contaminación con secuencias de adaptadores, lo cual es ideal. Si existiera un número significativo de secuencias de adaptadores, se debe utilizar un programa para recortarlos y realizar el análisis de calidad nuevamente.
+
+mas dudas aca ...
+[FastQC Documentation](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/)
+
+
+# 3.2 Recorte de lecturas (Trimeado) para lecturas *paired-end*
 
 En este caso en particular, las secuencias no tienen adaptador ¿o sí? y tienen la misma longitud.
 
+* para *paired-END*
+
 cd $HOME/Ensamble
 git clone https://github.com/ATGenomics/adapters.git $HOME/bin/adapters
+
 adapters="$HOME/bin/adapters/NexteraPE-PE.fa"
 
 Activamos el entorno qc
-
 `source activate qc`
 
 
@@ -280,9 +389,11 @@ Cuento cuántas secuencias tengo en el archivo `01_qc/Salbidoflavus_S01_2U.trim.
 `zcat 01_qc/Salbidoflavus_S01_2U.trim.fq.gz | awk 'END{ print NR/4 }'`
 
 
-# Evaluación de la preparación de la libreria con PhiX (control interno)
+# 3.3 Evaluación de la preparación de la libreria con PhiX (control interno)
 
 [PhiX](https://support.illumina.com/bulletins/2017/02/what-is-the-phix-control-v3-library-and-what-is-its-function-in-.html)
+[Phix download]()
+
 
 En una corrida estandar se introduce el 1% de PhiX, según el manual y en bacterias con baja complejidad,
 se recomienda utilizar el 10%, sin embargo en bacterias que contienen un mayor/menor valor de GC, se
@@ -339,7 +450,7 @@ zcat 01_qc/Salbidoflavus_S01_R2.trim.clean.fastq.gz | awk 'END{ print NR/4 }'
 **Nota** Cuando no hay secuencias de PHIX, podemos trabajar con los archivos *.trim.*
 
 
-# Ensamble de novo
+# 4.0 Ensamble de novo
 
 
 Estrategias de ensamble:
@@ -349,10 +460,6 @@ Estrategias de ensamble:
 
 
 Powers, J.G., Weigman, V.J., Shu, J. et al. Efficient and accurate whole genome assembly and methylome profiling of E. coli. BMC Genomics 14, 675 (2013). https://doi.org/10.1186/1471-2164-14-675
-
-
-
-
 
 
 Activamos el ambiente
