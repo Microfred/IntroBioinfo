@@ -549,31 +549,61 @@ eliminamos los archivos temporales
 rm -f *histo *pdf Salbidoflavus.fq.gz
 
 
-# EnsAmble
+# Ensamble
 
+En el este arte del ensmablado existen os principales (*o más populares*) algoritmos para el ensamble de secuencias:
 
-Ensamblador que utiliza grafos de Bruijn
+* **De Bruijn** (‘De brown’): descompone las lecturas en k-mers, y en el proceso reduce la complejidad a los k-mers compartidos en lugar de basarse en el número de lecturas y sobrelapamiento. Menos usos recursos de RAM, una desventja es que dificilmente se puede cerrar un genoma.
 
-cd $HOME/Ensamble
+* **OLC** (Overlap-layout-consensus): involucra alineamiento pareados all-vs-all de las lecturas y calcula los sobrelapamientos. All vs All,
+Alineamientos múltiples,  demanda RAM, mucha RAM, complicado en máquinas pequeñas.
 
-velveth 02_assembly/denovo_velvet/ec_47 47 -fastq -separate \
-    -shortPaired 01_qc/Salbidoflavus_S01_R1.trim.clean.fastq.gz 01_qc/Salbidoflavus_S01_R2.trim.clean.fastq.gz
+![figure14.png](figure14.png)
 
+Flujo de trabajo general del ensamblaje de novo de un genoma completo.
+* Mediante el solapamiento de lecturas, se ensamblan contigs a partir de lecturas cortas antes del scaffold mediante lecturas de gran inserción
+y se rellenan los huecos restantes.
+* Los pasos de scaffold y rellenado de huecos se pueden realizar de forma iterativa hasta que no se hayan ensamblado contigs o no se hayan resuelto huecos adicionales o no se resuelvan más lagunas antes de la finalización.
+* Mediante este procedimiento, se construye un borrador del genoma compuesto por cromosomas. Pueden quedar algunos huecos sin rellenar en el borrador del genoma.
 
+![figure15.png](figure15.png)
 
-    cd $HOME/Ensamble
+De brujin
+![figure16.png](figure16.png)
 
-    velvetg 02_assembly/denovo_velvet/ec_47 -read_trkg yes -ins_length auto \
-              -cov_cutoff auto -exp_cov auto
+OLC
+![figure17.png](figure17.png)
+
+[The present and future of de novo whole-genome assembly](https://sci-hub.se/10.1093/bib/bbw096).
+
+También existen programas para ensamblar híbridos nanopore-minION [MaSuRCA](https://github.com/alekseyzimin/masurca)
+
+Ensamblador que utiliza grafos de Bruijn (Debraun)
+
+*Velvet* consta de dos programas dentro del mismo software (los ejecutables) **Velveth y Velvetg**, utilizaremos el K-mer obtenido con *Kmergenie*
+
++ velveth: hash, o fragmentarlas
+* velvetg: ensamblador 
+
+`cd $HOME/Ensamble`
+
+`velveth 02_assembly/denovo_velvet/ec_47 47 -fastq -separate \
+    -shortPaired 01_qc/Salbidoflavus_S01_R1.trim.clean.fastq.gz 01_qc/Salbidoflavus_S01_R2.trim.clean.fastq.gz`
+
+`cd $HOME/Ensamble`
+
+`velvetg 02_assembly/denovo_velvet/ec_47 -read_trkg yes -ins_length auto \
+-cov_cutoff auto -exp_cov auto`
 
 Las últimas lineas de la salida estándar de Velvet nos darán los parámetros para mejorar el ensamble:
 Estimated Coverage = 51.663610
 Estimated Coverage cutoff = 25.831805
 Final graph has 296 nodes and n50 of 1614804581, max 1867599102, total 4313423170, using 6825503/6850400 reads
 
+Contamos el número de caracteres ">" que aparecen en el archivo. En un archivo FASTA se espera que haya una cabacera (>) por cada secuencia.
 
-Contamos el número de caracteres > que aparecen en el archivo. En un archivo FASTA se espera que haya una cabacera (>) por cada secuencia.
-grep -c \> 02_assembly/denovo_velvet/ec_47/contigs.fa
+`grep -c \> 02_assembly/denovo_velvet/ec_47/contigs.fa`
+
 
 ### Calculamos el tamaño del inserto y la cobertura esperada:
 
