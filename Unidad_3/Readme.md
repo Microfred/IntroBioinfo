@@ -583,70 +583,85 @@ Ensamblador que utiliza grafos de Bruijn (Debraun)
 *Velvet* consta de dos programas dentro del mismo software (los ejecutables) **Velveth y Velvetg**, utilizaremos el K-mer obtenido con *Kmergenie*
 
 + velveth: hash, o fragmentarlas
-* velvetg: ensamblador 
+* velvetg: ensamblador
 
+
+`mkdir -p 02_assembly/{denovo_velvet,denovo_spades}`
 `cd $HOME/Ensamble`
 
 `velveth 02_assembly/denovo_velvet/ec_47 47 -fastq -separate \
-    -shortPaired 01_qc/Salbidoflavus_S01_R1.trim.clean.fastq.gz 01_qc/Salbidoflavus_S01_R2.trim.clean.fastq.gz`
+-shortPaired 01_qc/Salbidoflavus_S01_R1.trim.clean.fastq.gz 01_qc/Salbidoflavus_S01_R2.trim.clean.fastq.gz`
 
 `cd $HOME/Ensamble`
 
 `velvetg 02_assembly/denovo_velvet/ec_47 -read_trkg yes -ins_length auto \
 -cov_cutoff auto -exp_cov auto`
 
+
 Las últimas lineas de la salida estándar de Velvet nos darán los parámetros para mejorar el ensamble:
-Estimated Coverage = 51.663610
-Estimated Coverage cutoff = 25.831805
-Final graph has 296 nodes and n50 of 1614804581, max 1867599102, total 4313423170, using 6825503/6850400 reads
+
+`Estimated Coverage = 51.663610` **80 tendrán al menos 51 lecturas**
+ Estimated Coverage cutoff = 25.831805 ****
+ Final graph has 296 nodes and n50 of 1614804581, max 1867599102, total 4313423170, using **6825503/6850400** reads **cuantas lecturas estoy utilizando**
+
 
 Contamos el número de caracteres ">" que aparecen en el archivo. En un archivo FASTA se espera que haya una cabacera (>) por cada secuencia.
 
 `grep -c \> 02_assembly/denovo_velvet/ec_47/contigs.fa`
 
+Es el número de contigs en el 1er intento :(, aún queda mucho por mejorar y reducir el número de contigs...
 
 ### Calculamos el tamaño del inserto y la cobertura esperada:
-
+```
 velvet_contrib="$HOME/bin/velvet_1.2.10/contrib"
-
 perl ${velvet_contrib}/estimate-exp_cov/velvet-estimate-exp_cov.pl 02_assembly/denovo_velvet/ec_47/stats.txt
+
 Resultado: promedio 56
 
 perl ${velvet_contrib}/observed-insert-length.pl/observed-insert-length.pl 02_assembly/denovo_velvet/ec_47
-Resultado
+```
+Resultado= ????
 
 
 Al parecer Velvet hizo un buen trabajo, ¿es así?
 
+```
 velvetg 02_assembly/denovo_velvet/ec_47 -read_trkg yes -ins_length 350 -cov_cutoff 30 -exp_cov 51
-Resultado Final graph has 329 nodes and n50 of 173136, max 459997, total 6910087, using 6808787/6850400 reads
 
-grep -c \> 02_assembly/denovo_velvet/ec_47/contigs.fa
- Resultado 160
+Resultado Final graph has 329 nodes and n50 of 173136, max 459997, total 6910087, using 6808787/6850400 reads
+```
+Contamos de nuevo ...
+`grep -c \> 02_assembly/denovo_velvet/ec_47/contigs.fa`
+
+**Resultado 160 contigs**
 
 Valor arbitrario por default-
 
- velvetg 02_assembly/denovo_velvet/ec_47 -read_trkg yes -ins_length 200 \
-          -cov_cutoff 40 -exp_cov 80 -min_contig_lgth 300
+ `velvetg 02_assembly/denovo_velvet/ec_47 -read_trkg yes -ins_length 200 \
+          -cov_cutoff 40 -exp_cov 80 -min_contig_lgth 500`
 
-          grep -c \> 02_assembly/denovo_velvet/ec_47/contigs.fa
+*valor minimo del contig, puedo modificarlo
+
+          `grep -c \> 02_assembly/denovo_velvet/ec_47/contigs.fa`
 
 -min_contig_lgth 300 **145 contigs**
 -min_contig_lgth 300 **109 contigs**
 -min_contig_lgth 500 **105 contigs**
 -min_contig_lgth 1000 **100 contigs**
+-min_contig_lgth 300 ¿qué tanto elimina con este modificación    
 
+*La ventaja es que ya no podemos usar el hash VelvetH
 
-tablet afg
+### Tablet afg
 
 velvetg 02_assembly/denovo_velvet/ec_47 -read_trkg yes -ins_length 300 \
           -cov_cutoff 40 -exp_cov 80 -min_contig_lgth 300 -amos_file yes
 
--min_contig_lgth 300 ¿qué tanto elimina con este modificación          
+
+Programa para visualizar genomas, todas las lecturas acomodadas en contigs
+
 
 https://ics.hutton.ac.uk/tablet/download-tablet/
-
-
 
 # 8.3.2 SPAdes
 
@@ -685,53 +700,57 @@ conda deactivate
 Colocar cada contig en una sola línea y contar líneas y la distribución de su longitud.
  **velvet**
 
-one_liner 02_assembly/denovo_velvet/ec_47/contigs.fa
+`one_liner 02_assembly/denovo_velvet/ec_47/contigs.fa`
 
-grep -v \> 02_assembly/denovo_velvet/ec_47/contigs.fa | awk '{ print length }' | sort -nr | uniq
+`grep -v \> 02_assembly/denovo_velvet/ec_47/contigs.fa | awk '{ print length }' | sort -nr | uniq`
 
 **spades**
-one_liner 02_assembly/denovo_spades/Salbidoflavus/scaffolds.fasta
-grep -v \> 02_assembly/denovo_spades/Salbidoflavus/scaffolds.fasta | awk '{ print length }' | sort -nr | uniq
+`one_liner 02_assembly/denovo_spades/Salbidoflavus/scaffolds.fasta`
+`grep -v \> 02_assembly/denovo_spades/Salbidoflavus/scaffolds.fasta | awk '{ print length }' | sort -nr | uniq`
 
 ### Un vistazo general a los archivos de ensamble:
-
+```
 source activate qc
-
 assembly-stats 02_assembly/denovo_spades/Salbidoflavus/scaffolds.fasta
 assembly-stats 02_assembly/denovo_velvet/ec_47/contigs.fa
 
 conda deactivate
+```
 
 
 # 8.5 Amplitud y profundidad de cobertura
 
-mkdir -p 03_assembly_qc
+`mkdir -p 03_assembly_qc`
 
 [bwa](http://bio-bwa.sourceforge.net/bwa.shtml)
 
 ##########################V E L V E T ######################################
-
+```
 bwa index -p 03_assembly_qc/velvet_assembly 02_assembly/denovo_velvet/ec_47/contigs.fa
 
 bwa mem -t 4 03_assembly_qc/velvet_assembly \
     01_qc/Salbidoflavus_S01_R1.trim.clean.fastq.gz  01_qc/Salbidoflavus_S01_R1.trim.clean.fastq.gz  | \
     samtools view -Sb - | samtools sort - -o 03_assembly_qc/velvet_assembly.sorted.bam
+```
 
 
 [samtools](http://www.htslib.org/doc/samtools.html)
 
-conda deactivate
+`conda deactivate`
 
 ##SAM/BAM
 
 SAM son las siglas para Sequence Alignment Map, un formato de texto delimitado por tabuladores; consiste de un header, el cual es opcional, y una sección de alineamiento. En caso de estar presente el header empiezan con el símbolo @. Cada alineamiento tiene 11 campos obligatorios para información esencial del alineamiento, como posición de mapeo y otros campos que hacen que formato SAM flexible y específico.
 
+![figure18.png](figure18.png)
+
 
 Alineamiento:
-image
+![figure19.png](figure19.png)
 
 
 
+```
 cd $HOME/Ensamble
 
 source activate qc
@@ -743,31 +762,35 @@ samtools view -b -f 4 \
 samtools view -b -F 4 \
     03_assembly_qc/velvet_assembly.sorted.bam \
     > 03_assembly_qc/velvet_assembly.mapped.sorted.bam
+```
 
 Para comparar con los de referencia es necesario indexar los archivos mapeados y no mapeados
-
+```
 samtools index 03_assembly_qc/velvet_assembly.sorted.bam
 samtools index 03_assembly_qc/velvet_assembly.mapped.sorted.bam
 samtools index 03_assembly_qc/velvet_assembly.unmapped.sorted.bam
+```
 
-
+Activamos el ENTORNO
+```
 source activate qc
 samtools depth 03_assembly_qc/velvet_assembly.mapped.sorted.bam \
             > 03_assembly_qc/velvet_assembly_depth.txt
 
 conda deactivate
+```
 
 Contando el total de bases mapeadas (assembly_stats)
 
 # Bases mapped and sum depth: 4472581 596551566
-awk '{ c++; s+=$3 } END {print c " " s}' 03_assembly_qc/velvet_assembly_depth.txt
+`awk '{ c++; s+=$3 } END {print c " " s}' 03_assembly_qc/velvet_assembly_depth.txt`
 
 # Sum depth: 133.38
-awk '{ c++; s+=$3 } END { print s/c }' 03_assembly_qc/velvet_assembly_depth.txt
+`awk '{ c++; s+=$3 } END { print s/c }' 03_assembly_qc/velvet_assembly_depth.txt`
 
 
 # Breadth of coverage (with >= 5X coverage depth): 99.98
-awk '{c++; if($3>5) total+=1}END{print (total/c)*100}' 03_assembly_qc/velvet_assembly_depth.txt
+`awk '{c++; if($3>5) total+=1}END{print (total/c)*100}' 03_assembly_qc/velvet_assembly_depth.txt`
 
 
 cubierto el 99.973 mapean contra mi ensamble, estoy usando practicamente todas mis secuencias.
@@ -775,7 +798,7 @@ cubierto el 99.973 mapean contra mi ensamble, estoy usando practicamente todas m
 de bam > fastq
 
  de estos que mapearon entre mis lecturas y los contigs ¿cuantos corresponden al R1, R2, single (s)?
-
+```
  cd $HOME/Ensamble
  source activate qc
 
@@ -784,6 +807,7 @@ de bam > fastq
          -2 03_assembly_qc/Salbidoflavus_velvet_R2.fastq.gz \
          -s 03_assembly_qc/Salbidoflavus_velvet_S.fastq.gz \
          03_assembly_qc/velvet_assembly.mapped.sorted.bam
+```
 
 results:
 discarded 3182 singletons
