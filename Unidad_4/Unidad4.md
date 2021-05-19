@@ -142,11 +142,11 @@ samtools sort: ordena
 
 SAM son las siglas para Sequence Alignment Map, un formato de texto delimitado por tabuladores; consiste de un header, el cual es opcional, y una sección de alineamiento. En caso de estar presente el header empiezan con el símbolo @. Cada alineamiento tiene 11 campos obligatorios para información esencial del alineamiento, como posición de mapeo y otros campos que hacen que formato SAM flexible y específico.
 
-![figure_1.png](figure_1.png)
+![figura_1.png](figura_1.png)
 
 ejemplo
 
-![bma.png](bma.png)
+![bam.png](bam.png)
 
 header
 tipo de alineamiento
