@@ -26,8 +26,50 @@ ii) conteo de contigs con número de nucléotidos
 39898
 ```
 utilizando los siguientes comandos
+
+Para denovo_velvet
+
 ```
 one_liner 02_assembly/denovo_velvet/ec_31/contigs.fa
 
 grep -v \> 02_assembly/denovo_velvet/ec_31/contigs.fa | awk '{ print length }' | sort -nr | uniq
 ```
+
+Para denovo_spades
+
+```
+one_liner 02_assembly/denovo_spades/ecoli/scaffolds.fasta
+
+grep -v \> 02_assembly/denovo_spades/ecoli/scaffolds.fasta | awk '{ print length }' | sort -nr | uniq
+```
+
+
+## Estadísticos del Ensamble
+
+1º verificamos que assembly_stats esté instalado
+`assembly-stats`
+
+
+2º instalar el programa assembly_stats con **mamba**
+
+`mamba install -n qc -yc bioconda assembly_stats`
+
+### Un vistazo general a los archivos de ensamble:
+
+```
+source activate qc
+assembly-stats 02_assembly/denovo_spades/ecoli/scaffolds.fasta
+assembly-stats 02_assembly/denovo_velvet/ec_31/contigs.fa
+conda deactivate
+```
+
+
+
+
+
+
+
+
+
+
+
