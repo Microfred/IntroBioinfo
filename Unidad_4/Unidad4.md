@@ -56,7 +56,7 @@ grep -v \> 02_assembly/denovo_spades/ecoli/scaffolds.fasta | awk '{ print length
 
 ### Un vistazo general a los archivos de ensamble:
 
-```
+```denovo_spades
 source activate qc
 assembly-stats 02_assembly/denovo_spades/ecoli/scaffolds.fasta
 assembly-stats 02_assembly/denovo_velvet/ec_31/contigs.fa
