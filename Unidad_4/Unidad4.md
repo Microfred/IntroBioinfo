@@ -97,13 +97,16 @@ etc..
 
 ¿cuál es el rendimiento de ese genoma ensamblado?
 ¿qué pasaría si mapeo las lecturas con el ensamble?
+
 Depth
 Breadth
+
 conda deactivate
+
 ```
 mkdir -p 03_assembly_qc
 
-Velvet
+Spades
 
 cd $HOME/Ensamble
 
@@ -111,15 +114,16 @@ source activate qcBreath
 conda deactivate
 ```
 * tomamos como referencia nuestro propio Ensamble y mapeamos nuestras lecturas trimeadas vs el ensamble
-El mapeo de secuencias se lleva a cabop en 3 pasos
+El mapeo de secuencias se lleva a cabo en 3 pasos
+
 + indexar
 + mapear
 + filtrar
 
 esta en un sólo script
-Breath
 bwa es un "algoritmo Burrows-Wheeler Aligner", nos permite ubicar nuestras lecturas sobre el genoma de referencia.
 Utilizaremos un formato sam
+
 conda deactivate
 ```
 bwa index -p 03_assembly_qc/spades_assembly 02_assembly/denovo_spades/Salbidoflavus/scaffolds.fasta
@@ -134,13 +138,16 @@ conda deactivate
 samtool view: lee un formato y convierte a otro
 samtools sort: ordena
 
-SAM/BAMreathen
+## SAM/BAM
 
 SAM son las siglas para Sequence Alignment Map, un formato de texto delimitado por tabuladores; consiste de un header, el cual es opcional, y una sección de alineamiento. En caso de estar presente el header empiezan con el símbolo @. Cada alineamiento tiene 11 campos obligatorios para información esencial del alineamiento, como posición de mapeo y otros campos que hacen que formato SAM flexible y específico.
 
-figura
+![figure_1.png](figure_1.png)
 
 ejemplo
+
+![bma.png](bma.png)
+
 header
 tipo de alineamiento
 secuencias
