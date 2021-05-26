@@ -130,7 +130,7 @@ bwa index -p 03_assembly_qc/spades_assembly 02_assembly/denovo_spades/Salbidofla
 
 bwa mem -t 20 03_assembly_qc/spades_assembly \
     01_qc/Salbidoflavus_S01_R1.trim.fastq.gz 01_qc/Salbidoflavus_S01_R2.trim.fastq.gz | \
-    samtools view -Sb - | sreathenamtools sort - -o 03_assembly_qc/spades_assembly.sorted.bam
+    samtools view -Sb - | samtools sort - -o 03_assembly_qc/spades_assembly.sorted.bam
 
 conda deactivateBreath
 conda deactivate
@@ -209,7 +209,7 @@ samtools fastq -c 9 \
         03_assembly_qc/spades_assembly.mapped.sorted.bam
 ```
 
-# Contamos líneas, por enésima vez:
+### Contamos líneas, por enésima vez:
 ```
 zcat 03_assembly_qc/Salbidoflavus_S01_R1.fastq.gz | awk 'END{ print NR/4 }'
 zcat 03_assembly_qc/Salbidoflavus_S01_R2.fastq.gz | awk 'END{ print NR/4 }'
@@ -217,7 +217,7 @@ zcat 03_assembly_qc/Salbidoflavus_S.fastq.gz | awk 'END{ print NR/4 }'
 ```
 
 
-# Ensamble con referencia
+### Ensamble con referencia
 
 Mapeo de reads vs referencia
 ```
