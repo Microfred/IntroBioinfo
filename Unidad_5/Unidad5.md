@@ -1,4 +1,3 @@
-
 # 5.0 Anotación
 ## 5.1 Prokka
 
@@ -41,4 +40,46 @@ conda deactivate
 |.txt	| Statistics relating to the annotated features found. |
 |.tsv	| Tab-separated file of all features: locus_tag,ftype,len_bp,gene,EC_number,COG,product |
 
-## 5.2 RAST
+## ![5.2 RAST](http://rast.nmpdr.org/])
+
++ Otra manera, muy popular por cierto, es realizar una anotación automatizada en el servidor web RAST, 
+accesible desde la página.
+![rast01.png](rast01.png)
+
++ Es necesario registrarse.
+![rast02.png](rast02.png)
+
++ Puedes lanzar varias anotaciones simultaneas, el servidor indicará cuál es la carga de trabajo actual.
+![rast03.png](rast03.png)
+
++ Vamos a la pestaña **Your jobs** > **Upload new job**
+![rast04.png](rast04.png)
+
++ Seleccionamos el archivo de los contigs, A5 en este caso.
+![rast05.png](rast05.png)
+
++ Nos da un resumen del genoma.
+![rast06.png](rast06.png)
+
++ En caso de ser un genoma resecuenciado podemos llenar los campos con la información de la referencia.
+![rast07.png](rast07.png)
+
++ En este caso sólo selecciono el código 11 para codones de bacteria y lleno los campos de género y especie.
+![rast08.png](rast08.png)
+
+Seleccionamos el algoritmo para anotación: GLIMMER, RAST
+![rast09.png](rast09.png)
+![rast10.png](rast10.png)
+
+Enviamos nuestra secuencia y el sistema nos notificará vía correo electrónico cuando nuestra anotación esté lista.
+![rast11.png](rast11.png)
+
+
+
+
+
+
+
+
+
+
