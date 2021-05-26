@@ -117,6 +117,7 @@ conda deactivate
 Archivos de salida:
 
 |Extension |	Description |
+| --- | --- |
 |report.txt |	summary table |
 |report.tsv	|tab-separated version, for parsing, or for spreadsheets (Google Docs, Excel, etc) |
 |report.tex	|Latex version |
