@@ -36,13 +36,13 @@ conda deactivate
 |.fsa	| Nucleotide FASTA file of the input contig sequences, used by “tbl2asn” to create the .sqn file. It is mostly the same as the .fna file, but with extra Sequin tags in the sequence description lines. |
 |.tbl	| Feature Table file, used by “tbl2asn” to create the .sqn file. |
 |.err	| Unacceptable annotations - the NCBI discrepancy report. |
-|.log	| Contains all the output that Prokka produced during its run. This is a record of what settings you used, even if the –quiet option was enabled. | 
+|.log	| Contains all the output that Prokka produced during its run. This is a record of what settings you used, even if the –quiet option was enabled. |
 |.txt	| Statistics relating to the annotated features found. |
 |.tsv	| Tab-separated file of all features: locus_tag,ftype,len_bp,gene,EC_number,COG,product |
 
 ## ![5.2 RAST](http://rast.nmpdr.org/])
 
-+ Otra manera, muy popular por cierto, es realizar una anotación automatizada en el servidor web RAST, 
++ Otra manera, muy popular por cierto, es realizar una anotación automatizada en el servidor web RAST,
 accesible desde la página.
 ![rast01.png](rast01.png)
 
@@ -74,12 +74,59 @@ Seleccionamos el algoritmo para anotación: GLIMMER, RAST
 Enviamos nuestra secuencia y el sistema nos notificará vía correo electrónico cuando nuestra anotación esté lista.
 ![rast11.png](rast11.png)
 
+## 5.3 Evaluación de ensamble y anotación.
 
+![QUAST](http://quast.sourceforge.net/)
 
++ Spades:
 
+```
+cd $HOME/Ensamble
 
+source activate annotation
 
+wget -P 05_annotation/ https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz
 
+quast.py 05_annotation/spades_assembly.fasta \
+  -R 05_annotation/GCF_000005845.2_ASM584v2_genomic.fna.gz \
+  -g 05_annotation/ec_spades_prokka/ec_spades.ffn \
+  -1 01_qc/ecoli_S01_R1.trim.fastq.gz -2 01_qc/ecoli_S01_R2.trim.fastq.gz \
+  -t 4 -o 05_annotation/spades_prokka_quast
 
+conda deactivate
+```
 
++ Velvet:
 
+```
+cd $HOME/Ensamble
+
+source activate annotation
+
+wget -P 05_annotation/ https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz
+
+quast.py 05_annotation/velvet_assembly.fasta \
+  -R 05_annotation/GCF_000005845.2_ASM584v2_genomic.fna.gz \
+  -g 05_annotation/ec_velvet_prokka/ec_velvet.ffn \
+  -1 01_qc/ecoli_S01_R1.trim.fastq.gz -2 01_qc/ecoli_S01_R2.trim.fastq.gz \
+  -t 4 -o 05_annotation/velvet_prokka_quast
+
+conda deactivate
+```
+
+Archivos de salida:
+
+|Extension |	Description |
+|report.txt |	summary table |
+|report.tsv	|tab-separated version, for parsing, or for spreadsheets (Google Docs, Excel, etc) |
+|report.tex	|Latex version |
+|report.pdf	|PDF version, includes all tables and plots for some statistics |
+|report.html |	everything in an interactive HTML file |
+|icarus.html |	Icarus main menu with links to interactive viewers |
+|contigs_reports/ |	(only if a reference genome is provided) |
+|misassemblies_report |	detailed report on misassemblies. |
+|unaligned_report :	| detailed report on unaligned and partially unaligned contigs. |
+|k_mer_stats/	| (only if –k-mer-stats option is specified) |
+|kmers_report : | 	detailed report on k-mer-based metrics. |
+|reads_stats/	| (only if reads are provided). |
+|reads_report :	| detailed report on mapped reads statistics. |
