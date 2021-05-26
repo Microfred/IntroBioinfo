@@ -44,7 +44,7 @@ grep -v \> 02_assembly/denovo_spades/Salbidoflavus/scaffolds.fasta | awk '{ prin
 ```
 
 
-## Estadísticos del Ensamble
+### Estadísticos del Ensamble
 
 1º verificamos que assembly_stats esté instalado
 
@@ -62,15 +62,15 @@ a lo largo
 >atcatgctagtagctacgtagctagcatgctagcatgcatgcatgctagctagcta
 
 a lo profundo
-atcatgctagtagctac
-atcatgctagtagctac
-atcatgctagtagctac
-atcatgctagtagctac
-atcatgctagtagctac
-atcatgctagtagctac
-atcatgctagtagctac
-atcatgctagtagctac
-atcatgctagtagctac
+>atcatgctagtagctac
+>atcatgctagtagctac
+>tcatgctagtagctac
+>atcatgctagtagctac
+>atcatgctagtagctac
+>atcatgctagtagctac
+>atcatgctagtagctac
+>atcatgctagtagctac
+>atcatgctagtagctac
 
 
 ```
@@ -93,7 +93,7 @@ etc..
 
 
 
-# 5 Amplitud y profundidad de cobertura
+## 4.1 Amplitud y profundidad de cobertura
 
 ¿cuál es el rendimiento de ese genoma ensamblado?
 ¿qué pasaría si mapeo las lecturas con el ensamble?
@@ -263,14 +263,14 @@ zcat 03_assembly_qc/Salbi_spades_S.fastq.gz | awk 'END{ print NR/4 }'
 ```
 ################################################################################
 
-# 6.0 Ensamble de referencia
+## 4.3 Ensamble de referencia
 
 El ensamble con referencia tiene dos principales objetivos:
 + i) evaluar pequeños cambios
 + ii) utilizar la referencia como una guía para el Ensamble.
 
 
-### Descargamos el genoma de referencia:
+#### Descargamos el genoma de referencia:
 
 Tenemos que ingresar al NCBI https://www.ncbi.nlm.nih.gov/
 usar siempre **refseq** GCF
