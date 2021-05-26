@@ -200,12 +200,13 @@ zcat 03_assembly_qc/salbi_61_velvet_S.fastq.gz | awk 'END{ print NR/4 }'
 
 
 ### Análisis con SPADES (todo se realiza dentro del entorno de qc)
+
 #### Indexar el resultado de mi ensamble, ya sean contig.fna o scaffolds.fna
 
 `bwa index -p 03_assembly_qc/spades_assembly 02_assembly/denovo_spades/Salbidoflavus/scaffolds.fasta`
 
 --------------------------------------------------------------------------------
-## bwa mem pueden mapear secuencias más largas (de 70bp a 1Mbp)
+#### bwa mem pueden mapear secuencias más largas (de 70bp a 1Mbp)
 
 `bwa mem -t 16 03_assembly_qc/spades_assembly \
   01_qc/Salbidoflavus_S01_R1.trim.fastq.gz 01_qc/Salbidoflavus_S01_R2.trim.fastq.gz | \
@@ -319,13 +320,13 @@ samtools index 04_assembly_ref/S_albi_referencia_vs_reads.mapped.sorted.bam
 `samtools depth 04_assembly_ref/S_albi_referencia_vs_reads.mapped.sorted.bam \
             > 04_assembly_ref/S_albi_referencia_vs_reads_depth.txt`
 
-# Bases mapped and sum depth: **6198122 610587586**
+#### Bases mapped and sum depth: **6198122 610587586**
 `awk '{ c++; s+=$3 } END {print c " " s}' 04_assembly_ref/S_albi_referencia_vs_reads_depth.txt`
 
-# Sum depth (profundidad):**98.5117**
+#### Sum depth (profundidad):**98.5117**
 `awk '{ c++; s+=$3 } END { print s/c }' 04_assembly_ref/S_albi_referencia_vs_reads_depth.txt`
 
-# Breadth of coverage (with >= 5X coverage depth)):**99.809**
+#### Breadth of coverage (with >= 5X coverage depth)):**99.809**
 `awk '{c++; if($3>5) total+=1}END{print (total/c)*100}' 04_assembly_ref/S_albi_referencia_vs_reads_depth.txt`
 
 **Mis secuencias cubren una gran cantidad de la secuencia de referencia**
@@ -348,7 +349,7 @@ zcat 01_qc/Salbidoflavus_S01_R2.trim.fastq.gz | awk 'END{ print NR/4 }'
 zcat 01_qc/Salbidoflavus_S01_1U.trim.fq.gz | awk 'END{ print NR/4 }'
 zcat 01_qc/Salbidoflavus_S01_2U.trim.fq.gz | awk 'END{ print NR/4 }'
 ```
-# Lecturas que mapearon con la referencia
+#### Lecturas que mapearon con la referencia
 ```
   zcat 04_assembly_ref/S_albi_referencia_vs_reads_R1.fastq.gz | awk 'END{ print NR/4 }'
   zcat 04_assembly_ref/S_albi_referencia_vs_reads_R2.fastq.gz | awk 'END{ print NR/4 }'
