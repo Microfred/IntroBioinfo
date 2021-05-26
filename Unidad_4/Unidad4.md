@@ -394,3 +394,4 @@ velveth 04_assembly_ref/velvet/salbi_61 61 -fasta \
 `assembly-stats 04_assembly_ref/velvet/salbi_61/contigs.fa`
 
 El ensamble de referencia **solo** se permite realizar con Velvet.
+
