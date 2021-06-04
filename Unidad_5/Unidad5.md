@@ -1,7 +1,19 @@
 # 5.0 Anotación
+
+La anotación del ADN de un genoma consiste en la identificación estructural de genes, regiones codificantes y motivos, así como la identificación funcional de esas regiones. La anotación puede ser tan compleja como queramos o tan general como lo permita la herramimenta. 
+Existenn diferentes herramientas para la anotación de genomas bacterianos, las más comúnes son PROKKA, RAST y PATRIC.
+
+Los algoritmos principales para realizar la anotacion son: ![prodigal](https://github.com/hyattpd/Prodigal), ![genmark](http://exon.gatech.edu/GeneMark/) y 
+![Glimmer](http://ccb.jhu.edu/software/glimmer/index.shtml).
+
+
 ## 5.1 Prokka
 
-Existen 2 algoritmos para realizar la anotación: genemarker y Prodigal
+Esta basado en .perl y tiene muchos complementos de perl.
+Este programa utiliza prodigal para la obtencion de los open reading frame (ORF)
+
+Usualmente sólo requerimos el input y la carpeta de salida. Este software es muy rápido, pero perdemos algo de calidad en el anotado.
+
 
 ```
 cd $HOME/Ensamble
