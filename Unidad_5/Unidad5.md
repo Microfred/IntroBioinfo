@@ -14,6 +14,9 @@ Este programa utiliza prodigal para la obtencion de los open reading frame (ORF)
 
 Usualmente sólo requerimos el input y la carpeta de salida. Este software es muy rápido, pero perdemos algo de calidad en el anotado.
 
+La ventaja de prokka es que obtenemos varios formatos que podrían ser facilmente utilizables para subir en NCBI.
+
+Para los alineamientos y detección de genes utiliza [blastn](https://www.ncbi.nlm.nih.gov/books/NBK569856/) o [diamond](https://github.com/bbuchfink/diamond)
 
 ```
 cd $HOME/Ensamble
