@@ -23,17 +23,17 @@ cd $HOME/Ensamble
 
 mkdir -p 05_annotation
 
-cp 02_assembly/denovo_spades/ecoli/scaffolds.fasta 05_annotation/spades_assembly.fasta
+cp 02_assembly/denovo_spades/Salbidoflavus/scaffolds.fasta 05_annotation/spades_assembly.fasta
 
-cp 02_assembly/denovo_velvet/ec_31/contigs.fa 05_annotation/velvet_assembly.fasta
+cp 02_assembly/denovo_velvet/salbi_61/contigs.fa 05_annotation/velvet_assembly.fasta
 
 source activate annotation
 
-prokka --outdir 05_annotation/ec_spades_prokka --gcode 11 --evalue 1e-6 \
-    --prefix ec_spades 05_annotation/spades_assembly.fasta
+prokka --outdir 05_annotation/Salbi_spades_prokka --gcode 11 --evalue 1e-6 \
+    --prefix salbi_spades 05_annotation/spades_assembly.fasta
 
-prokka --outdir 05_annotation/ec_velvet_prokka --gcode 11 --evalue 1e-6 \
-    --prefix ec_velvet 05_annotation/velvet_assembly.fasta
+prokka --outdir 05_annotation/Salbi_velvet_prokka --gcode 11 --evalue 1e-6 \
+    --prefix salbi_velvet 05_annotation/velvet_assembly.fasta
 
 conda deactivate
 ```
@@ -91,6 +91,8 @@ Enviamos nuestra secuencia y el sistema nos notificará vía correo electrónico
 
 ## 5.3 Evaluación de ensamble y anotación.
 
+Evaluación del genoma por varias métricas. 
+
 ![QUAST](http://quast.sourceforge.net/)
 
 + Spades:
@@ -99,16 +101,16 @@ Enviamos nuestra secuencia y el sistema nos notificará vía correo electrónico
 cd $HOME/Ensamble
 
 source activate annotation
-
-wget -P 05_annotation/ https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz
+cp 04_assembly_ref/GCF_000156475.1_ASM15647v1_genomic.fna.gz 05_annotation/
+wget -P 05_annotation/https://ftp.ncbi.nlm.nih.gov/genomes/refseq/bacteria/Streptomyces_albidoflavus/latest_assembly_versions/GCF_000156475.1_ASM15647v1/GCF_000005845.2_ASM584v2_genomic.fna.gz
 
 quast.py 05_annotation/spades_assembly.fasta \
-  -R 05_annotation/GCF_000005845.2_ASM584v2_genomic.fna.gz \
-  -g 05_annotation/ec_spades_prokka/ec_spades.ffn \
-  -1 01_qc/ecoli_S01_R1.trim.fastq.gz -2 01_qc/ecoli_S01_R2.trim.fastq.gz \
-  -t 4 -o 05_annotation/spades_prokka_quast
+  -R 05_annotation/GCF_000156475.1_ASM15647v1_genomic.fna.gz\
+  -g 05_annotation/salbi_spades_prokka/salbi_spades.ffn \
+  -1 01_qc/Salbidoflavus_S01_R1.trim.clean.fastq.gz -2 01_qc/Salbidoflavus_S01_R2.trim.clean.fastq.gz \
+  -t 16 -o 05_annotation/spades_prokka_quast
 
-conda deactivate
+
 ```
 
 + Velvet:
@@ -118,13 +120,13 @@ cd $HOME/Ensamble
 
 source activate annotation
 
-wget -P 05_annotation/ https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz
+wget -P 05_annotation/ https://ftp.ncbi.nlm.nih.gov/genomes/refseq/bacteria/Streptomyces_albidoflavus/latest_assembly_versions/GCF_000156475.1_ASM15647v1/GCF_000005845.2_ASM584v2_genomic.fna.gz
 
 quast.py 05_annotation/velvet_assembly.fasta \
-  -R 05_annotation/GCF_000005845.2_ASM584v2_genomic.fna.gz \
-  -g 05_annotation/ec_velvet_prokka/ec_velvet.ffn \
-  -1 01_qc/ecoli_S01_R1.trim.fastq.gz -2 01_qc/ecoli_S01_R2.trim.fastq.gz \
-  -t 4 -o 05_annotation/velvet_prokka_quast
+  -R 05_annotation/GCF_000156475.1_ASM15647v1_genomic.fna.gz \
+  -g 05_annotation/salbi_velvet_prokka/ec_velvet.ffn \
+  -1 01_qc/Salbidoflavus_S01_R1.trim.clean.fastq.gz -2 01_qc/Salbidoflavus_S01_R2.trim.clean.fastq.gz \
+  -t 16 -o 05_annotation/velvet_prokka_quast
 
 conda deactivate
 ```
