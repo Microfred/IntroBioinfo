@@ -174,7 +174,7 @@ zcat Q1_CSFP200001976-1a_H57HLDSXY_L1_2.fq.gz | seqkit sample -p 0.15 -o Salbido
 
 
 `cd $HOME/Ensamble`
-
+### En caso de utilizar macOS, se utiliza **gzcat** en vez de zcat
 * Número de secuencias en el archivo Salbidoflavus_S01_R1.fastq.gz
 `zcat 00_raw/Salbidoflavus_S01_R1.fastq.gz  | awk 'END{ print NR/4 }'`
 
