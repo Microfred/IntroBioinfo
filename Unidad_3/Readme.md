@@ -5,7 +5,7 @@
 
 ### Ubuntu
 
-Estas son las instrucciones para la instalación de los programas necesarios para el análisis que vamos a realizar en las próximas clases. Incluye instalación de librerías, programas, y configuración del *$PATH*. Estas instrucciones fueron probadas en AWS con Ubuntu 20.04 LTS, **van caladas, van garantizadas (lease con voz de comenrciante del metro)**
+Estas son las instrucciones para la instalación de los programas necesarios para el análisis que vamos a realizar en las próximas clases. Incluye instalación de librerías, programas, y configuración del *$PATH*. Estas instrucciones fueron probadas en AWS con Ubuntu 20.04 LTS, **van caladas, van garantizadas (lease con voz de comerciante)**
 
 ```
 sudo apt-get update && sudo apt-get install -y build-essential \
@@ -13,7 +13,7 @@ sudo apt-get update && sudo apt-get install -y build-essential \
     gfortran tree htop zlib1g-dev ncbi-blast+
 ```
 
-### Modificar el $PATH
+### Modificar el $[PATH](https://rootsudo.wordpress.com/2014/04/06/el-path-la-ruta-de-linux-variables-de-entorno/comment-page-1/)
 
 ```
 mkdir -p $HOME/bin
@@ -45,7 +45,7 @@ bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/bin/miniconda3
 rm Miniconda3-latest-Linux-x86_64.sh
 ```
 
-Agregar Miniconda al PATH
+Agregar Miniconda al $PATH
 ```
 cat <<EOF >> $HOME/.bashrc
 export PATH=\$HOME/bin/miniconda3/bin:\$PATH
@@ -59,8 +59,8 @@ Recargar y revisar el $PATH
 
 ### Agregar canales de Conda
 
-Si tienes una instalación previa de `conda`revisa el archivo `.condarc` para evitar duplicación de canales, generará error cuando quieras instalar programas
-¿cómo revisamos?
+Si tienes una instalación previa de `conda` revisa el archivo `.condarc` para evitar duplicación de canales, lo cual podría generar error cuando quieras instalar programas
+¿cómo los revisamos?
 
 `nano $HOME/.condarc `
 
@@ -79,18 +79,20 @@ EOF
 
 # Ensamble de genomas
 
-### 1.- Crearemos un directorio y copiaremos ahí los datos de secuenciación
+### 1.- Crearemos un directorio y copiaremos ahí los datos de secuenciación de un genoma, el que ustedes quieran, éste debe ser secuenciado por la plataforma Illumina, 
 
 `mkdir -p 00_raw/`
 
-### 2.- Descargamos el genoma de nuestro interés desde una red de internet estable:
+### 2.- Descargamos el genoma de nuestro interés,  desde una red de internet estable. En este link puedes encontrar muchos:
 
-### El genoma ha sido secuenciado por illumina
+[ver genomas](https://www.ebi.ac.uk/ena/browser/search)
+
+### El genoma ha sido secuenciado por illumina, para este caso puden descargar el de *Escherichis coli*
 
 `wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR022/ERR022075/ERR022075_1.fastq.gz
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR022/ERR022075/ERR022075_2.fastq.gz`
 
-#3.- trabajaremos solo con una **submuestra** que elegiremos al azar
+#3.- trabajaremos solo con una **submuestra** que elegiremos al azar a través de las siguientes instrucciones, ¿tienes duda de que significa cada una, cómo lo revisarías?
 
 `zcat ERR022075_1.fastq.gz | seqkit sample -p 0.15 -o ecoli_S01_R1.fastq.gz
 zcat ERR022075_2.fastq.gz | seqkit sample -p 0.15 -o ecoli_S01_R2.fastq.gz`
