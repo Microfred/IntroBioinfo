@@ -85,21 +85,34 @@ EOF
 
 ### 2.- Descargamos el genoma de nuestro interés,  desde una red de internet estable. En este link puedes encontrar muchos:
 
-[ver genomas](https://www.ebi.ac.uk/ena/browser/search)
+[ver genomas](https://www.ebi.ac.uk/ena/browser/search) 
 
-### El genoma ha sido secuenciado por illumina, para este caso puden descargar el de *Escherichis coli*
+### 3.- El genoma ha sido secuenciado por illumina, para este caso puden descargar el de *Escherichia coli*
 
-`wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR022/ERR022075/ERR022075_1.fastq.gz
-wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR022/ERR022075/ERR022075_2.fastq.gz`
+`wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR022/ERR022075/ERR022075_1.fastq.gz`
+`wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR022/ERR022075/ERR022075_2.fastq.gz`
 
-#3.- trabajaremos solo con una **submuestra** que elegiremos al azar a través de las siguientes instrucciones, ¿tienes duda de que significa cada una, cómo lo revisarías?
+### 4.- trabajaremos solo con una **submuestra** que elegiremos al azar a través de las siguientes instrucciones, ¿tienes duda de que significa cada una, cómo lo revisarías?
 
-`zcat ERR022075_1.fastq.gz | seqkit sample -p 0.15 -o ecoli_S01_R1.fastq.gz
-zcat ERR022075_2.fastq.gz | seqkit sample -p 0.15 -o ecoli_S01_R2.fastq.gz`
+`zcat ERR022075_1.fastq.gz | seqkit sample -p 0.15 -o ecoli_S01_R1.fastq.gz`
+`zcat ERR022075_2.fastq.gz | seqkit sample -p 0.15 -o ecoli_S01_R2.fastq.gz`
 
 
 # **HASTA AQUÍ**
+
+![alto.png](alto.png)
 ___________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
 
 [https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0060204](Identification of Optimum Sequencing Depth Especially for De Novo Genome Assembly of Small Genomes Using Next Generation Sequencing Data. Desai et al. PLOS One 2013)
 
