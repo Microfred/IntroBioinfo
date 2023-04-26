@@ -1,10 +1,11 @@
 
-# Unidad_3
+# Unidad_3 Análisis de genomas
+
 ## Instalación
 
 ### Ubuntu
 
-Estas son las instrucciones para la instalación de los programas necesarios para el análisis que vamos a realizar. Incluye instalación de librerías, programas, y configuración del $PATH. Estas instrucciones fueron probadas en AWS con Ubuntu 20.04 LTS, **van caladas, van garantizadas**
+Estas son las instrucciones para la instalación de los programas necesarios para el análisis que vamos a realizar en las próximas clases. Incluye instalación de librerías, programas, y configuración del *$PATH*. Estas instrucciones fueron probadas en AWS con Ubuntu 20.04 LTS, **van caladas, van garantizadas (lease con voz de comenrciante del metro)**
 
 ```
 sudo apt-get update && sudo apt-get install -y build-essential \
@@ -76,12 +77,27 @@ EOF
 
 `conda install -yc conda-forge mamba`
 
-# ensamble de genomas
+# Ensamble de genomas
 
-### Crearemos un directorio y copiaremos ahí los datos de secuenciación
+### 1.- Crearemos un directorio y copiaremos ahí los datos de secuenciación
 
-`mkdir -p $HOME/Ensamble/00_raw && mv misdatos* 00_raw/`
+`mkdir -p 00_raw/`
 
+### 2.- Descargamos el genoma de nuestro interés desde una red de internet estable:
+
+### El genoma ha sido secuenciado por illumina
+
+`wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR022/ERR022075/ERR022075_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR022/ERR022075/ERR022075_2.fastq.gz`
+
+#3.- trabajaremos solo con una **submuestra** que elegiremos al azar
+
+`zcat ERR022075_1.fastq.gz | seqkit sample -p 0.15 -o ecoli_S01_R1.fastq.gz
+zcat ERR022075_2.fastq.gz | seqkit sample -p 0.15 -o ecoli_S01_R2.fastq.gz`
+
+
+# **HASTA AQUÍ**
+___________________________________________________________________
 
 [https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0060204](Identification of Optimum Sequencing Depth Especially for De Novo Genome Assembly of Small Genomes Using Next Generation Sequencing Data. Desai et al. PLOS One 2013)
 
