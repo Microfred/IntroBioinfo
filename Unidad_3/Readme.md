@@ -76,6 +76,10 @@ EOF
 # [Mamba](https://mamba.readthedocs.io/en/latest/)
 
 `conda install -yc conda-forge mamba`
+## Antes de comensar no olvides instalar seqkit
+
+`conda install seqkit`
+## y finalmente escribe : `seqkit`
 
 # Ensamble de genomas
 
