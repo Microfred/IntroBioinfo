@@ -81,6 +81,20 @@ EOF
 `conda install seqkit`
 ## y finalmente escribe : `seqkit`
 
+### Es muy importante crear un ambiente en donde instalraemos los programas que se utilizarán en el control de calidad, para esto necesitamos instalarlos con el siguiente comando ( copia todo junto):
+
+`mamba create -n qc -yc bioconda fastqc seqkit \
+trimmomatic samtools bwa assembly-stats pilon`
+
+### Para activar el ambiente es importante  activar el ambiente en el cual se instalaron los programas, este ambiente se activa de esta manera:
+
+     $ conda activate qc
+
+### Para desactivar el ambiente necesitamos ejecutarl la siguiente orden
+
+     $ conda deactivate
+
+
 # Ensamble de genomas
 
 ### 1.- Crearemos un directorio y copiaremos ahí los datos de secuenciación de un genoma, el que ustedes quieran, éste debe ser secuenciado por la plataforma Illumina, 
