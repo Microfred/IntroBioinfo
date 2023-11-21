@@ -1,5 +1,5 @@
 
-# Unidad_3 Análisis de genomas
+# Unidad_3 Análisis de calidad de genomas
 
 ## Instalación
 
@@ -132,7 +132,7 @@ ___________________________________________________________________
 
 
 
-[https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0060204](Identification of Optimum Sequencing Depth Especially for De Novo Genome Assembly of Small Genomes Using Next Generation Sequencing Data. Desai et al. PLOS One 2013)
+[https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0060204] (Identification of Optimum Sequencing Depth Especially for De Novo Genome Assembly of Small Genomes Using Next Generation Sequencing Data. Desai et al. PLOS One 2013)
 
 Existen diferentes bases de datos que podemos utilizar para el análisis de genomas.
 
