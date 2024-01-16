@@ -219,6 +219,7 @@ Una de las limitantes de los ensambles es el hardware con el que se dispone para
 cd 00_raw
 
 zcat Q1_CSFP200001976-1a_H57HLDSXY_L1_1.fq.gz | seqkit sample -p 0.15 -o Salbidoflavus_S01_R1.fastq.gz
+
 zcat Q1_CSFP200001976-1a_H57HLDSXY_L1_2.fq.gz | seqkit sample -p 0.15 -o Salbidoflavus_S01_R2.fastq.gz
 ```
 `-p` porcentaje de secuencias por extraer para probar el pipeline
