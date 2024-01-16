@@ -86,6 +86,10 @@ EOF
 `mamba create -n qc -yc bioconda fastqc seqkit \
 trimmomatic samtools bwa assembly-stats pilon`
 
+# Solo para fastqc y trimmomatic :
+
+`mamba create -n qc -yc bioconda fastqc trimmomatic` 
+
 ### Para activar el ambiente es importante  activar el ambiente en el cual se instalaron los programas, este ambiente se activa de esta manera:
 
      $ conda activate qc
