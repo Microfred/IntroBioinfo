@@ -1,7 +1,7 @@
 
-# Unidad_3 Análisis de calidad de genomas
+# Unidad_3 **Análisis de calidad de genomas**
 
-## Instalación
+## 1.- Instalación de programas base
 
 ### Ubuntu
 
@@ -17,7 +17,7 @@ sudo apt-get update && sudo apt-get install -y build-essential \
 
 ```
 mkdir -p $HOME/bin
-cat <<EOF >> $HOME/.bashrc
+cat <<EOF>> $HOME/.bashrc
 ##### Microfred #####
 if [ -d "\$HOME/bin" ] ; then
 export PATH="\$HOME/bin:\$PATH"
@@ -37,17 +37,24 @@ echo $PATH
 
 LOS PASOS DE LA SECCIÓN DE CONDA SE HACEN **UNA SOLA VEZ**
 
-## Miniconda
+## Miniconda para Linux.
 ```
 cd $HOME/bin
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/bin/miniconda3
 rm Miniconda3-latest-Linux-x86_64.sh
 ```
-
-Agregar Miniconda al $PATH
+## Miniconda para Mac (procesador corei)
 ```
-cat <<EOF >> $HOME/.bashrc
+cd $HOME/bin
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh
+bash Miniconda3-latest-MacOSX-x86_64.sh -b -p $HOME/bin/miniconda3
+rm Miniconda3-latest-MacOSX-x86_64.sh
+```
+# Agregar Miniconda al $PATH
+
+```
+cat <<EOF>> $HOME/.bashrc
 export PATH=\$HOME/bin/miniconda3/bin:\$PATH
 EOF
 ```
@@ -56,16 +63,19 @@ Recargar y revisar el $PATH
 
 `source $HOME/.bashrc`
 `echo $PATH`
+`se vería algo así: /Users/ToxicAvenger/miniconda3/bin:/Users/ToxicAvenger/miniconda3/condabin:`
+
 
 ### Agregar canales de Conda
 
-Si tienes una instalación previa de `conda` revisa el archivo `.condarc` para evitar duplicación de canales, lo cual podría generar error cuando quieras instalar programas
-¿cómo los revisamos?
+#Si tienes una instalación previa de `conda` primero revisa el archivo `.condarc` para evitar duplicación de canales, lo cual podría generar error cuando quieras instalar programas
+
+#¿cómo los revisamos?
 
 `nano $HOME/.condarc `
 
 ```
-cat <<EOF >> $HOME/.condarc
+cat <<EOF>> $HOME/.condarc
 channels:
   - conda-forge
   - bioconda
