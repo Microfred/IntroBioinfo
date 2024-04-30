@@ -125,9 +125,11 @@ trimmomatic samtools bwa assembly-stats pilon`
 `wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR022/ERR022075/ERR022075_2.fastq.gz`
 
 ### 4.- trabajaremos solo con una **submuestra** que elegiremos al azar a través de las siguientes instrucciones, ¿tienes duda de que significa cada una, cómo lo revisarías?
+```
+zcat ERR022075_1.fastq.gz | seqkit sample -p 0.15 -o ecoli_S01_R1.fastq.gz
 
-`zcat ERR022075_1.fastq.gz | seqkit sample -p 0.15 -o ecoli_S01_R1.fastq.gz`
-`zcat ERR022075_2.fastq.gz | seqkit sample -p 0.15 -o ecoli_S01_R2.fastq.gz`
+zcat ERR022075_2.fastq.gz | seqkit sample -p 0.15 -o ecoli_S01_R2.fastq.gz
+```
 
 
 # **HASTA AQUÍ**
