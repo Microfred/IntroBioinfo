@@ -420,12 +420,13 @@ adapters="$HOME/bin/adapters/NexteraPE-PE.fa"
 Activamos el entorno qc
 `source activate qc`
 
-
-`trimmomatic PE -phred33 -threads 16 \
+```
+trimmomatic PE -phred33 -threads 16 \
     00_raw/Salbidoflavus_S01_R1.fastq.gz  00_raw/Salbidoflavus_S01_R2.fastq.gz  \
     01_qc/Salbidoflavus_S01_R1.trim.fastq.gz 01_qc/Salbidoflavus_S01_1U.trim.fq.gz \
     01_qc/Salbidoflavus_S01_R2.trim.fastq.gz 01_qc/Salbidoflavus_S01_2U.trim.fq.gz \
-    ILLUMINACLIP:${adapters}:2:30:10 SLIDINGWINDOW:4:20 MINLEN:90 CROP:150`
+    ILLUMINACLIP:${adapters}:2:30:10 SLIDINGWINDOW:4:20 MINLEN:90 CROP:150
+```
 
      ILLUMINACLIP:${adapters} eliminamos adaptadores con cierta frecuencia
      SLIDINGWINDOW: 4:20 cuatro nucleoticos en promedio tienen una claidad menor a 20 se elimina la secuencia (incluyendo el par).
