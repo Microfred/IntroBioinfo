@@ -435,7 +435,7 @@ trimmomatic PE -phred33 -threads 16 \
 
 
      **Loop para trimmomatic** 
-     ```
+ ```
       for infile in *_R1.fastq.gz; do
     base=$(basename "$infile" _R1.fastq.gz);
     trimmomatic PE "$infile" "${base}_R2.fastq.gz" \
@@ -443,6 +443,7 @@ trimmomatic PE -phred33 -threads 16 \
         "${base}_R2.trim.fastq.gz" "${base}_R2un.trim.fastq.gz" \
         SLIDINGWINDOW:4:20 MINLEN:35 ILLUMINACLIP:TruSeq3-PE.fa:2:40:15;
 done
+
 ````
 
 **NOTA** EL orden en que se colocan es importante.
