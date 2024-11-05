@@ -1,5 +1,4 @@
-# Unidad 1: Introducción a la programación
-
+# Unidad 1: Introducción a la programación ​👨‍💻
 
 ## Introducción a la consola y línea de comando de bash y R
 
