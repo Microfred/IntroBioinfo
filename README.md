@@ -124,7 +124,7 @@ Con `quit()` salgo de la Terminal de R y vuelvo a la Terminal de bash.
 R también tiene su propia terminal (lo que sale cuando abres R via su ícono). Sin embargo, nosotros ocuparemos RStudio, que es una interfaz visual que integra la terminal de R con varias funcionalidades útiles e intuitivas.
 
 
-
+Acá dejo un [curso](https://hub-courses.pages.pasteur.fr/R_pasteur_phd/First_steps_RStudio.html#1_Get_ready_for_the_course) básico de **R** del [Instiuto Pasteur](https://www.pasteur.fr/en)
 
 ## Introducción a los Scripts
 
