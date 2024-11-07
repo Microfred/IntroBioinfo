@@ -145,13 +145,13 @@ Toxic-Avenger:~ ToxicAvenger$ pwd
 ```
 
     $ pwd
-    /Users/ticatla
+    /Users/Alfrdo
  
 La diagonal **/** es el símbolo que separa los directorios en niveles jerárquicos. Es decir `ticatla` es un subdirectorio de `Users` que a su vez es un subdirectorio de `root` (simbolizado aquí como una sola /), la raíz de todos los directorios.
 
 ### `cd`
 
-`cd` viene de **change directory** y sirve para movernos a otro directorio. Por ejemplo:
+`cd` viene de **change directory** y sirve para cambiarno a otro directorio. Por ejemplo:
 
 ```
 Toxic-Avenger:~ ToxicAvenger$ cd Documents/
@@ -165,14 +165,16 @@ Como se explicó antes, el texto antes de `$` nos indica el nombre del equipo, e
 
 Ahora vamos a navegar al directorio del repositorio. La navegación se puede hacer de diferentes maneras:
 
-
 Para esto hay varias opciones:
 
-#### Moverse hacia adelante/abajo (i.e. adentro de subdirectorios):
+#### Moverse hacia adelante/abajo  que es dar la ruta (dirección) completa **desde root** hasta el directorio que queremos.
+	pwd
+ 	/Users/ToxicAvenger/Documents/B_tacu_24/03_taxonomy
 
-* **Absolute path** que es dar la ruta (dirección) completa **desde root** hasta el directorio que queremos.
 
 * **Relative path** que es dar la ruta **desde donde estamos** hasta el directorio que queremos.
+	`cd
+	03_taxonomy`
 
 Ejemplo de ruta absoluta:
 
