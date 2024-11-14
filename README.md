@@ -132,7 +132,7 @@ Windows, Mac y las interfaces gráficas de Linux (como Ubuntu y Biolinux) tienen
 
 A continuación vamos a ver cómo navegar por este **mismo** sistema de archivos, pero desde la Terminal y con el teclado en vez de desde una ventana y con clicks.
 
-### `pwd`
+### `pwd`: print work directory
 
 `pwd` nos da el directorio en donde estamos (viene de print **working directory**). 
 
@@ -145,13 +145,13 @@ Toxic-Avenger:~ ToxicAvenger$ pwd
 ```
 
     $ pwd
-    /Users/Alfrdo
+    /Users/Alfredo
  
 La diagonal **/** es el símbolo que separa los directorios en niveles jerárquicos. Es decir `ticatla` es un subdirectorio de `Users` que a su vez es un subdirectorio de `root` (simbolizado aquí como una sola /), la raíz de todos los directorios.
 
-### `cd`
+### `cd`: change directory
 
-`cd` viene de **change directory** y sirve para cambiarno a otro directorio. Por ejemplo:
+`cd`  sirve para cambiarno a otro directorio arriba o abajo. Por ejemplo:
 
 ```
 Toxic-Avenger:~ ToxicAvenger$ cd Documents/
@@ -163,11 +163,39 @@ Toxic-Avenger:POSTDOC_ ToxicAvenger$
 
 Como se explicó antes, el texto antes de `$` nos indica el nombre del equipo, el directorio actual y el nombre del usuario. El directorio actual cambió de "ToxicAvenger" (home) a "Desktop". 
 
+`tree`: Despliega la estructura del Directorio en sistema operativo de Linu/GNU y MacOS:
+
+```
+├── AQM2
+│   ├── AQM2.xlsx
+│   └── HEGJ860109_20232_AQM2_0_QA01_3.pdf
+├── AQM2.xlsx
+├── AQV1
+│   ├── AQV1.xlsx
+│   ├── HEGJ860109_20232_AQV1_0_QA01_3.pdf
+│   ├── JUEGO_DE_BASH.csv
+│   ├── Proyecto_final.csv
+│   └── aqv1_classroom.csv
+├── AQV1.xlsx
+├── Proyecto_final.csv
+├── ~$AQM2.xlsx
+├── ~$AQV1.xlsx
+└── ~$rta\ JAHG.docx
+
+2 directories, 13 files
+```
+
+Para usar el comando tree, primero necesitas asegurarte de que esté instalado en tu sistema. En muchas distribuciones de Linux, puedes instalarlo usando el gestor de paquetes correspondiente. Por ejemplo, en Debian/Ubuntu puedes usar:
+
+
+Linux: `sudo apt-get install tree`
+MacOS: `brew install tree`
+
 Ahora vamos a navegar al directorio del repositorio. La navegación se puede hacer de diferentes maneras:
 
 Para esto hay varias opciones:
 
-#### Moverse hacia adelante/abajo  que es dar la ruta (dirección) completa **desde root** hasta el directorio que queremos.
+#### Moverse hacia adelante/abajo o arriba/atrás que es dar la ruta (dirección) completa **desde root** hasta el directorio que queremos.
 	pwd
  	/Users/ToxicAvenger/Documents/B_tacu_24/03_taxonomy
 
@@ -198,7 +226,7 @@ Toxic-Avenger:Maiz ToxicAvenger$
 
 #### Moverse a home:
 
-`~` es una especie de ruta corta a la ruta absoluta de tu directorio home. No importa dónde estés `cd ~` o `cd $HOME` te llevará a home. 
+`~` _virgulilla_ es una especie de ruta corta a la ruta absoluta de tu directorio home. No importa dónde estés `cd ~` o `cd $HOME` te llevará a home. 
 
 ```
 Toxic-Avenger:~ ToxicAvenger$ cd Documents/GitHub/Unidad_1/Prac_Uni1/
@@ -210,7 +238,7 @@ Toxic-Avenger:Prac_Uni1 ToxicAvenger$ cd $HOME
 Toxic-Avenger:~ ToxicAvenger$ 
 ```
 
-#### Moverse para atrás (hacia el directorio raíz):
+#### Moverse para atrás/arriba (hacia el directorio raíz):
 
 Igual puede ser con rutas absolutas o relativas, pero utilizando `..` que representa **parent directory**, es decir el directorio arriba (o atrás, como le entiendas mejor):
 
@@ -257,6 +285,7 @@ Toxic-Avenger:Manzanas ToxicAvenger$
 ```
 
 #### No moverse
+
 O en otras palabras ir al directorio donde ya estás. Suena inútil, y en general lo es si lo hace con `cd`, pero el concepto es importante para otros comandos que veremos más adelante. 
 
 `cd ./` te lleva al directorio en el que estás. Lo importante a recordar es que `.` significa "el directorio actual". 
